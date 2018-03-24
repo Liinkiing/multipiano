@@ -1,6 +1,7 @@
 <template>
     <div class="room">
         <h1>{{ roomName || 'Multiplayer Piano' }}</h1>
+        <p>Coucou</p>
     </div>
 </template>
 
@@ -14,5 +15,13 @@
 </script>
 
 <style lang="scss">
-
+    .room {
+        width: inherit;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        & h1 {
+            text-align: center;
+        }
+    }
 </style>

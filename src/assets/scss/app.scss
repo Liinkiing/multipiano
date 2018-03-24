@@ -2,5 +2,14 @@
 
 body {
   background: $primary-gradient;
+  min-height: 100vh;
+  display: flex;
+  font-family: 'Signika', sans-serif;
+  color: whitesmoke;
+}
+
+.wrapper {
+  display: flex;
+  width: 100%;
 }
 

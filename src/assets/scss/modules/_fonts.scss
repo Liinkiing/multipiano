@@ -1,0 +1,33 @@
+$font_path: '~@/assets/fonts/';
+
+@font-face {
+  font-family: 'Signika';
+  src: url($font_path + 'Signika-Bold.woff2') format('woff2'),
+  url($font_path + 'Signika-Bold.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Signika';
+  src: url($font_path + 'Signika-Light.woff2') format('woff2'),
+  url($font_path + 'Signika-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Signika';
+  src: url($font_path + 'Signika-Semibold.woff2') format('woff2'),
+  url($font_path + 'Signika-Semibold.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Signika';
+  src: url($font_path + 'Signika-Regular.woff2') format('woff2'),
+  url($font_path + 'Signika-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
