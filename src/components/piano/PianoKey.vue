@@ -1,5 +1,6 @@
 <template>
     <div class="piano-key">
+
     </div>
     
 </template>
@@ -11,5 +12,9 @@
 </script>
 
 <style lang="scss">
-
+    .piano-key {
+        background: whitesmoke;
+        height: 40px;
+        width: 20px;
+    }
 </style>

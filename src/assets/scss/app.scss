@@ -1,5 +1,9 @@
 @import "bootstrap";
 
+html {
+  font-size: 100%;
+}
+
 body {
   background: $primary-gradient;
   min-height: 100vh;
