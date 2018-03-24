@@ -1,5 +1,6 @@
 <template>
     <div class="room">
+        <h1>{{ roomName || 'Multiplayer Piano' }}</h1>
     </div>
 </template>
 
