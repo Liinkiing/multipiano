@@ -7,7 +7,7 @@ export default class MIDIMessage {
      */
     constructor({ data }) {
         this._signalType = SIGNAL_TYPE_MAP[data[0]]
-        this._note = new Note(data[1])
+        this._note =  (this._signalType === MIDI_ATTACK || this._signalType === MIDI_RELASE) ? new Note(data[1]) : null
         this._velocity = data[2]
     }
 

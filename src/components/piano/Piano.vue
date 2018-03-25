@@ -16,13 +16,8 @@
     export default {
         components: {PianoKey},
         name: 'piano',
-        created () {
-            this.$store.state.piano.midiAccess.addEventListener(MIDI_ATTACK, this.onNotePlayed)
-        },
-        methods: {
-            onNotePlayed (e) {
-                console.log(e)
-            }
+        mounted () {
+            this.$store.state.piano.midiAccess.addEventListener(MIDI_ATTACK, e => console.log(e))
         }
     }
 </script>

@@ -17,13 +17,30 @@ export default class MIDIAccess {
             this.inputs.push(input)
         })
         this.outputs = []
-        this.outputs.forEach(output => {
+        this.midiAccess.outputs.forEach(output => {
             this.outputs.push(output)
         })
-        this.initListeners()
+        this.init()
     }
 
-    initListeners() {
+    init() {
+        this.midiAccess.onstatechange = e => {
+            if (this.listeners['onstatechange']) {
+                this.listeners['onstatechange'].forEach(callback => {
+                    callback(e)
+                })
+            }
+        }
+    }
+
+    addEventListener(eventName, callback) {
+        if (!callback || typeof callback !== "function") {
+            console.error('Please attach a valid callback to the listener!')
+        }
+        if (!this.listeners[eventName]) {
+            this.listeners[eventName] = []
+        }
+        this.listeners[eventName].push(callback)
         this.inputs.forEach(input => {
             input.onmidimessage = e => {
                 let message = new MIDIMessage(e)
@@ -36,16 +53,6 @@ export default class MIDIAccess {
         })
     }
 
-    addEventListener(eventName, callback) {
-        if (!callback || typeof callback !== "function") {
-            console.error('Please attach a valid callback to the listener!')
-        }
-        if (!this.listeners[eventName]) {
-            this.listeners[eventName] = []
-        }
-        this.listeners[eventName].push(callback)
-    }
-
     removeEventListener(eventName, callback) {
         if (!callback || typeof callback !== "function") {
             console.error('Please attach a valid callback to the listener!')
@@ -53,6 +60,9 @@ export default class MIDIAccess {
         if (this.listeners[eventName]) {
             this.listeners[eventName] = this.listeners[eventName].filter(cb => cb !== callback)
         }
+        this.inputs.forEach(input => {
+            input.onmidimessage = null
+        })
     }
 
 }

@@ -1,0 +1,20 @@
+.vue-js-switch#changed-font {
+  font-size: 16px;
+}
+
+div[data-popover] {
+  color: #000;
+}
+
+.v--modal-overlay {
+  background: transparentize($violet, 0.5);
+}
+
+.v--modal-box {
+  background: whitesmoke;
+  padding: 40px;
+}
+
+.vue-js-switch.changed-font {
+  font-size: 2rem;
+}

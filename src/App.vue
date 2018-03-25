@@ -22,12 +22,16 @@
       },
       methods: {
           ...mapActions([
-              'getMidiAccess'
+              'getMidiAccess',
+              'refreshMidi'
           ])
       },
       async created () {
           await this.getMidiAccess()
           this.loadingMidi = false;
+          this.$store.state.piano.midiAccess.addEventListener('onstatechange', e => {
+              this.refreshMidi(e)
+          })
       }
   }
 </script>
