@@ -30,6 +30,7 @@
           await this.getMidiAccess()
           this.loadingMidi = false;
           this.$store.state.piano.midiAccess.addEventListener('onstatechange', e => {
+              console.log(e)
               this.refreshMidi(e)
           })
       }

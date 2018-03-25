@@ -4,7 +4,9 @@
         <modal name="midi">
             <ul class="midi-inputs">
                 <li class="midi-input" v-for="input in midiInputs" :key="input.id">
-                    <toggle-button class="changed-font" :value="midiPortState(input.id) === 'connected'" :key="input.id" :labels="{checked: input.name, unchecked: input.name}" :width="500" :height="40"/>
+                    <toggle-button class="changed-font" :value="midiPortState(input.id) === 'connected'"
+                                   :key="input.id" :labels="{checked: input.name, unchecked: input.name}"
+                                   :width="500" :height="40" @change="toggleMidiConnectionInput(input.id)"/>
                 </li>
             </ul>
         </modal>
@@ -16,11 +18,6 @@
     import { mapGetters, mapActions } from 'vuex'
     export default {
         name: 'bottom-bar',
-        data () {
-            return {
-                toggleValues: []
-            }
-        },
         computed: {
             ...mapGetters([
                 'midiInputs',
@@ -32,6 +29,7 @@
             ...mapActions([
                 'closeMidiPort',
                 'openMidiPort',
+                'toggleMidiConnectionInput',
             ])
         }
     }
