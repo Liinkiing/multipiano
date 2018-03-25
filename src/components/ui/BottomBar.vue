@@ -1,0 +1,29 @@
+<template>
+    <div class="bottom-bar">
+        <p>coucou je suis la bottom bar</p>
+    </div>
+    
+</template>
+
+<script>
+    import { mapGetters } from 'vuex'
+    export default {
+        name: 'bottom-bar',
+        computed: {
+            ...mapGetters([
+                'midiInputs',
+                'midiOutputs'
+            ])
+        }
+    }
+</script>
+
+<style lang="scss">
+    @import "../../assets/scss/modules/variables";
+    .bottom-bar {
+        margin-top: auto;
+        padding: 40px;
+        background: rgba(0, 0, 0, 0.28);
+        box-shadow: $big-shadow;
+    }
+</style>

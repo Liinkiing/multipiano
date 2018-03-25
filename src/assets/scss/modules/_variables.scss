@@ -1,6 +1,6 @@
-$shadow-3d: 0px 3px 0px darken(whitesmoke, 45),
-0px 8px 10px rgba(0,0,0,0.15);
-
+$shadow-3d: 0 3px 0 darken(whitesmoke, 45),
+0 8px 10px rgba(0,0,0,0.15);
+$big-shadow: 0 -8px 30px rgba(0, 0, 0, 0.2);
 $violet: #5f2c82;
 $blue: #49a09d;
 $primary-gradient: linear-gradient(45deg, $violet, $blue);

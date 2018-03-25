@@ -11,14 +11,9 @@
 
 <script>
     import PianoKey from './PianoKey'
-    import MIDIWrapper from '../../wrappers/MIDIWrapper'
-
     export default {
         components: {PianoKey},
-        name: 'piano',
-        beforeMount: async function () {
-            this.midiWrapper = await MIDIWrapper.requestMidiAccess()
-        }
+        name: 'piano'
     }
 </script>
 

@@ -10,10 +10,12 @@ body {
   display: flex;
   font-family: 'Signika', sans-serif;
   color: whitesmoke;
+  overflow: hidden;
 }
 
 .wrapper {
   display: flex;
+  flex-direction: column;
   width: 100%;
 }
 
