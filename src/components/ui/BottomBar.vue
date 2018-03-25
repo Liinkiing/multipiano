@@ -7,7 +7,7 @@
                 <li class="midi-input" v-for="input in midiInputs" :key="input.id">
                     <toggle-button class="changed-font" :value="isMidiInputConnectionStatusOpen(input.id)"
                                    :key="input.id" :labels="{checked: input.name, unchecked: input.name}"
-                                   :width="500" :height="40" @change="toggleMidiConnectionInput(input.id)"/>
+                                   :width="500" :height="40" @change="TOGGLE_MIDI_CONNECTION_INPUT(input.id)"/>
                 </li>
             </ul>
             <h2>Outputs</h2>
@@ -15,7 +15,7 @@
                 <li class="midi-output" v-for="output in midiOutputs" :key="output.id">
                     <toggle-button class="changed-font" :value="isMidiOutputConnectionStatusOpen(output.id)"
                                    :key="output.id" :labels="{checked: output.name, unchecked: output.name}"
-                                   :width="500" :height="40" @change="toggleMidiConnectionOutput(output.id)"/>
+                                   :width="500" :height="40" @change="TOGGLE_MIDI_CONNECTION_OUTPUT(output.id)"/>
                 </li>
             </ul>
         </modal>
@@ -25,6 +25,12 @@
 
 <script>
     import { mapGetters, mapActions } from 'vuex'
+    import {
+        CLOSE_MIDI_PORT,
+        OPEN_MIDI_PORT,
+        TOGGLE_MIDI_CONNECTION_INPUT,
+        TOGGLE_MIDI_CONNECTION_OUTPUT
+    } from "../../store/modules/piano/actions";
     export default {
         name: 'bottom-bar',
         computed: {
@@ -38,10 +44,10 @@
         },
         methods: {
             ...mapActions([
-                'closeMidiPort',
-                'openMidiPort',
-                'toggleMidiConnectionInput',
-                'toggleMidiConnectionOutput',
+                CLOSE_MIDI_PORT,
+                OPEN_MIDI_PORT,
+                TOGGLE_MIDI_CONNECTION_INPUT,
+                TOGGLE_MIDI_CONNECTION_OUTPUT,
             ])
         }
     }

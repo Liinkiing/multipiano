@@ -11,6 +11,8 @@
 <script>
     import { mapActions } from 'vuex'
     import BottomBar from "./components/ui/BottomBar";
+    import {MIDI_PITCH} from "./components/midi/constants";
+    import {GET_MIDI_ACCESS, REFRESH_MIDI, REFRESH_MIDI_INPUTS_OUTPUTS} from "./store/modules/piano/actions";
 
   export default {
       components: {BottomBar},
@@ -22,18 +24,22 @@
       },
       methods: {
           ...mapActions([
-              'getMidiAccess',
-              'refreshMidi',
-              'refreshMidiInputsOutputs'
+              GET_MIDI_ACCESS,
+              REFRESH_MIDI,
+              REFRESH_MIDI_INPUTS_OUTPUTS
           ])
       },
       async created () {
-          await this.getMidiAccess()
+          await this[GET_MIDI_ACCESS]()
           this.loadingMidi = false;
           this.$store.state.piano.midiAccess.addEventListener('onstatechange', e => {
-              this.refreshMidi(e)
-              this.refreshMidiInputsOutputs()
+              this[REFRESH_MIDI](e)
+              this[REFRESH_MIDI_INPUTS_OUTPUTS]()
           })
+          this.$store.state.piano.midiAccess.addEventListener(MIDI_PITCH, e => {
+            console.log('pitch', e.signalType)
+          })
+
       }
   }
 </script>
