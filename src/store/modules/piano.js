@@ -1,32 +1,35 @@
 import MIDIWrapper from "../../wrappers/MIDIWrapper";
 
 const state = {
-    midiAccess: null
+    midiAccess: null,
+    inputs: [],
+    outputs: [],
 }
 
 const getters = {
     midiInputs: state => {
-        console.log(state.midiAccess.inputs)
         return state.midiAccess.inputs
     },
-    midiInput: state => id => {
-        return state.midiAccess.inputs.find(input => input.id === id)
-    },
-    midiPortState: state => id => {
-        return state.midiAccess.inputs.find(input => input.id === id).state
-    },
-    midiPortConnectionStatus: state => id => {
-        return state.midiAccess.inputs.find(input => input.id === id).connection
-    },
     midiOutputs: state => {
-        if (!state.midiAccess) return []
         return state.midiAccess.outputs
+    },
+    isMidiInputConnectionStatusOpen: state => id => {
+        let result = state.inputs.find(input => input.id === id);
+        if(!result) return false
+        return 'connection' in result ? result.connection === 'open' : false
+    },
+    isMidiOutputConnectionStatusOpen: state => id => {
+        let result = state.outputs.find(output => output.id === id);
+        if(!result) return false
+        return 'connection' in result ? result.connection === 'open' : false
     }
 }
 
 const mutations = {
     setMidiAccess(state, midiAccess) {
         state.midiAccess = midiAccess
+        state.inputs = state.midiAccess.inputsConnectionStatus
+        state.outputs = state.midiAccess.outputsConnectionStatus
     },
     addMidiInput(state, input) {
         if (state.midiAccess.inputs.filter(i => i.id === input.id).length > 0) return
@@ -48,17 +51,9 @@ const mutations = {
         state.midiAccess.outputs = state.midiAccess.outputs.filter(o => o.id !== output.id)
         state.midiAccess.init()
     },
-    openMidiInput(state, input) {
-        state.midiAccess.inputs.filter(i => i.id === input.id)[0].open()
-    },
-    closeMidiInput(state, input) {
-        state.midiAccess.inputs.filter(i => i.id === input.id)[0].close()
-    },
-    openMidiOutput(state, output) {
-        state.midiAccess.outputs.filter(o => o.id === output.id)[0].open()
-    },
-    closeMidiOutput(state, output) {
-        state.midiAccess.outputs.filter(o => o.id === output.id)[0].close()
+    refreshMidiInputsOutputs(state) {
+        state.inputs = state.midiAccess.inputsConnectionStatus
+        state.outputs = state.midiAccess.outputsConnectionStatus
     }
 }
 
@@ -78,22 +73,26 @@ const actions = {
     removeMidiOutput({commit, state}, output) {
         commit('removeMidiOutput', output)
     },
-    openMidiInput({commit, state}, input) {
-        commit('openMidiInput', input)
+    async openMidiInput({commit, state}, inputId) {
+        await state.midiAccess.inputs.filter(i => i.id === inputId)[0].open()
+        commit('refreshMidiInputsOutputs')
     },
-    closeMidiInput({commit, state}, input) {
-        commit('closeMidiInput', input)
+    async closeMidiInput({state, commit}, inputId) {
+        await state.midiAccess.inputs.filter(i => i.id === inputId)[0].close()
+        commit('refreshMidiInputsOutputs')
     },
-    openMidiOutput({commit, state}, output) {
-        commit('openMidiOutput', output)
+    async openMidiOutput({state, commit}, outputId) {
+        await state.midiAccess.outputs.filter(o => o.id === outputId)[0].open()
+        commit('refreshMidiInputsOutputs')
     },
-    closeMidiOutput({commit, state}, output) {
-        commit('closeMidiOutput', output)
+    async closeMidiOutput({state, commit}, outputId) {
+        await state.midiAccess.outputs.filter(o => o.id === outputId)[0].close()
+        commit('refreshMidiInputsOutputs')
     },
-    refreshMidi({commit}, midiStateEvent) {
+    refreshMidi({commit, dispatch}, midiStateEvent) {
         if (midiStateEvent.port.state === 'connected' && midiStateEvent.port.type === 'input') {
             commit('addMidiInput', midiStateEvent.port)
-        } else if (midiStateEvent.port.state === 'disconnected' &&  midiStateEvent.port.type === 'input') {
+        } else if (midiStateEvent.port.state === 'disconnected' && midiStateEvent.port.type === 'input') {
             commit('removeMidiInput', midiStateEvent.port)
         }
         else if (midiStateEvent.port.state === 'connected' && midiStateEvent.port.type === 'output') {
@@ -101,6 +100,10 @@ const actions = {
         } else if (midiStateEvent.port.state === 'disconnected' && midiStateEvent.port.type === 'output') {
             commit('removeMidiOutput', midiStateEvent.port)
         }
+        dispatch('refreshMidiInputsOutputs')
+    },
+    refreshMidiInputsOutputs({commit}) {
+        commit('refreshMidiInputsOutputs')
     },
     closeMidiPort({getters}, inputId) {
         getters.midiInputs.filter(input => input.id === inputId)[0].close()
@@ -108,13 +111,20 @@ const actions = {
     openMidiPort({getters}, inputId) {
         getters.midiInputs.filter(input => input.id === inputId)[0].open()
     },
-    toggleMidiConnectionInput({getters, commit}, inputId) {
-        if (getters.midiPortConnectionStatus(inputId) === 'open') {
-            commit('closeMidiInput', getters.midiInput(inputId))
-        } else if (getters.midiPortConnectionStatus(inputId) === 'closed') {
-            commit('openMidiInput', getters.midiInput(inputId))
+    async toggleMidiConnectionInput({getters, commit, dispatch}, inputId) {
+        if (getters.isMidiInputConnectionStatusOpen(inputId)) {
+            await dispatch('closeMidiInput', inputId)
+        } else if (!getters.isMidiInputConnectionStatusOpen(inputId)) {
+            await dispatch('openMidiInput', inputId)
         }
-    }
+    },
+    async toggleMidiConnectionOutput({getters, commit, dispatch}, inputId) {
+        if (getters.isMidiOutputConnectionStatusOpen(inputId)) {
+            await dispatch('closeMidiOutput', inputId)
+        } else if (!getters.isMidiOutputConnectionStatusOpen(inputId)) {
+            await dispatch('openMidiOutput', inputId)
+        }
+    },
 }
 
 export default {

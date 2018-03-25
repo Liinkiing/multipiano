@@ -43,6 +43,30 @@ export default class MIDIAccess {
         })
     }
 
+    get inputsConnectionStatus () {
+        let result = []
+        this.inputs.forEach(input => {
+            result.push({
+                id: input.id,
+                connection: input.connection,
+                state: input.state,
+            })
+        })
+        return result
+    }
+
+    get outputsConnectionStatus () {
+        let result = []
+        this.outputs.forEach(output => {
+            result.push({
+                id: output.id,
+                connection: output.connection,
+                state: output.state,
+            })
+        })
+        return result
+    }
+
     addEventListener(eventName, callback) {
         if (!callback || typeof callback !== "function") {
             console.error('Please attach a valid callback to the listener!')

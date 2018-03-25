@@ -23,7 +23,8 @@
       methods: {
           ...mapActions([
               'getMidiAccess',
-              'refreshMidi'
+              'refreshMidi',
+              'refreshMidiInputsOutputs'
           ])
       },
       async created () {
@@ -31,6 +32,7 @@
           this.loadingMidi = false;
           this.$store.state.piano.midiAccess.addEventListener('onstatechange', e => {
               this.refreshMidi(e)
+              this.refreshMidiInputsOutputs()
           })
       }
   }
