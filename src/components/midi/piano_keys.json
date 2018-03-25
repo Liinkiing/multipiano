@@ -1,0 +1,354 @@
+[
+  {
+    "keyname": "A1",
+    "midiCode": 21
+  },
+  {
+    "keyname": "A#1",
+    "midiCode": 22
+  },
+  {
+    "keyname": "B1",
+    "midiCode": 23
+  },
+  {
+    "keyname": "C2",
+    "midiCode": 24
+  },
+  {
+    "keyname": "C#2",
+    "midiCode": 25
+  },
+  {
+    "keyname": "D2",
+    "midiCode": 26
+  },
+  {
+    "keyname": "D#2",
+    "midiCode": 27
+  },
+  {
+    "keyname": "E2",
+    "midiCode": 28
+  },
+  {
+    "keyname": "F2",
+    "midiCode": 29
+  },
+  {
+    "keyname": "F#2",
+    "midiCode": 30
+  },
+  {
+    "keyname": "G2",
+    "midiCode": 31
+  },
+  {
+    "keyname": "G#2",
+    "midiCode": 32
+  },
+  {
+    "keyname": "A2",
+    "midiCode": 33
+  },
+  {
+    "keyname": "A#2",
+    "midiCode": 34
+  },
+  {
+    "keyname": "B2",
+    "midiCode": 35
+  },
+  {
+    "keyname": "C3",
+    "midiCode": 36
+  },
+  {
+    "keyname": "C#3",
+    "midiCode": 37
+  },
+  {
+    "keyname": "D3",
+    "midiCode": 38
+  },
+  {
+    "keyname": "D#3",
+    "midiCode": 39
+  },
+  {
+    "keyname": "E3",
+    "midiCode": 40
+  },
+  {
+    "keyname": "F3",
+    "midiCode": 41
+  },
+  {
+    "keyname": "F#3",
+    "midiCode": 42
+  },
+  {
+    "keyname": "G3",
+    "midiCode": 43
+  },
+  {
+    "keyname": "G#3",
+    "midiCode": 44
+  },
+  {
+    "keyname": "A3",
+    "midiCode": 45
+  },
+  {
+    "keyname": "A#3",
+    "midiCode": 46
+  },
+  {
+    "keyname": "B3",
+    "midiCode": 47
+  },
+  {
+    "keyname": "C4",
+    "midiCode": 48
+  },
+  {
+    "keyname": "C#4",
+    "midiCode": 49
+  },
+  {
+    "keyname": "D4",
+    "midiCode": 50
+  },
+  {
+    "keyname": "D#4",
+    "midiCode": 51
+  },
+  {
+    "keyname": "E4",
+    "midiCode": 52
+  },
+  {
+    "keyname": "F4",
+    "midiCode": 53
+  },
+  {
+    "keyname": "F#4",
+    "midiCode": 54
+  },
+  {
+    "keyname": "G4",
+    "midiCode": 55
+  },
+  {
+    "keyname": "G#4",
+    "midiCode": 56
+  },
+  {
+    "keyname": "A4",
+    "midiCode": 57
+  },
+  {
+    "keyname": "A#4",
+    "midiCode": 58
+  },
+  {
+    "keyname": "B4",
+    "midiCode": 59
+  },
+  {
+    "keyname": "C5",
+    "midiCode": 60
+  },
+  {
+    "keyname": "C#5",
+    "midiCode": 61
+  },
+  {
+    "keyname": "D5",
+    "midiCode": 62
+  },
+  {
+    "keyname": "D#5",
+    "midiCode": 63
+  },
+  {
+    "keyname": "E5",
+    "midiCode": 64
+  },
+  {
+    "keyname": "F5",
+    "midiCode": 65
+  },
+  {
+    "keyname": "F#5",
+    "midiCode": 66
+  },
+  {
+    "keyname": "G5",
+    "midiCode": 67
+  },
+  {
+    "keyname": "G#5",
+    "midiCode": 68
+  },
+  {
+    "keyname": "A5",
+    "midiCode": 69
+  },
+  {
+    "keyname": "A#5",
+    "midiCode": 70
+  },
+  {
+    "keyname": "B5",
+    "midiCode": 71
+  },
+  {
+    "keyname": "C6",
+    "midiCode": 72
+  },
+  {
+    "keyname": "C#6",
+    "midiCode": 73
+  },
+  {
+    "keyname": "D6",
+    "midiCode": 74
+  },
+  {
+    "keyname": "D#6",
+    "midiCode": 75
+  },
+  {
+    "keyname": "E6",
+    "midiCode": 76
+  },
+  {
+    "keyname": "F6",
+    "midiCode": 77
+  },
+  {
+    "keyname": "F#6",
+    "midiCode": 78
+  },
+  {
+    "keyname": "G6",
+    "midiCode": 79
+  },
+  {
+    "keyname": "G#6",
+    "midiCode": 80
+  },
+  {
+    "keyname": "A6",
+    "midiCode": 81
+  },
+  {
+    "keyname": "A#6",
+    "midiCode": 82
+  },
+  {
+    "keyname": "B6",
+    "midiCode": 83
+  },
+  {
+    "keyname": "C7",
+    "midiCode": 84
+  },
+  {
+    "keyname": "C#7",
+    "midiCode": 85
+  },
+  {
+    "keyname": "D7",
+    "midiCode": 86
+  },
+  {
+    "keyname": "D#7",
+    "midiCode": 87
+  },
+  {
+    "keyname": "E7",
+    "midiCode": 88
+  },
+  {
+    "keyname": "F7",
+    "midiCode": 89
+  },
+  {
+    "keyname": "F#7",
+    "midiCode": 90
+  },
+  {
+    "keyname": "G7",
+    "midiCode": 91
+  },
+  {
+    "keyname": "G#7",
+    "midiCode": 92
+  },
+  {
+    "keyname": "A7",
+    "midiCode": 93
+  },
+  {
+    "keyname": "A#7",
+    "midiCode": 94
+  },
+  {
+    "keyname": "B7",
+    "midiCode": 95
+  },
+  {
+    "keyname": "C8",
+    "midiCode": 96
+  },
+  {
+    "keyname": "C#8",
+    "midiCode": 97
+  },
+  {
+    "keyname": "D8",
+    "midiCode": 98
+  },
+  {
+    "keyname": "D#8",
+    "midiCode": 99
+  },
+  {
+    "keyname": "E8",
+    "midiCode": 100
+  },
+  {
+    "keyname": "F8",
+    "midiCode": 101
+  },
+  {
+    "keyname": "F#8",
+    "midiCode": 102
+  },
+  {
+    "keyname": "G8",
+    "midiCode": 103
+  },
+  {
+    "keyname": "G#8",
+    "midiCode": 104
+  },
+  {
+    "keyname": "A8",
+    "midiCode": 105
+  },
+  {
+    "keyname": "A#8",
+    "midiCode": 106
+  },
+  {
+    "keyname": "B8",
+    "midiCode": 107
+  },
+  {
+    "keyname": "C9",
+    "midiCode": 108
+  }
+]

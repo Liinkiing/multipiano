@@ -11,9 +11,16 @@
 
 <script>
     import PianoKey from './PianoKey'
+    import {MIDI_ATTACK} from '../midi/constants'
+
     export default {
         components: {PianoKey},
-        name: 'piano'
+        name: 'piano',
+        created () {
+            this.$store.state.piano.midiAccess.addEventListener(MIDI_ATTACK, e => {
+                console.log(e.note)
+            })
+        }
     }
 </script>
 
