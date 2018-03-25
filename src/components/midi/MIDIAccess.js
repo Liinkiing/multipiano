@@ -9,7 +9,7 @@ export default class MIDIAccess {
     /**
      * @param {WebMidi.MIDIAccess} midiAccess
      */
-    constructor (midiAccess) {
+    constructor(midiAccess) {
         this.midiAccess = midiAccess
         this.listeners = []
         this.inputs = []
@@ -23,11 +23,11 @@ export default class MIDIAccess {
         this.initListeners()
     }
 
-    initListeners () {
+    initListeners() {
         this.inputs.forEach(input => {
             input.onmidimessage = e => {
                 let message = new MIDIMessage(e)
-                if(this.listeners[message.signalType]) {
+                if (this.listeners[message.signalType]) {
                     this.listeners[message.signalType].forEach(callback => {
                         callback(message)
                     })
@@ -37,10 +37,22 @@ export default class MIDIAccess {
     }
 
     addEventListener(eventName, callback) {
-        if(!this.listeners[eventName]) {
+        if (!callback || typeof callback !== "function") {
+            console.error('Please attach a valid callback to the listener!')
+        }
+        if (!this.listeners[eventName]) {
             this.listeners[eventName] = []
         }
         this.listeners[eventName].push(callback)
+    }
+
+    removeEventListener(eventName, callback) {
+        if (!callback || typeof callback !== "function") {
+            console.error('Please attach a valid callback to the listener!')
+        }
+        if (this.listeners[eventName]) {
+            this.listeners[eventName] = this.listeners[eventName].filter(cb => cb !== callback)
+        }
     }
 
 }
