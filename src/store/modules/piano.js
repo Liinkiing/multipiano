@@ -31,18 +31,22 @@ const mutations = {
     addMidiInput(state, input) {
         if (state.midiAccess.inputs.filter(i => i.id === input.id).length > 0) return
         state.midiAccess.inputs.push(input)
+        state.midiAccess.init()
     },
     removeMidiInput(state, input) {
         if (state.midiAccess.inputs.filter(i => i.id === input.id).length === 0) return
         state.midiAccess.inputs = state.midiAccess.inputs.filter(i => i.id !== input.id)
+        state.midiAccess.init()
     },
     addMidiOutput(state, output) {
         if (state.midiAccess.outputs.filter(o => o.id === output.id).length > 0) return
         state.midiAccess.outputs.push(output)
+        state.midiAccess.init()
     },
     removeMidiOutput(state, output) {
         if (state.midiAccess.outputs.filter(o => o.id === output.id).length === 0) return
         state.midiAccess.outputs = state.midiAccess.outputs.filter(o => o.id !== output.id)
+        state.midiAccess.init()
     },
     openMidiInput(state, input) {
         state.midiAccess.inputs.filter(i => i.id === input.id)[0].open()

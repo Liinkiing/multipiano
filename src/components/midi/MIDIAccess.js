@@ -31,16 +31,6 @@ export default class MIDIAccess {
                 })
             }
         }
-    }
-
-    addEventListener(eventName, callback) {
-        if (!callback || typeof callback !== "function") {
-            console.error('Please attach a valid callback to the listener!')
-        }
-        if (!this.listeners[eventName]) {
-            this.listeners[eventName] = []
-        }
-        this.listeners[eventName].push(callback)
         this.inputs.forEach(input => {
             input.onmidimessage = e => {
                 let message = new MIDIMessage(e)
@@ -52,6 +42,17 @@ export default class MIDIAccess {
             }
         })
     }
+
+    addEventListener(eventName, callback) {
+        if (!callback || typeof callback !== "function") {
+            console.error('Please attach a valid callback to the listener!')
+        }
+        if (!this.listeners[eventName]) {
+            this.listeners[eventName] = []
+        }
+        this.listeners[eventName].push(callback)
+
+            }
 
     removeEventListener(eventName, callback) {
         if (!callback || typeof callback !== "function") {
