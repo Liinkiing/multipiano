@@ -1,6 +1,11 @@
 <template>
     <div class="bottom-bar">
-        <p>coucou je suis la bottom bar</p>
+        <button v-popover:midi.top>MIDI In / Out</button>
+        <transition name="fade-up">
+            <popover name="midi">
+                salut
+            </popover>
+        </transition>
     </div>
     
 </template>

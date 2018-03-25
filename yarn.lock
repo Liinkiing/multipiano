@@ -6662,6 +6662,10 @@ vue-hot-reload-api@^2.2.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.3.0.tgz#97976142405d13d8efae154749e88c4e358cf926"
 
+vue-js-popover@^1.1.7:
+  version "1.1.7"
+  resolved "https://registry.yarnpkg.com/vue-js-popover/-/vue-js-popover-1.1.7.tgz#29df244018ba2ad89406421cf88338faae4eddb2"
+
 vue-loader@^14.1.1:
   version "14.2.2"
   resolved "https://registry.yarnpkg.com/vue-loader/-/vue-loader-14.2.2.tgz#c8cf3c2e29b6fb2ee595248a2aa6005038a125b3"

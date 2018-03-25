@@ -1,0 +1,10 @@
+.fade-up-enter-active {
+  transition: opacity .3s, filter 0.4s;
+}
+.fade-up-leave-active {
+  transition: opacity .3s, filter 0.4s;
+}
+.fade-up-enter, .fade-up-leave-to {
+  opacity: 0;
+  filter: blur(15px)
+}
