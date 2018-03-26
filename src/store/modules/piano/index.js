@@ -4,11 +4,15 @@ import actions from './actions'
 
 const state = {
     midiAccess: null,
+    pianoType: 'stage_grand',
     inputs: [],
     outputs: [],
 }
 
 const getters = {
+    pianoType: state => {
+        return state.pianoType
+    },
     midiInputs: state => {
         return state.midiAccess.inputs
     },

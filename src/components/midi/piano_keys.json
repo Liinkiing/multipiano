@@ -4,7 +4,7 @@
     "midiCode": 21
   },
   {
-    "keyname": "A#1",
+    "keyname": "AS1",
     "midiCode": 22
   },
   {
@@ -16,7 +16,7 @@
     "midiCode": 24
   },
   {
-    "keyname": "C#2",
+    "keyname": "CS2",
     "midiCode": 25
   },
   {
@@ -24,7 +24,7 @@
     "midiCode": 26
   },
   {
-    "keyname": "D#2",
+    "keyname": "DS2",
     "midiCode": 27
   },
   {
@@ -36,7 +36,7 @@
     "midiCode": 29
   },
   {
-    "keyname": "F#2",
+    "keyname": "FS2",
     "midiCode": 30
   },
   {
@@ -44,7 +44,7 @@
     "midiCode": 31
   },
   {
-    "keyname": "G#2",
+    "keyname": "GS2",
     "midiCode": 32
   },
   {
@@ -52,7 +52,7 @@
     "midiCode": 33
   },
   {
-    "keyname": "A#2",
+    "keyname": "AS2",
     "midiCode": 34
   },
   {
@@ -64,7 +64,7 @@
     "midiCode": 36
   },
   {
-    "keyname": "C#3",
+    "keyname": "CS3",
     "midiCode": 37
   },
   {
@@ -72,7 +72,7 @@
     "midiCode": 38
   },
   {
-    "keyname": "D#3",
+    "keyname": "DS3",
     "midiCode": 39
   },
   {
@@ -84,7 +84,7 @@
     "midiCode": 41
   },
   {
-    "keyname": "F#3",
+    "keyname": "FS3",
     "midiCode": 42
   },
   {
@@ -92,7 +92,7 @@
     "midiCode": 43
   },
   {
-    "keyname": "G#3",
+    "keyname": "GS3",
     "midiCode": 44
   },
   {
@@ -100,7 +100,7 @@
     "midiCode": 45
   },
   {
-    "keyname": "A#3",
+    "keyname": "AS3",
     "midiCode": 46
   },
   {
@@ -112,7 +112,7 @@
     "midiCode": 48
   },
   {
-    "keyname": "C#4",
+    "keyname": "CS4",
     "midiCode": 49
   },
   {
@@ -120,7 +120,7 @@
     "midiCode": 50
   },
   {
-    "keyname": "D#4",
+    "keyname": "DS4",
     "midiCode": 51
   },
   {
@@ -132,7 +132,7 @@
     "midiCode": 53
   },
   {
-    "keyname": "F#4",
+    "keyname": "FS4",
     "midiCode": 54
   },
   {
@@ -140,7 +140,7 @@
     "midiCode": 55
   },
   {
-    "keyname": "G#4",
+    "keyname": "GS4",
     "midiCode": 56
   },
   {
@@ -148,7 +148,7 @@
     "midiCode": 57
   },
   {
-    "keyname": "A#4",
+    "keyname": "AS4",
     "midiCode": 58
   },
   {
@@ -160,7 +160,7 @@
     "midiCode": 60
   },
   {
-    "keyname": "C#5",
+    "keyname": "CS5",
     "midiCode": 61
   },
   {
@@ -168,7 +168,7 @@
     "midiCode": 62
   },
   {
-    "keyname": "D#5",
+    "keyname": "DS5",
     "midiCode": 63
   },
   {
@@ -180,7 +180,7 @@
     "midiCode": 65
   },
   {
-    "keyname": "F#5",
+    "keyname": "FS5",
     "midiCode": 66
   },
   {
@@ -188,7 +188,7 @@
     "midiCode": 67
   },
   {
-    "keyname": "G#5",
+    "keyname": "GS5",
     "midiCode": 68
   },
   {
@@ -196,7 +196,7 @@
     "midiCode": 69
   },
   {
-    "keyname": "A#5",
+    "keyname": "AS5",
     "midiCode": 70
   },
   {
@@ -208,7 +208,7 @@
     "midiCode": 72
   },
   {
-    "keyname": "C#6",
+    "keyname": "CS6",
     "midiCode": 73
   },
   {
@@ -216,7 +216,7 @@
     "midiCode": 74
   },
   {
-    "keyname": "D#6",
+    "keyname": "DS6",
     "midiCode": 75
   },
   {
@@ -228,7 +228,7 @@
     "midiCode": 77
   },
   {
-    "keyname": "F#6",
+    "keyname": "FS6",
     "midiCode": 78
   },
   {
@@ -236,7 +236,7 @@
     "midiCode": 79
   },
   {
-    "keyname": "G#6",
+    "keyname": "GS6",
     "midiCode": 80
   },
   {
@@ -244,7 +244,7 @@
     "midiCode": 81
   },
   {
-    "keyname": "A#6",
+    "keyname": "AS6",
     "midiCode": 82
   },
   {
@@ -256,7 +256,7 @@
     "midiCode": 84
   },
   {
-    "keyname": "C#7",
+    "keyname": "CS7",
     "midiCode": 85
   },
   {
@@ -264,7 +264,7 @@
     "midiCode": 86
   },
   {
-    "keyname": "D#7",
+    "keyname": "DS7",
     "midiCode": 87
   },
   {
@@ -276,7 +276,7 @@
     "midiCode": 89
   },
   {
-    "keyname": "F#7",
+    "keyname": "FS7",
     "midiCode": 90
   },
   {
@@ -284,7 +284,7 @@
     "midiCode": 91
   },
   {
-    "keyname": "G#7",
+    "keyname": "GS7",
     "midiCode": 92
   },
   {
@@ -292,7 +292,7 @@
     "midiCode": 93
   },
   {
-    "keyname": "A#7",
+    "keyname": "AS7",
     "midiCode": 94
   },
   {
@@ -304,7 +304,7 @@
     "midiCode": 96
   },
   {
-    "keyname": "C#8",
+    "keyname": "CS8",
     "midiCode": 97
   },
   {
@@ -312,7 +312,7 @@
     "midiCode": 98
   },
   {
-    "keyname": "D#8",
+    "keyname": "DS8",
     "midiCode": 99
   },
   {
@@ -324,7 +324,7 @@
     "midiCode": 101
   },
   {
-    "keyname": "F#8",
+    "keyname": "FS8",
     "midiCode": 102
   },
   {
@@ -332,7 +332,7 @@
     "midiCode": 103
   },
   {
-    "keyname": "G#8",
+    "keyname": "GS8",
     "midiCode": 104
   },
   {
@@ -340,7 +340,7 @@
     "midiCode": 105
   },
   {
-    "keyname": "A#8",
+    "keyname": "AS8",
     "midiCode": 106
   },
   {
