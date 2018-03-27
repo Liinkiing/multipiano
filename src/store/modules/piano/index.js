@@ -1,31 +1,49 @@
-import MIDIWrapper from "../../../wrappers/MIDIWrapper";
+import pianoKeys from '../../../components/midi/piano_keys'
 import mutations from './mutations'
 import actions from './actions'
+import Note from "../../../components/midi/Note";
+
 
 const state = {
-    midiAccess: null,
-    pianoType: 'stage_grand',
-    inputs: [],
-    outputs: [],
+    midi: {
+        midiAccess: null,
+        inputs: [],
+        outputs: []
+    },
+    type: 'stage_grand',
+    keys: pianoKeys.map(key => new Note(key.midiCode))
+
 }
 
 const getters = {
     pianoType: state => {
-        return state.pianoType
+        return state.type
+    },
+    pianoKeys: state => {
+        return state.keys
     },
     midiInputs: state => {
-        return state.midiAccess.inputs
+        return state.midi.midiAccess.inputs
     },
     midiOutputs: state => {
-        return state.midiAccess.outputs
+        return state.midi.midiAccess.outputs
+    },
+    midiAccess: state => {
+        return state.midi.midiAccess
+    },
+    findNoteByKeyName: state => keyname => {
+        return state.keys.find(key.keyname = keyname)
+    },
+    findNoteByMidiCode: state => midiCode => {
+        return state.keys.find(key.midiCode = midiCode)
     },
     isMidiInputConnectionStatusOpen: state => id => {
-        let result = state.inputs.find(input => input.id === id);
+        let result = state.midi.inputs.find(input => input.id === id);
         if (!result) return false
         return 'connection' in result ? result.connection === 'open' : false
     },
     isMidiOutputConnectionStatusOpen: state => id => {
-        let result = state.outputs.find(output => output.id === id);
+        let result = state.midi.outputs.find(output => output.id === id);
         if (!result) return false
         return 'connection' in result ? result.connection === 'open' : false
     }

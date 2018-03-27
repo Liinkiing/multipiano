@@ -10,18 +10,30 @@ class AudioEngine {
         this.masterGain.connect(this.context.destination);
         this.masterGain.gain.value = this.volume;
 
-        this.limiterNode = this.context.createDynamicsCompressor();
+       this.limiterNode = this.context.createDynamicsCompressor();
         this.limiterNode.threshold.value = -10;
         this.limiterNode.knee.value = 0;
         this.limiterNode.ratio.value = 20;
         this.limiterNode.attack.value = 0;
         this.limiterNode.release.value = 0.1;
         this.limiterNode.connect(this.masterGain);
+
+        this.pianoGain = this.context.createGain();
+        this.pianoGain.gain.value = 0.5;
+        this.pianoGain.connect(this.limiterNode);
+
         this.sounds = {}
+        this.playings = {}
     }
 
     async init (soundType) {
         this.sounds = await this.preloadSounds(soundType)
+    }
+
+
+
+    get BASE_URL () {
+        return BASE_URL
     }
 
     preloadSounds (type) {
@@ -39,8 +51,35 @@ class AudioEngine {
         })
     }
 
+    /**
+     * @param {Note} note
+     * @param {Number} volume
+     */
+    play (note, volume = 0.5) {
+        if(!this.sounds.hasOwnProperty(note.keyname)) return;
+        const source = this.context.createBufferSource();
+        source.buffer = this.sounds[note.keyname];
+        const gain = this.context.createGain();
+        console.log(volume)
+        gain.gain.value = this.volume * volume;
+        source.connect(gain);
+        gain.connect(this.pianoGain);
+        source.start(0);
+        if(this.playings[note.keyname]) {
+            const playing = this.playings[note.keyname];
+            playing.gain.gain.setValueAtTime(playing.gain.gain.value, 0.5);
+            playing.gain.gain.linearRampToValueAtTime(0.0, 0.5 + 0.2);
+            playing.source.stop(0.5 + 0.21);
+        }
+        this.playings[note.keyname] = {
+            source,
+            gain
+        };
+    }
+
 }
 
 const instance = new AudioEngine()
+window.AudioEngine = instance
 // Object.freeze(instance)
 export default instance

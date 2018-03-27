@@ -1,9 +1,7 @@
 <template>
     <div class="piano">
         <ul class="keys">
-            <piano-key/>
-            <piano-key/>
-            <piano-key/>
+            <piano-key v-for="note in pianoKeys" :note="note"/>
         </ul>
     </div>
 
@@ -20,11 +18,11 @@
         name: 'piano',
         computed: {
             ...mapGetters([
-                'pianoType'
+                'pianoType',
+                'pianoKeys',
             ])
         },
         async mounted () {
-            this.$store.state.piano.midiAccess.addEventListener(MIDI_ATTACK, e => console.log(e))
             await audioEngine.init(this.pianoType)
         }
     }

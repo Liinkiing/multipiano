@@ -12,26 +12,30 @@ export const REFRESH_MIDI = "REFRESH_MIDI"
 export const REFRESH_MIDI_INPUTS_OUTPUTS = "REFRESH_MIDI_INPUTS_OUTPUTS"
 export const TOGGLE_MIDI_CONNECTION_INPUT = "TOGGLE_MIDI_CONNECTION_INPUT"
 export const TOGGLE_MIDI_CONNECTION_OUTPUT = "TOGGLE_MIDI_CONNECTION_OUTPUT"
+export const SET_PIANO_KEYS = "SET_PIANO_KEYS"
 
 export default {
     async [GET_MIDI_ACCESS]({commit}) {
         commit(SET_MIDI_ACCESS, await MIDIWrapper.requestMidiAccess())
     },
     async [OPEN_MIDI_INPUT]({commit, state}, inputId) {
-        await state.midiAccess.inputs.filter(i => i.id === inputId)[0].open()
+        await state.midi.midiAccess.inputs.filter(i => i.id === inputId)[0].open()
         commit(MUTATION_REFRESH_MIDI_INPUTS_OUTPUTS)
     },
     async [CLOSE_MIDI_INPUT]({state, commit}, inputId) {
-        await state.midiAccess.inputs.filter(i => i.id === inputId)[0].close()
+        await state.midi.midiAccess.inputs.filter(i => i.id === inputId)[0].close()
         commit(MUTATION_REFRESH_MIDI_INPUTS_OUTPUTS)
     },
     async [OPEN_MIDI_OUTPUT]({state, commit}, outputId) {
-        await state.midiAccess.outputs.filter(o => o.id === outputId)[0].open()
+        await state.midi.midiAccess.outputs.filter(o => o.id === outputId)[0].open()
         commit(MUTATION_REFRESH_MIDI_INPUTS_OUTPUTS)
     },
     async [CLOSE_MIDI_OUTPUT]({state, commit}, outputId) {
-        await state.midiAccess.outputs.filter(o => o.id === outputId)[0].close()
+        await state.midi.midiAccess.outputs.filter(o => o.id === outputId)[0].close()
         commit(MUTATION_REFRESH_MIDI_INPUTS_OUTPUTS)
+    },
+    [SET_PIANO_KEYS] ({commit}, keys) {
+        commit(SET_PIANO_KEYS, keys)
     },
     [REFRESH_MIDI]({commit, dispatch}, midiStateEvent) {
         if (midiStateEvent.port.state === 'connected' && midiStateEvent.port.type === 'input') {

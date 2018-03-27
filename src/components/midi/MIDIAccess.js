@@ -1,4 +1,11 @@
 /**
+ * Callback used by midi events.
+ *
+ * @callback midiCallback
+ * @param {MIDIMessage} message
+ */
+
+/**
  * @property {Array<WebMidi.MIDIInput>} inputs
  * @property {Array<WebMidi.MIDIOutput>} outputs
  */
@@ -39,11 +46,14 @@ export default class MIDIAccess {
                         callback(message)
                     })
                 }
+                if (this.listeners[message.note.keyname][message.signalType]) {
+                    this.listeners[message.note.keyname][message.signalType](message)
+                }
             }
         })
     }
 
-    get inputsConnectionStatus () {
+    get inputsConnectionStatus() {
         let result = []
         this.inputs.forEach(input => {
             result.push({
@@ -55,7 +65,7 @@ export default class MIDIAccess {
         return result
     }
 
-    get outputsConnectionStatus () {
+    get outputsConnectionStatus() {
         let result = []
         this.outputs.forEach(output => {
             result.push({
@@ -67,6 +77,10 @@ export default class MIDIAccess {
         return result
     }
 
+    /**
+     * @param eventName
+     * @param {midiCallback} callback
+     */
     addEventListener(eventName, callback) {
         if (!callback || typeof callback !== "function") {
             console.error('Please attach a valid callback to the listener!')
@@ -76,8 +90,29 @@ export default class MIDIAccess {
         }
         this.listeners[eventName].push(callback)
 
-            }
+    }
 
+    /**
+     *
+     * @param {string} eventName
+     * @param {Note} note
+     * @param {midiCallback} callback
+     */
+    listenToMidiForNote(eventName, note, callback) {
+        if (!callback || typeof callback !== "function") {
+            console.error('Please attach a valid callback to the listener!')
+        }
+        if(!this.listeners[note.keyname]) {
+            this.listeners[note.keyname] = {
+                [eventName]: callback
+            }
+        }
+    }
+
+    /**
+     * @param eventName
+     * @param {midiCallback} callback
+     */
     removeEventListener(eventName, callback) {
         if (!callback || typeof callback !== "function") {
             console.error('Please attach a valid callback to the listener!')

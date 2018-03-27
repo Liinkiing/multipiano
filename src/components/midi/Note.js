@@ -1,5 +1,6 @@
 import pianoKeys from './piano_keys'
 import Utils from "../../utils/Utils";
+import audioEngine from '../../components/audio/AudioEngine'
 
 export default class Note {
 
@@ -8,12 +9,16 @@ export default class Note {
      * @returns {Note}
      */
     constructor(midiCode) {
-        let note = pianoKeys.filter(note => note.midiCode == midiCode)[0]
+        let note = pianoKeys.find(note => note.midiCode == midiCode)
         this._keyname = note.keyname
         this._midiCode = note.midiCode
-        this._isBlackKey = note.keyname.includes("#")
+        this._isBlackKey = note.keyname.includes("S")
         this._octave = Utils.getNumberFromString(note.keyname)
         this._midiCode = midiCode;
+    }
+
+    play (volume) {
+        audioEngine.play(this)
     }
 
     get octave() {

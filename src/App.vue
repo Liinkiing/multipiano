@@ -9,9 +9,8 @@
 </template>
 
 <script>
-    import { mapActions } from 'vuex'
+    import { mapActions, mapGetters } from 'vuex'
     import BottomBar from "./components/ui/BottomBar";
-    import {MIDI_PITCH} from "./components/midi/constants";
     import {GET_MIDI_ACCESS, REFRESH_MIDI, REFRESH_MIDI_INPUTS_OUTPUTS} from "./store/modules/piano/actions";
 
   export default {
@@ -21,6 +20,11 @@
           return {
               loadingMidi: true
           }
+      },
+      computed: {
+          ...mapGetters([
+              'midiAccess'
+          ])
       },
       methods: {
           ...mapActions([
@@ -32,14 +36,10 @@
       async created () {
           await this[GET_MIDI_ACCESS]()
           this.loadingMidi = false;
-          this.$store.state.piano.midiAccess.addEventListener('onstatechange', e => {
+          this.midiAccess.addEventListener('onstatechange', e => {
               this[REFRESH_MIDI](e)
               this[REFRESH_MIDI_INPUTS_OUTPUTS]()
           })
-          this.$store.state.piano.midiAccess.addEventListener(MIDI_PITCH, e => {
-            console.log('pitch', e.signalType)
-          })
-
       }
   }
 </script>
