@@ -1,0 +1,511 @@
+[
+  {
+    "keyname": "A1",
+    "midiCode": 21,
+    "keyCodes": [87]
+  },
+  {
+    "keyname": "AS1",
+    "midiCode": 22,
+    "keyCodes": null
+  },
+  {
+    "keyname": "B1",
+    "midiCode": 23,
+    "keyCodes": null
+  },
+  {
+    "keyname": "C2",
+    "midiCode": 24,
+    "keyCodes": null
+  },
+  {
+    "keyname": "CS2",
+    "midiCode": 25,
+    "keyCodes": null
+  },
+  {
+    "keyname": "D2",
+    "midiCode": 26,
+    "keyCodes": null
+  },
+  {
+    "keyname": "DS2",
+    "midiCode": 27,
+    "keyCodes": null
+  },
+  {
+    "keyname": "E2",
+    "midiCode": 28,
+    "keyCodes": null
+  },
+  {
+    "keyname": "F2",
+    "midiCode": 29,
+    "keyCodes": null
+  },
+  {
+    "keyname": "FS2",
+    "midiCode": 30,
+    "keyCodes": null
+  },
+  {
+    "keyname": "G2",
+    "midiCode": 31,
+    "keyCodes": null
+  },
+  {
+    "keyname": "GS2",
+    "midiCode": 32,
+    "keyCodes": null
+  },
+  {
+    "keyname": "A2",
+    "midiCode": 33,
+    "keyCodes": null
+  },
+  {
+    "keyname": "AS2",
+    "midiCode": 34,
+    "keyCodes": null
+  },
+  {
+    "keyname": "B2",
+    "midiCode": 35,
+    "keyCodes": null
+  },
+  {
+    "keyname": "C3",
+    "midiCode": 36,
+    "keyCodes": null
+  },
+  {
+    "keyname": "CS3",
+    "midiCode": 37,
+    "keyCodes": null
+  },
+  {
+    "keyname": "D3",
+    "midiCode": 38,
+    "keyCodes": null
+  },
+  {
+    "keyname": "DS3",
+    "midiCode": 39,
+    "keyCodes": null
+  },
+  {
+    "keyname": "E3",
+    "midiCode": 40,
+    "keyCodes": null
+  },
+  {
+    "keyname": "F3",
+    "midiCode": 41,
+    "keyCodes": null
+  },
+  {
+    "keyname": "FS3",
+    "midiCode": 42,
+    "keyCodes": null
+  },
+  {
+    "keyname": "G3",
+    "midiCode": 43,
+    "keyCodes": null
+  },
+  {
+    "keyname": "GS3",
+    "midiCode": 44,
+    "keyCodes": null
+  },
+  {
+    "keyname": "A3",
+    "midiCode": 45,
+    "keyCodes": null
+  },
+  {
+    "keyname": "AS3",
+    "midiCode": 46,
+    "keyCodes": null
+  },
+  {
+    "keyname": "B3",
+    "midiCode": 47,
+    "keyCodes": null
+  },
+  {
+    "keyname": "C4",
+    "midiCode": 48,
+    "keyCodes": [
+      87
+    ]
+  },
+  {
+    "keyname": "CS4",
+    "midiCode": 49,
+    "keyCodes": [
+      83
+    ]
+  },
+  {
+    "keyname": "D4",
+    "midiCode": 50,
+    "keyCodes": [
+      88
+    ]
+  },
+  {
+    "keyname": "DS4",
+    "midiCode": 51,
+    "keyCodes": [
+      68
+    ]
+  },
+  {
+    "keyname": "E4",
+    "midiCode": 52,
+    "keyCodes": [
+      67
+    ]
+  },
+  {
+    "keyname": "F4",
+    "midiCode": 53,
+    "keyCodes": [
+      86
+    ]
+  },
+  {
+    "keyname": "FS4",
+    "midiCode": 54,
+    "keyCodes": [
+      71
+    ]
+  },
+  {
+    "keyname": "G4",
+    "midiCode": 55,
+    "keyCodes": [
+      66
+    ]
+  },
+  {
+    "keyname": "GS4",
+    "midiCode": 56,
+    "keyCodes": [
+      72
+    ]
+  },
+  {
+    "keyname": "A4",
+    "midiCode": 57,
+    "keyCodes": [
+      78
+    ]
+  },
+  {
+    "keyname": "AS4",
+    "midiCode": 58,
+    "keyCodes": [
+      74
+    ]
+  },
+  {
+    "keyname": "B4",
+    "midiCode": 59,
+    "keyCodes": [
+      188
+    ]
+  },
+  {
+    "keyname": "C5",
+    "midiCode": 60,
+    "keyCodes": [
+      65,
+      190
+    ]
+  },
+  {
+    "keyname": "CS5",
+    "midiCode": 61,
+    "keyCodes": [
+      50,
+      76
+    ]
+  },
+  {
+    "keyname": "D5",
+    "midiCode": 62,
+    "keyCodes": [
+      90,
+      191
+    ]
+  },
+  {
+    "keyname": "DS5",
+    "midiCode": 63,
+    "keyCodes": [
+      51,
+      77
+    ]
+  },
+  {
+    "keyname": "E5",
+    "midiCode": 64,
+    "keyCodes": [
+      69,
+      223
+    ]
+  },
+  {
+    "keyname": "F5",
+    "midiCode": 65,
+    "keyCodes": [
+      82
+    ]
+  },
+  {
+    "keyname": "FS5",
+    "midiCode": 66,
+    "keyCodes": [
+      53
+    ]
+  },
+  {
+    "keyname": "G5",
+    "midiCode": 67,
+    "keyCodes": [
+      84
+    ]
+  },
+  {
+    "keyname": "GS5",
+    "midiCode": 68,
+    "keyCodes": [
+      54
+    ]
+  },
+  {
+    "keyname": "A5",
+    "midiCode": 69,
+    "keyCodes": [
+      89
+    ]
+  },
+  {
+    "keyname": "AS5",
+    "midiCode": 70,
+    "keyCodes": [
+      55
+    ]
+  },
+  {
+    "keyname": "B5",
+    "midiCode": 71,
+    "keyCodes": [
+      85
+    ]
+  },
+  {
+    "keyname": "C6",
+    "midiCode": 72,
+    "keyCodes": [
+      73
+    ]
+  },
+  {
+    "keyname": "CS6",
+    "midiCode": 73,
+    "keyCodes": [
+      57
+    ]
+  },
+  {
+    "keyname": "D6",
+    "midiCode": 74,
+    "keyCodes": [
+      79
+    ]
+  },
+  {
+    "keyname": "DS6",
+    "midiCode": 75,
+    "keyCodes": [
+      48
+    ]
+  },
+  {
+    "keyname": "E6",
+    "midiCode": 76,
+    "keyCodes": [
+      80
+    ]
+  },
+  {
+    "keyname": "F6",
+    "midiCode": 77,
+    "keyCodes": [
+      221
+    ]
+  },
+  {
+    "keyname": "FS6",
+    "midiCode": 78,
+    "keyCodes": [
+      187
+    ]
+  },
+  {
+    "keyname": "G6",
+    "midiCode": 79,
+    "keyCodes": [
+      186
+    ]
+  },
+  {
+    "keyname": "GS6",
+    "midiCode": 80,
+    "keyCodes": null
+  },
+  {
+    "keyname": "A6",
+    "midiCode": 81,
+    "keyCodes": null
+  },
+  {
+    "keyname": "AS6",
+    "midiCode": 82,
+    "keyCodes": null
+  },
+  {
+    "keyname": "B6",
+    "midiCode": 83,
+    "keyCodes": null
+  },
+  {
+    "keyname": "C7",
+    "midiCode": 84,
+    "keyCodes": null
+  },
+  {
+    "keyname": "CS7",
+    "midiCode": 85,
+    "keyCodes": null
+  },
+  {
+    "keyname": "D7",
+    "midiCode": 86,
+    "keyCodes": null
+  },
+  {
+    "keyname": "DS7",
+    "midiCode": 87,
+    "keyCodes": null
+  },
+  {
+    "keyname": "E7",
+    "midiCode": 88,
+    "keyCodes": null
+  },
+  {
+    "keyname": "F7",
+    "midiCode": 89,
+    "keyCodes": null
+  },
+  {
+    "keyname": "FS7",
+    "midiCode": 90,
+    "keyCodes": null
+  },
+  {
+    "keyname": "G7",
+    "midiCode": 91,
+    "keyCodes": null
+  },
+  {
+    "keyname": "GS7",
+    "midiCode": 92,
+    "keyCodes": null
+  },
+  {
+    "keyname": "A7",
+    "midiCode": 93,
+    "keyCodes": null
+  },
+  {
+    "keyname": "AS7",
+    "midiCode": 94,
+    "keyCodes": null
+  },
+  {
+    "keyname": "B7",
+    "midiCode": 95,
+    "keyCodes": null
+  },
+  {
+    "keyname": "C8",
+    "midiCode": 96,
+    "keyCodes": null
+  },
+  {
+    "keyname": "CS8",
+    "midiCode": 97,
+    "keyCodes": null
+  },
+  {
+    "keyname": "D8",
+    "midiCode": 98,
+    "keyCodes": null
+  },
+  {
+    "keyname": "DS8",
+    "midiCode": 99,
+    "keyCodes": null
+  },
+  {
+    "keyname": "E8",
+    "midiCode": 100,
+    "keyCodes": null
+  },
+  {
+    "keyname": "F8",
+    "midiCode": 101,
+    "keyCodes": null
+  },
+  {
+    "keyname": "FS8",
+    "midiCode": 102,
+    "keyCodes": null
+  },
+  {
+    "keyname": "G8",
+    "midiCode": 103,
+    "keyCodes": null
+  },
+  {
+    "keyname": "GS8",
+    "midiCode": 104,
+    "keyCodes": null
+  },
+  {
+    "keyname": "A8",
+    "midiCode": 105,
+    "keyCodes": null
+  },
+  {
+    "keyname": "AS8",
+    "midiCode": 106,
+    "keyCodes": null
+  },
+  {
+    "keyname": "B8",
+    "midiCode": 107,
+    "keyCodes": null
+  },
+  {
+    "keyname": "C9",
+    "midiCode": 108,
+    "keyCodes": null
+  }
+]

@@ -1,10 +1,12 @@
+import Note from "../../../components/midi/Note";
+
 export const SET_MIDI_ACCESS = "SET_MIDI_ACCESS"
 export const ADD_MIDI_INPUT = "ADD_MIDI_INPUT"
 export const ADD_MIDI_OUTPUT = "ADD_MIDI_OUTPUT"
 export const REMOVE_MIDI_OUTPUT = "REMOVE_MIDI_OUTPUT"
 export const REMOVE_MIDI_INPUT = "REMOVE_MIDI_INPUT"
 export const REFRESH_MIDI_INPUTS_OUTPUTS = "REFRESH_MIDI_INPUTS_OUTPUTS"
-export const SET_MIDI_KEYS = "SET_MIDI_KEYS"
+export const SET_PIANO_NOTES = "SET_PIANO_NOTES"
 
 export default {
     [SET_MIDI_ACCESS](state, midiAccess) {
@@ -36,8 +38,10 @@ export default {
         state.midi.inputs = state.midi.midiAccess.inputsConnectionStatus
         state.midi.outputs = state.midi.midiAccess.outputsConnectionStatus
     },
-    [SET_MIDI_KEYS] (state, keys) {
-        state.notes = keys
+    [SET_PIANO_NOTES] (state, keys) {
+        let notes = keys.map(key => new Note(key));
+        console.log(notes)
+        state.notes = notes
     }
 }
 

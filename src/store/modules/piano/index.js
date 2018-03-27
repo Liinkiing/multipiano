@@ -11,8 +11,7 @@ const state = {
         outputs: []
     },
     type: 'stage_grand',
-    notes: pianoKeys.map(key => new Note(key.midiCode))
-
+    notes: pianoKeys.map(key => new Note(key))
 }
 
 const getters = {

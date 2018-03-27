@@ -1,5 +1,11 @@
 import MIDIWrapper from "../../../wrappers/MIDIWrapper";
-import {ADD_MIDI_INPUT, ADD_MIDI_OUTPUT, REMOVE_MIDI_INPUT, REMOVE_MIDI_OUTPUT, SET_MIDI_ACCESS, REFRESH_MIDI_INPUTS_OUTPUTS as MUTATION_REFRESH_MIDI_INPUTS_OUTPUTS} from "./mutations";
+import {ADD_MIDI_INPUT,
+    ADD_MIDI_OUTPUT,
+    REMOVE_MIDI_INPUT,
+    REMOVE_MIDI_OUTPUT,
+    SET_MIDI_ACCESS,
+    REFRESH_MIDI_INPUTS_OUTPUTS as MUTATION_REFRESH_MIDI_INPUTS_OUTPUTS,
+    SET_PIANO_NOTES as MUTATION_SET_PIANO_NOTES} from "./mutations";
 
 export const GET_MIDI_ACCESS = "GET_MIDI_ACCESS"
 export const OPEN_MIDI_INPUT = "OPEN_MIDI_INPUT"
@@ -12,7 +18,7 @@ export const REFRESH_MIDI = "REFRESH_MIDI"
 export const REFRESH_MIDI_INPUTS_OUTPUTS = "REFRESH_MIDI_INPUTS_OUTPUTS"
 export const TOGGLE_MIDI_CONNECTION_INPUT = "TOGGLE_MIDI_CONNECTION_INPUT"
 export const TOGGLE_MIDI_CONNECTION_OUTPUT = "TOGGLE_MIDI_CONNECTION_OUTPUT"
-export const SET_PIANO_KEYS = "SET_PIANO_KEYS"
+export const SET_PIANO_NOTES = "SET_PIANO_NOTES"
 
 export default {
     async [GET_MIDI_ACCESS]({commit}) {
@@ -34,8 +40,8 @@ export default {
         await state.midi.midiAccess.outputs.filter(o => o.id === outputId)[0].close()
         commit(MUTATION_REFRESH_MIDI_INPUTS_OUTPUTS)
     },
-    [SET_PIANO_KEYS] ({commit}, keys) {
-        commit(SET_PIANO_KEYS, keys)
+    [SET_PIANO_NOTES] ({commit}, keys) {
+        commit(MUTATION_SET_PIANO_NOTES, keys)
     },
     [REFRESH_MIDI]({commit, dispatch}, midiStateEvent) {
         if (midiStateEvent.port.state === 'connected' && midiStateEvent.port.type === 'input') {
