@@ -25,11 +25,14 @@
         async mounted() {
             await audioEngine.init(this.pianoType)
             window.addEventListener('keydown', (e) => {
-                let note = this.pianoNotes
-                    .find(key => key.keyCodes && key.keyCodes.includes(e.keyCode));
-                if (note) {
-                    audioEngine.play(note)
+                if(!e.ctrlKey && !e.shiftKey && !e.altKey && !e.metaKey) {
+                    let note = this.pianoNotes
+                        .find(key => key.keyCodes && key.keyCodes.includes(e.keyCode));
+                    if (note) {
+                        audioEngine.play(note)
+                    }
                 }
+
             })
         }
     }
