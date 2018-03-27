@@ -1,14 +1,14 @@
 <template>
     <div class="piano">
         <ul class="keys">
-            <piano-key v-for="note in pianoKeys" :note="note"/>
+            <piano-key v-for="note in pianoNotes" :note="note"/>
         </ul>
     </div>
 
 </template>
 
 <script>
-    import { mapGetters } from 'vuex'
+    import {mapGetters} from 'vuex'
     import PianoKey from './PianoKey'
     import {MIDI_ATTACK} from '../midi/constants'
     import audioEngine from '../audio/AudioEngine'
@@ -19,11 +19,18 @@
         computed: {
             ...mapGetters([
                 'pianoType',
-                'pianoKeys',
+                'pianoNotes',
             ])
         },
-        async mounted () {
+        async mounted() {
             await audioEngine.init(this.pianoType)
+            window.addEventListener('keydown', (e) => {
+                let note = this.pianoNotes
+                    .find(key => key.keyCodes && key.keyCodes.includes(e.keyCode));
+                if (note) {
+                    audioEngine.play(note)
+                }
+            })
         }
     }
 </script>

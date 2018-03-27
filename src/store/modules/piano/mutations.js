@@ -37,7 +37,7 @@ export default {
         state.midi.outputs = state.midi.midiAccess.outputsConnectionStatus
     },
     [SET_MIDI_KEYS] (state, keys) {
-        state.keys = keys
+        state.notes = keys
     }
 }
 

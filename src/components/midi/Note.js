@@ -12,6 +12,7 @@ export default class Note {
         let note = pianoKeys.find(note => note.midiCode == midiCode)
         this._keyname = note.keyname
         this._midiCode = note.midiCode
+        this._keyCodes = note.keyCodes || null
         this._isBlackKey = note.keyname.includes("S")
         this._octave = Utils.getNumberFromString(note.keyname)
         this._midiCode = midiCode;
@@ -23,6 +24,10 @@ export default class Note {
 
     get octave() {
         return this._octave;
+    }
+
+    get keyCodes () {
+        return this._keyCodes
     }
 
     get midiCode() {

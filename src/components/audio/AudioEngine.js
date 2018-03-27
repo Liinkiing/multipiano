@@ -60,7 +60,6 @@ class AudioEngine {
         const source = this.context.createBufferSource();
         source.buffer = this.sounds[note.keyname];
         const gain = this.context.createGain();
-        console.log(volume)
         gain.gain.value = this.volume * volume;
         source.connect(gain);
         gain.connect(this.pianoGain);
