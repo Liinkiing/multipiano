@@ -1,16 +1,17 @@
 import pianoKeys from '../../components/midi/piano_keys'
+
 const BASE_URL = "http://localhost:5000/assets/sounds/piano"
 
 class AudioEngine {
 
-    constructor () {
+    constructor() {
         this.volume = 0.6;
         this.context = new AudioContext()
         this.masterGain = this.context.createGain();
         this.masterGain.connect(this.context.destination);
         this.masterGain.gain.value = this.volume;
 
-       this.limiterNode = this.context.createDynamicsCompressor();
+        this.limiterNode = this.context.createDynamicsCompressor();
         this.limiterNode.threshold.value = -10;
         this.limiterNode.knee.value = 0;
         this.limiterNode.ratio.value = 20;
@@ -26,19 +27,18 @@ class AudioEngine {
         this.playings = {}
     }
 
-    async init (soundType) {
+    async init(soundType) {
         this.masterGain.gain.value = 0.0
         this.sounds = await this.preloadSounds(soundType)
         this.masterGain.gain.value = this.volume
     }
 
 
-
-    get BASE_URL () {
+    get BASE_URL() {
         return BASE_URL
     }
 
-    preloadSounds (type) {
+    preloadSounds(type) {
         const basePath = `${BASE_URL}/${type}`
         const promises = []
         pianoKeys.forEach(key => {
@@ -56,9 +56,11 @@ class AudioEngine {
     /**
      * @param {Note} note
      * @param {Number} volume
+     * @param {Boolean} sustained
+     * @param {Number} stopDelay
      */
-    play (note, volume = 0.5) {
-        if(!this.sounds.hasOwnProperty(note.keyname)) return;
+    play(note, volume = 0.5, sustained = false, stopDelay = 1.5) {
+        if (!this.sounds.hasOwnProperty(note.keyname)) return;
         const source = this.context.createBufferSource();
         source.buffer = this.sounds[note.keyname];
         const gain = this.context.createGain();
@@ -66,16 +68,25 @@ class AudioEngine {
         source.connect(gain);
         gain.connect(this.pianoGain);
         source.start(0);
-        if(this.playings[note.keyname]) {
+        if (this.playings[note.keyname]) {
             const playing = this.playings[note.keyname];
-            playing.gain.gain.setValueAtTime(playing.gain.gain.value, 0.5);
-            playing.gain.gain.linearRampToValueAtTime(0.0, 0.5 + 0.2);
-            playing.source.stop(0.5 + 0.21);
+            if (!sustained) {
+                playing.gain.gain.exponentialRampToValueAtTime(0.000001, this.context.currentTime + stopDelay);
+            }
         }
         this.playings[note.keyname] = {
             source,
             gain
         };
+    }
+
+    stop(note, stopDelay = 1.5, sustained = false) {
+        if (this.playings[note.keyname]) {
+            if (!sustained) {
+                this.playings[note.keyname].gain.gain.exponentialRampToValueAtTime(0.000001, this.context.currentTime + stopDelay);
+            }
+            delete this.playings[note.keyname]
+        }
     }
 
 }

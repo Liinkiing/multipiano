@@ -50,10 +50,10 @@
                 this.USER_PLAY_NOTE({
                     note: this.note,
                     volume: e.velocity * (MAX_VELOCITY / VELOCITY_STEPS)
-                })
+                }, 4)
             })
             this.midiAccess.listenToMidiForNote(MIDI_RELASE, this.note, () => {
-                this.USER_RELEASE_NOTE(this.note)
+                this.USER_RELEASE_NOTE(this.note, 3)
             })
         },
         mounted () {

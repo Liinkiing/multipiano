@@ -8,8 +8,9 @@ export default class MIDIMessage {
      */
     constructor({ data }) {
         this._signalType = SIGNAL_TYPE_MAP[data[0]]
-        this._note =  (this._signalType === MIDI_ATTACK || this._signalType === MIDI_RELASE) ?
-            new Note(pianoKeys.find(key => key.midiCode === data[1])) :
+        const note = pianoKeys.find(key => key.midiCode === data[1]);
+        this._note =  ((this._signalType === MIDI_ATTACK && note) || (this._signalType === MIDI_RELASE && note)) ?
+            new Note(note) :
             null
         this._velocity = data[2]
     }

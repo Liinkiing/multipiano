@@ -8,6 +8,7 @@ export default class Note {
      * @returns {Note}
      */
     constructor(note) {
+        if (!note) return null
         this._keyname = note.keyname
         this._midiCode = note.midiCode
         this._isPlaying = false

@@ -34,8 +34,11 @@ const getters = {
     midiAccess: state => {
         return state.midi.midiAccess
     },
-    note: state => note => {
+    getNote: state => note => {
         return state.notes.find(n => n.keyname === note.keyname)
+    },
+    getNoteByKeycode: state => keycode => {
+        return state.notes.find(key => key.keyCodes && key.keyCodes.includes(keycode))
     },
     isMidiInputConnectionStatusOpen: state => id => {
         let result = state.midi.inputs.find(input => input.id === id);

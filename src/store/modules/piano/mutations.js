@@ -17,12 +17,12 @@ export default {
         state.midi.inputs = state.midi.midiAccess.inputsConnectionStatus
         state.midi.outputs = state.midi.midiAccess.outputsConnectionStatus
     },
-    [ADD_MIDI_INPUT](state, input) {
+    [ADD_MIDI_INPUT] (state, input) {
         if (state.midi.midiAccess.inputs.filter(i => i.id === input.id).length > 0) return
         state.midi.midiAccess.inputs.push(input)
         state.midi.midiAccess.init()
     },
-    [REMOVE_MIDI_INPUT](state, input) {
+    [REMOVE_MIDI_INPUT] (state, input) {
         if (state.midi.midiAccess.inputs.filter(i => i.id === input.id).length === 0) return
         state.midi.midiAccess.inputs = state.midi.midiAccess.inputs.filter(i => i.id !== input.id)
         state.midi.midiAccess.init()

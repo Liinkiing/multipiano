@@ -46,7 +46,7 @@ export default {
         await state.midi.midiAccess.outputs.filter(o => o.id === outputId)[0].close()
         commit(MUTATION_REFRESH_MIDI_INPUTS_OUTPUTS)
     },
-    [SET_PIANO_NOTES] ({commit}, keys) {
+    [SET_PIANO_NOTES]({commit}, keys) {
         commit(MUTATION_SET_PIANO_NOTES, keys)
     },
     [REFRESH_MIDI]({commit, dispatch}, midiStateEvent) {
@@ -71,28 +71,33 @@ export default {
     [OPEN_MIDI_PORT]({getters}, inputId) {
         getters.midiInputs.filter(input => input.id === inputId)[0].open()
     },
-    async [TOGGLE_MIDI_CONNECTION_INPUT] ({getters, dispatch}, inputId) {
+    async [TOGGLE_MIDI_CONNECTION_INPUT]({getters, dispatch}, inputId) {
         if (getters.isMidiInputConnectionStatusOpen(inputId)) {
             await dispatch(CLOSE_MIDI_INPUT, inputId)
         } else if (!getters.isMidiInputConnectionStatusOpen(inputId)) {
             await dispatch(OPEN_MIDI_INPUT, inputId)
         }
     },
-    [USER_PLAY_NOTE] ({commit}, {note, volume}) {
+    [USER_PLAY_NOTE]({commit}, {note, volume}, stopDelay) {
+        if (note) {
             commit(ADD_NOTE_PLAYING, note)
-        audioEngine.play(note, volume)
+            audioEngine.play(note, volume, stopDelay)
+        }
     },
-    [USER_RELEASE_NOTE] ({commit}, note) {
-        commit(REMOVE_NOTE_PLAYING, note)
+    [USER_RELEASE_NOTE]({commit}, note, stopDelay) {
+        if (note) {
+            commit(REMOVE_NOTE_PLAYING, note)
+            audioEngine.stop(note, stopDelay)
+        }
     },
-    async [TOGGLE_MIDI_CONNECTION_OUTPUT] ({getters, dispatch}, inputId) {
+    async [TOGGLE_MIDI_CONNECTION_OUTPUT]({getters, dispatch}, inputId) {
         if (getters.isMidiOutputConnectionStatusOpen(inputId)) {
             await dispatch(CLOSE_MIDI_OUTPUT, inputId)
         } else if (!getters.isMidiOutputConnectionStatusOpen(inputId)) {
             await dispatch(OPEN_MIDI_OUTPUT, inputId)
         }
     },
-    [CHANGE_PIANO_TYPE] ({commit}, type) {
+    [CHANGE_PIANO_TYPE]({commit}, type) {
         commit(SET_PIANO_TYPE, type)
     }
 }
