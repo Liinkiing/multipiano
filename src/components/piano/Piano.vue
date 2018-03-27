@@ -1,7 +1,7 @@
 <template>
     <div class="piano">
         <ul class="keys">
-            <piano-key v-if="!loadingSounds" v-for="note in pianoNotes" :note="note"/>
+            <piano-key v-if="!loadingSounds" :key="note.keyname" v-for="note in pianoNotes" :note="note"/>
         </ul>
     </div>
 
@@ -10,7 +10,6 @@
 <script>
     import {mapGetters} from 'vuex'
     import PianoKey from './PianoKey'
-    import {MIDI_ATTACK} from '../midi/constants'
     import audioEngine from '../audio/AudioEngine'
 
     export default {
