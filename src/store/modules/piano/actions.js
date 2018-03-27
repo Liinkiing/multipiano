@@ -1,11 +1,13 @@
 import MIDIWrapper from "../../../wrappers/MIDIWrapper";
-import {ADD_MIDI_INPUT,
+import {
+    ADD_MIDI_INPUT,
     ADD_MIDI_OUTPUT,
     REMOVE_MIDI_INPUT,
     REMOVE_MIDI_OUTPUT,
     SET_MIDI_ACCESS,
     REFRESH_MIDI_INPUTS_OUTPUTS as MUTATION_REFRESH_MIDI_INPUTS_OUTPUTS,
-    SET_PIANO_NOTES as MUTATION_SET_PIANO_NOTES} from "./mutations";
+    SET_PIANO_NOTES as MUTATION_SET_PIANO_NOTES, SET_PIANO_TYPE
+} from "./mutations";
 
 export const GET_MIDI_ACCESS = "GET_MIDI_ACCESS"
 export const OPEN_MIDI_INPUT = "OPEN_MIDI_INPUT"
@@ -19,6 +21,7 @@ export const REFRESH_MIDI_INPUTS_OUTPUTS = "REFRESH_MIDI_INPUTS_OUTPUTS"
 export const TOGGLE_MIDI_CONNECTION_INPUT = "TOGGLE_MIDI_CONNECTION_INPUT"
 export const TOGGLE_MIDI_CONNECTION_OUTPUT = "TOGGLE_MIDI_CONNECTION_OUTPUT"
 export const SET_PIANO_NOTES = "SET_PIANO_NOTES"
+export const CHANGE_PIANO_TYPE = "CHANGE_PIANO_TYPE"
 
 export default {
     async [GET_MIDI_ACCESS]({commit}) {
@@ -79,4 +82,7 @@ export default {
             await dispatch(OPEN_MIDI_OUTPUT, inputId)
         }
     },
+    [CHANGE_PIANO_TYPE] ({commit}, type) {
+        commit(SET_PIANO_TYPE, type)
+    }
 }

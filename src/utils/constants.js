@@ -19,5 +19,3 @@ for(let i = 2; i < octaves + 2; i++) {
     activeOctave++
 
 }
-
-console.log(final)

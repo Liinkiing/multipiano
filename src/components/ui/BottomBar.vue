@@ -1,6 +1,8 @@
 <template>
     <div class="bottom-bar">
         <button @click="$modal.show('midi')">MIDI In / Out</button>
+        <button @click="CHANGE_PIANO_TYPE('stage_grand')">Stage Grand</button>
+        <button @click="CHANGE_PIANO_TYPE('close_grand')">Close Grand</button>
         <modal height="auto" name="midi">
             <h2>Inputs</h2>
             <ul class="midi-inputs">
@@ -28,6 +30,7 @@
     import {
         CLOSE_MIDI_PORT,
         OPEN_MIDI_PORT,
+        CHANGE_PIANO_TYPE,
         TOGGLE_MIDI_CONNECTION_INPUT,
         TOGGLE_MIDI_CONNECTION_OUTPUT
     } from "../../store/modules/piano/actions";
@@ -48,6 +51,7 @@
                 OPEN_MIDI_PORT,
                 TOGGLE_MIDI_CONNECTION_INPUT,
                 TOGGLE_MIDI_CONNECTION_OUTPUT,
+                CHANGE_PIANO_TYPE,
             ])
         }
     }

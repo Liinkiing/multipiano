@@ -27,7 +27,9 @@ class AudioEngine {
     }
 
     async init (soundType) {
+        this.masterGain.gain.value = 0.0
         this.sounds = await this.preloadSounds(soundType)
+        this.masterGain.gain.value = this.volume
     }
 
 

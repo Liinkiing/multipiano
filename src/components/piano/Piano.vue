@@ -1,7 +1,7 @@
 <template>
     <div class="piano">
         <ul class="keys">
-            <piano-key v-for="note in pianoNotes" :note="note"/>
+            <piano-key v-if="!loadingSounds" v-for="note in pianoNotes" :note="note"/>
         </ul>
     </div>
 
@@ -16,11 +16,23 @@
     export default {
         components: {PianoKey},
         name: 'piano',
+        data () {
+            return {
+                loadingSounds: false,
+            }
+        },
         computed: {
             ...mapGetters([
                 'pianoType',
                 'pianoNotes',
             ])
+        },
+        watch: {
+            async pianoType(newPianoType) {
+                this.loadingSounds = true
+                await audioEngine.init(newPianoType)
+                this.loadingSounds = false
+            }
         },
         async mounted() {
             await audioEngine.init(this.pianoType)

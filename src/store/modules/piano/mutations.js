@@ -7,6 +7,7 @@ export const REMOVE_MIDI_OUTPUT = "REMOVE_MIDI_OUTPUT"
 export const REMOVE_MIDI_INPUT = "REMOVE_MIDI_INPUT"
 export const REFRESH_MIDI_INPUTS_OUTPUTS = "REFRESH_MIDI_INPUTS_OUTPUTS"
 export const SET_PIANO_NOTES = "SET_PIANO_NOTES"
+export const SET_PIANO_TYPE = "SET_PIANO_TYPE"
 
 export default {
     [SET_MIDI_ACCESS](state, midiAccess) {
@@ -40,8 +41,10 @@ export default {
     },
     [SET_PIANO_NOTES] (state, keys) {
         let notes = keys.map(key => new Note(key));
-        console.log(notes)
         state.notes = notes
+    },
+    [SET_PIANO_TYPE] (state, type) {
+        state.type = type
     }
 }
 
