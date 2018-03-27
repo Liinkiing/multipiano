@@ -1,5 +1,5 @@
 <template>
-    <div class="piano-key" :class="{'is-black-key': note.isBlackKey, 'is-playing': note.playing}" @click="(e) => {this.play()}">
+    <div class="piano-key" :class="{'is-black-key': note.isBlackKey, 'is-playing': note.playing}">
 
     </div>
 
@@ -31,6 +31,15 @@
                     volume,
                 })
             },
+            onMouseDown () {
+                this.USER_PLAY_NOTE({
+                    note: this.note,
+                    volume: 0.5
+                })
+            },
+            onMouseUp () {
+                this.USER_RELEASE_NOTE(this.note)
+            },
             ...mapActions([
                 USER_PLAY_NOTE,
                 USER_RELEASE_NOTE
@@ -46,6 +55,16 @@
             this.midiAccess.listenToMidiForNote(MIDI_RELASE, this.note, () => {
                 this.USER_RELEASE_NOTE(this.note)
             })
+        },
+        mounted () {
+            this.$el.addEventListener('mousedown', this.onMouseDown.bind(this))
+            this.$el.addEventListener('mouseup', this.onMouseUp.bind(this))
+            this.$el.addEventListener('mouseout', this.onMouseUp.bind(this))
+        },
+        beforeDestroy () {
+            this.$el.removeEventListener('mousedown', this.onMouseDown.bind(this))
+            this.$el.removeEventListener('mouseup', this.onMouseUp.bind(this))
+            this.$el.removeEventListener('mouseout', this.onMouseUp.bind(this))
         }
     }
 </script>

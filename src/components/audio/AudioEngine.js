@@ -81,6 +81,4 @@ class AudioEngine {
 }
 
 const instance = new AudioEngine()
-window.AudioEngine = instance
-// Object.freeze(instance)
 export default instance
