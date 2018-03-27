@@ -6,7 +6,7 @@ import {
     REMOVE_MIDI_OUTPUT,
     SET_MIDI_ACCESS,
     REFRESH_MIDI_INPUTS_OUTPUTS as MUTATION_REFRESH_MIDI_INPUTS_OUTPUTS,
-    SET_PIANO_NOTES as MUTATION_SET_PIANO_NOTES, SET_PIANO_TYPE
+    SET_PIANO_NOTES as MUTATION_SET_PIANO_NOTES, SET_PIANO_TYPE, ADD_NOTE_PLAYING, REMOVE_NOTE_PLAYING
 } from "./mutations";
 
 export const GET_MIDI_ACCESS = "GET_MIDI_ACCESS"
@@ -22,6 +22,8 @@ export const TOGGLE_MIDI_CONNECTION_INPUT = "TOGGLE_MIDI_CONNECTION_INPUT"
 export const TOGGLE_MIDI_CONNECTION_OUTPUT = "TOGGLE_MIDI_CONNECTION_OUTPUT"
 export const SET_PIANO_NOTES = "SET_PIANO_NOTES"
 export const CHANGE_PIANO_TYPE = "CHANGE_PIANO_TYPE"
+export const USER_PLAY_NOTE = "USER_PLAY_NOTE"
+export const USER_RELEASE_NOTE = "USER_RELEASE_NOTE"
 
 export default {
     async [GET_MIDI_ACCESS]({commit}) {
@@ -68,14 +70,20 @@ export default {
     [OPEN_MIDI_PORT]({getters}, inputId) {
         getters.midiInputs.filter(input => input.id === inputId)[0].open()
     },
-    async [TOGGLE_MIDI_CONNECTION_INPUT] ({getters, commit, dispatch}, inputId) {
+    async [TOGGLE_MIDI_CONNECTION_INPUT] ({getters, dispatch}, inputId) {
         if (getters.isMidiInputConnectionStatusOpen(inputId)) {
             await dispatch(CLOSE_MIDI_INPUT, inputId)
         } else if (!getters.isMidiInputConnectionStatusOpen(inputId)) {
             await dispatch(OPEN_MIDI_INPUT, inputId)
         }
     },
-    async [TOGGLE_MIDI_CONNECTION_OUTPUT] ({getters, commit, dispatch}, inputId) {
+    [USER_PLAY_NOTE] ({commit}, note) {
+        commit(ADD_NOTE_PLAYING, note)
+    },
+    [USER_RELEASE_NOTE] ({commit}, note) {
+        commit(REMOVE_NOTE_PLAYING, note)
+    },
+    async [TOGGLE_MIDI_CONNECTION_OUTPUT] ({getters, dispatch}, inputId) {
         if (getters.isMidiOutputConnectionStatusOpen(inputId)) {
             await dispatch(CLOSE_MIDI_OUTPUT, inputId)
         } else if (!getters.isMidiOutputConnectionStatusOpen(inputId)) {

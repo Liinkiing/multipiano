@@ -11,12 +11,16 @@ const state = {
         outputs: []
     },
     type: 'stage_grand',
+    playingNotes: [],
     notes: pianoKeys.map(key => new Note(key))
 }
 
 const getters = {
     pianoType: state => {
         return state.type
+    },
+    playingNotes: state => {
+        return state.playingNotes
     },
     pianoNotes: state => {
         return state.notes
@@ -30,11 +34,8 @@ const getters = {
     midiAccess: state => {
         return state.midi.midiAccess
     },
-    findNoteByKeyName: state => keyname => {
-        return state.notes.find(key.keyname = keyname)
-    },
-    findNoteByMidiCode: state => midiCode => {
-        return state.notes.find(key.midiCode = midiCode)
+    note: state => note => {
+        return state.notes.find(n => n.keyname === note.keyname)
     },
     isMidiInputConnectionStatusOpen: state => id => {
         let result = state.midi.inputs.find(input => input.id === id);

@@ -8,6 +8,8 @@ export const REMOVE_MIDI_INPUT = "REMOVE_MIDI_INPUT"
 export const REFRESH_MIDI_INPUTS_OUTPUTS = "REFRESH_MIDI_INPUTS_OUTPUTS"
 export const SET_PIANO_NOTES = "SET_PIANO_NOTES"
 export const SET_PIANO_TYPE = "SET_PIANO_TYPE"
+export const ADD_NOTE_PLAYING = "ADD_NOTE_PLAYING"
+export const REMOVE_NOTE_PLAYING = "REMOVE_NOTE_PLAYING"
 
 export default {
     [SET_MIDI_ACCESS](state, midiAccess) {
@@ -40,11 +42,26 @@ export default {
         state.midi.outputs = state.midi.midiAccess.outputsConnectionStatus
     },
     [SET_PIANO_NOTES] (state, keys) {
-        let notes = keys.map(key => new Note(key));
-        state.notes = notes
+        state.notes = keys.map(key => new Note(key))
     },
     [SET_PIANO_TYPE] (state, type) {
         state.type = type
+    },
+    [ADD_NOTE_PLAYING] (state, note) {
+        state.notes = state.notes.map(n => {
+            if (n.keyname === note.keyname) {
+                n.playing = true
+            }
+            return n
+        })
+    },
+    [REMOVE_NOTE_PLAYING] (state, note) {
+        state.notes = state.notes.map(n => {
+            if (n.keyname === note.keyname) {
+                n.playing = false
+            }
+            return n
+        })
     }
 }
 

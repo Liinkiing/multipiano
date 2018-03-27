@@ -8,9 +8,10 @@
 </template>
 
 <script>
-    import {mapGetters} from 'vuex'
+    import {mapGetters, mapActions} from 'vuex'
     import PianoKey from './PianoKey'
     import audioEngine from '../audio/AudioEngine'
+    import {USER_PLAY_NOTE} from '../../store/modules/piano/actions'
 
     export default {
         components: {PianoKey},
@@ -20,9 +21,15 @@
                 loadingSounds: false,
             }
         },
+        methods: {
+            ...mapActions([
+                USER_PLAY_NOTE
+            ])
+        },
         computed: {
             ...mapGetters([
                 'pianoType',
+                'playingNotes',
                 'pianoNotes',
             ])
         },
@@ -40,10 +47,11 @@
                     let note = this.pianoNotes
                         .find(key => key.keyCodes && key.keyCodes.includes(e.keyCode));
                     if (note) {
+                        console.log(note)
                         audioEngine.play(note)
+                        this.USER_PLAY_NOTE(note)
                     }
                 }
-
             })
         }
     }

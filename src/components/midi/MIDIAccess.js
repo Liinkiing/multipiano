@@ -102,11 +102,11 @@ export default class MIDIAccess {
         if (!callback || typeof callback !== "function") {
             console.error('Please attach a valid callback to the listener!')
         }
-        if(!this.listeners[note.keyname]) {
-            this.listeners[note.keyname] = {
-                [eventName]: callback
-            }
+        if (!this.listeners[note.keyname]) {
+            this.listeners[note.keyname] = {}
         }
+        this.listeners[note.keyname][eventName] = callback
+
     }
 
     /**
