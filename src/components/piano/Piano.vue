@@ -47,9 +47,10 @@
                     let note = this.pianoNotes
                         .find(key => key.keyCodes && key.keyCodes.includes(e.keyCode));
                     if (note) {
-                        console.log(note)
-                        audioEngine.play(note)
-                        this.USER_PLAY_NOTE(note)
+                        this.USER_PLAY_NOTE({
+                            note,
+                            volume: 0.5
+                        })
                     }
                 }
             })
@@ -60,6 +61,11 @@
 <style lang="scss">
     .piano {
         display: flex;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -o-user-select: none;
+        user-select: none;
         & .keys {
             padding: 0;
             margin: 0;

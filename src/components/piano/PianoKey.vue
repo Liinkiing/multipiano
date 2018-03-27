@@ -8,7 +8,6 @@
 <script>
     import { mapGetters, mapActions } from 'vuex'
     import Note from '../midi/Note'
-    import audioEngine from '../audio/AudioEngine'
     import {MIDI_ATTACK, MIDI_RELASE} from "../midi/constants";
     import {USER_PLAY_NOTE, USER_RELEASE_NOTE} from "../../store/modules/piano/actions";
 
@@ -27,8 +26,10 @@
         },
         methods: {
             play (volume) {
-                this.USER_PLAY_NOTE(this.note)
-                audioEngine.play(this.note, volume)
+                this.USER_PLAY_NOTE({
+                    note: this.note,
+                    volume,
+                })
             },
             ...mapActions([
                 USER_PLAY_NOTE,
@@ -37,7 +38,10 @@
         },
         created () {
             this.midiAccess.listenToMidiForNote(MIDI_ATTACK, this.note, (e) => {
-                this.play(e.velocity * (MAX_VELOCITY / VELOCITY_STEPS))
+                this.USER_PLAY_NOTE({
+                    note: this.note,
+                    volume: e.velocity * (MAX_VELOCITY / VELOCITY_STEPS)
+                })
             })
             this.midiAccess.listenToMidiForNote(MIDI_RELASE, this.note, () => {
                 this.USER_RELEASE_NOTE(this.note)

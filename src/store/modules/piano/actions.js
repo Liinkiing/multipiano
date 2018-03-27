@@ -1,4 +1,5 @@
 import MIDIWrapper from "../../../wrappers/MIDIWrapper";
+import audioEngine from '../../../components/audio/AudioEngine'
 import {
     ADD_MIDI_INPUT,
     ADD_MIDI_OUTPUT,
@@ -77,8 +78,9 @@ export default {
             await dispatch(OPEN_MIDI_INPUT, inputId)
         }
     },
-    [USER_PLAY_NOTE] ({commit}, note) {
-        commit(ADD_NOTE_PLAYING, note)
+    [USER_PLAY_NOTE] ({commit}, {note, volume}) {
+            commit(ADD_NOTE_PLAYING, note)
+        audioEngine.play(note, volume)
     },
     [USER_RELEASE_NOTE] ({commit}, note) {
         commit(REMOVE_NOTE_PLAYING, note)
