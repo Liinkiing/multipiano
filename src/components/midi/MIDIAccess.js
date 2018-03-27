@@ -46,7 +46,7 @@ export default class MIDIAccess {
                         callback(message)
                     })
                 }
-                if (this.listeners[message.note.keyname][message.signalType]) {
+                if (message.note && this.listeners[message.note.keyname][message.signalType]) {
                     this.listeners[message.note.keyname][message.signalType](message)
                 }
             }

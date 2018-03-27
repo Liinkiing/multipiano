@@ -5,7 +5,7 @@
             <h2>Inputs</h2>
             <ul class="midi-inputs">
                 <li class="midi-input" v-for="input in midiInputs" :key="input.id">
-                    <toggle-button class="changed-font" :value="isMidiInputConnectionStatusOpen(input.id)"
+                    <toggle-button class="changed-font" :value="isMidiInputConnectionStatusOpen(input.id)" :sync="true"
                                    :key="input.id" :labels="{checked: input.name, unchecked: input.name}"
                                    :width="500" :height="40" @change="TOGGLE_MIDI_CONNECTION_INPUT(input.id)"/>
                 </li>
@@ -13,7 +13,7 @@
             <h2>Outputs</h2>
             <ul class="midi-outputs">
                 <li class="midi-output" v-for="output in midiOutputs" :key="output.id">
-                    <toggle-button class="changed-font" :value="isMidiOutputConnectionStatusOpen(output.id)"
+                    <toggle-button class="changed-font" :value="isMidiOutputConnectionStatusOpen(output.id)" :sync="true"
                                    :key="output.id" :labels="{checked: output.name, unchecked: output.name}"
                                    :width="500" :height="40" @change="TOGGLE_MIDI_CONNECTION_OUTPUT(output.id)"/>
                 </li>
