@@ -27,6 +27,7 @@
         },
         methods: {
             play (volume) {
+                this.USER_PLAY_NOTE(this.note)
                 audioEngine.play(this.note, volume)
             },
             ...mapActions([
@@ -36,7 +37,6 @@
         },
         created () {
             this.midiAccess.listenToMidiForNote(MIDI_ATTACK, this.note, (e) => {
-                this.USER_PLAY_NOTE(this.note)
                 this.play(e.velocity * (MAX_VELOCITY / VELOCITY_STEPS))
             })
             this.midiAccess.listenToMidiForNote(MIDI_RELASE, this.note, () => {
