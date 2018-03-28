@@ -20,7 +20,8 @@
         data () {
             return {
                 loadingSounds: false,
-                sustain: false
+                sustain: false,
+                keysdown: {}
             }
         },
         methods: {
@@ -30,16 +31,20 @@
             ]),
             onKeydown (e) {
                 if(!e.ctrlKey && !e.shiftKey && !e.altKey && !e.metaKey) {
-                    const note = this.getNoteByKeycode(e.keyCode)
-                    if (note) {
-                        this[USER_PLAY_NOTE]({
-                            note,
-                            volume: 0.5
-                        })
+                    if(!this.keysdown[e.keyCode]) {
+                        this.keysdown[e.keyCode] = true
+                        const note = this.getNoteByKeycode(e.keyCode)
+                        if (note) {
+                            this[USER_PLAY_NOTE]({
+                                note,
+                                volume: 0.5
+                            })
+                        }
                     }
                 }
             },
             onKeyup (e) {
+                delete this.keysdown[e.keyCode]
                 const note = this.getNoteByKeycode(e.keyCode)
                 if (note) {
                     this[USER_RELEASE_NOTE]({

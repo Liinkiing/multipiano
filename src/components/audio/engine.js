@@ -131,7 +131,7 @@ AudioEngineWeb.prototype.actualPlay = function(id, vol, time, part_id) { //the o
 AudioEngineWeb.prototype.play = function(id, vol, delay_ms, part_id)
 {
     if(!this.sounds.hasOwnProperty(id)) return;
-    var time = this.context.currentTime + (delay_ms / 1000); //calculate time on note receive.
+    var time = this.context.currentTime + (delay_ms / 1000); //calculate time on getNote receive.
     var delay = delay_ms - this.threshold;
     if(delay<=0) this.actualPlay(id, vol, time, part_id);
     else {

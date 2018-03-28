@@ -59,12 +59,9 @@ export default {
         })
     },
     [REMOVE_NOTE_PLAYING] (state, note) {
-        console.log('REMOVE NOTE', note)
         state.notes = state.notes.map(n => {
             if (n.keyname === note.keyname) {
-                console.log(n, 'original')
                 n.playing = false
-                console.log(n, 'modified')
             }
             return n
         })

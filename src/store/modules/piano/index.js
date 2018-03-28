@@ -11,7 +11,6 @@ const state = {
         outputs: []
     },
     type: 'stage_grand',
-    playingNotes: [],
     notes: pianoKeys.map(key => new Note(key))
 }
 
@@ -20,7 +19,7 @@ const getters = {
         return state.type
     },
     playingNotes: state => {
-        return state.playingNotes
+        return state.notes.filter(note => note.playing)
     },
     pianoNotes: state => {
         return state.notes

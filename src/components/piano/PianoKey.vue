@@ -31,14 +31,18 @@
                     volume,
                 })
             },
-            onMouseDown () {
-                this[USER_PLAY_NOTE]({
+            release (delay = null) {
+                this[USER_RELEASE_NOTE]({
                     note: this.note,
-                    volume: 0.5
+                    delay,
+                    sustained: this.sustain
                 })
             },
+            onMouseDown () {
+                this.play(0.5)
+            },
             onMouseUp () {
-                this[USER_RELEASE_NOTE](this.note)
+                this.release()
             },
             ...mapActions([
                 USER_PLAY_NOTE,
@@ -47,18 +51,10 @@
         },
         created () {
             this.midiAccess.listenToMidiForNote(MIDI_ATTACK, this.note, (e) => {
-                this[USER_PLAY_NOTE]({
-                    note: this.note,
-                    volume: e.velocity * (MAX_VELOCITY / VELOCITY_STEPS)
-                }, 4)
+                this.play(e.velocity * (MAX_VELOCITY / VELOCITY_STEPS))
             })
             this.midiAccess.listenToMidiForNote(MIDI_RELASE, this.note, () => {
-                console.log(this.sustain)
-                this[USER_RELEASE_NOTE]({
-                    note: this.note,
-                    delay: 3,
-                    sustained: this.sustain
-                })
+                this.release(3)
             })
         },
         mounted () {
