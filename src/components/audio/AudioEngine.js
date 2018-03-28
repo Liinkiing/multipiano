@@ -9,18 +9,18 @@ class AudioEngine {
         this.context = new AudioContext()
         this.masterGain = this.context.createGain();
         this.masterGain.connect(this.context.destination);
-        this.masterGain.gain.value = this.volume;
+        this.masterGain.gain.setValueAtTime(this.volume, 0);
 
         this.limiterNode = this.context.createDynamicsCompressor();
-        this.limiterNode.threshold.value = -10;
-        this.limiterNode.knee.value = 0;
-        this.limiterNode.ratio.value = 20;
-        this.limiterNode.attack.value = 0;
-        this.limiterNode.release.value = 0.1;
+        this.limiterNode.threshold.setValueAtTime(-10, 0)
+        this.limiterNode.knee.setValueAtTime(0, 0)
+        this.limiterNode.ratio.setValueAtTime(20, 0)
+        this.limiterNode.attack.setValueAtTime(0, 0)
+        this.limiterNode.release.setValueAtTime(0.1, 0)
         this.limiterNode.connect(this.masterGain);
 
         this.pianoGain = this.context.createGain();
-        this.pianoGain.gain.value = 0.5;
+        this.pianoGain.gain.setValueAtTime(0.5, 0)
         this.pianoGain.connect(this.limiterNode);
 
         this.sounds = {}
@@ -28,9 +28,9 @@ class AudioEngine {
     }
 
     async init(soundType) {
-        this.masterGain.gain.value = 0.0
+        this.masterGain.gain.setValueAtTime(0., 0)
         this.sounds = await this.preloadSounds(soundType)
-        this.masterGain.gain.value = this.volume
+        this.masterGain.gain.setValueAtTime(this.volume, 0)
     }
 
     get BASE_URL() {
@@ -68,7 +68,7 @@ class AudioEngine {
         source.onended = this.onEndedSound.bind(this, keyId)
         source.buffer = this.sounds[note.keyname];
         const gain = this.context.createGain();
-        gain.gain.value = this.volume * volume;
+        gain.gain.setValueAtTime(this.volume * volume, 0);
         source.connect(gain);
         gain.connect(this.pianoGain);
         source.start(0);
