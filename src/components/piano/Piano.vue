@@ -32,7 +32,7 @@
                 if(!e.ctrlKey && !e.shiftKey && !e.altKey && !e.metaKey) {
                     const note = this.getNoteByKeycode(e.keyCode)
                     if (note) {
-                        this.USER_PLAY_NOTE({
+                        this[USER_PLAY_NOTE]({
                             note,
                             volume: 0.5
                         })
@@ -42,7 +42,7 @@
             onKeyup (e) {
                 const note = this.getNoteByKeycode(e.keyCode)
                 if (note) {
-                    this.USER_RELEASE_NOTE({
+                    this[USER_RELEASE_NOTE]({
                         note,
                         sustained: this.sustain
                     })

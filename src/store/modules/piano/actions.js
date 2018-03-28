@@ -9,6 +9,7 @@ import {
     REFRESH_MIDI_INPUTS_OUTPUTS as MUTATION_REFRESH_MIDI_INPUTS_OUTPUTS,
     SET_PIANO_NOTES as MUTATION_SET_PIANO_NOTES, SET_PIANO_TYPE, ADD_NOTE_PLAYING, REMOVE_NOTE_PLAYING
 } from "./mutations";
+import Note from "../../../components/midi/Note";
 
 export const GET_MIDI_ACCESS = "GET_MIDI_ACCESS"
 export const OPEN_MIDI_INPUT = "OPEN_MIDI_INPUT"
@@ -27,7 +28,7 @@ export const USER_PLAY_NOTE = "USER_PLAY_NOTE"
 export const USER_RELEASE_NOTE = "USER_RELEASE_NOTE"
 
 export default {
-    async [GET_MIDI_ACCESS]({commit}) {
+    async GET_MIDI_ACCESS ({commit}) {
         commit(SET_MIDI_ACCESS, await MIDIWrapper.requestMidiAccess())
     },
     async [OPEN_MIDI_INPUT]({commit, state}, inputId) {
@@ -83,12 +84,29 @@ export default {
             note.timestamp = Date.now()
             commit(ADD_NOTE_PLAYING, note)
             audioEngine.play(note, volume, stopDelay)
+            this._vm.$socket.emit('userPlayNote', note);
+        }
+    },
+    socket_userHasPlayedNote({commit}, payload) {
+        let note = new Note(payload)
+        if (note) {
+            note.timestamp = Date.now()
+            commit(ADD_NOTE_PLAYING, note)
+            audioEngine.play(note, 0.5, 1.5)
         }
     },
     [USER_RELEASE_NOTE]({commit}, {note, delay, sustained}) {
         if (note) {
             commit(REMOVE_NOTE_PLAYING, note)
             audioEngine.stop(note, delay, sustained)
+            this._vm.$socket.emit('userReleaseNote', note);
+        }
+    },
+    socket_userHasReleasedNote({commit}, payload) {
+        let note = new Note(payload)
+        if (note) {
+            note.timestamp = Date.now()
+            commit(REMOVE_NOTE_PLAYING, note)
         }
     },
     async [TOGGLE_MIDI_CONNECTION_OUTPUT]({getters, dispatch}, inputId) {

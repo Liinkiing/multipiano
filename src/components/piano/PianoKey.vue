@@ -26,19 +26,19 @@
         },
         methods: {
             play (volume) {
-                this.USER_PLAY_NOTE({
+                this[USER_PLAY_NOTE]({
                     note: this.note,
                     volume,
                 })
             },
             onMouseDown () {
-                this.USER_PLAY_NOTE({
+                this[USER_PLAY_NOTE]({
                     note: this.note,
                     volume: 0.5
                 })
             },
             onMouseUp () {
-                this.USER_RELEASE_NOTE(this.note)
+                this[USER_RELEASE_NOTE](this.note)
             },
             ...mapActions([
                 USER_PLAY_NOTE,
@@ -47,13 +47,14 @@
         },
         created () {
             this.midiAccess.listenToMidiForNote(MIDI_ATTACK, this.note, (e) => {
-                this.USER_PLAY_NOTE({
+                this[USER_PLAY_NOTE]({
                     note: this.note,
                     volume: e.velocity * (MAX_VELOCITY / VELOCITY_STEPS)
                 }, 4)
             })
             this.midiAccess.listenToMidiForNote(MIDI_RELASE, this.note, () => {
-                this.USER_RELEASE_NOTE({
+                console.log(this.sustain)
+                this[USER_RELEASE_NOTE]({
                     note: this.note,
                     delay: 3,
                     sustained: this.sustain

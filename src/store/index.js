@@ -5,7 +5,7 @@ import piano from './modules/piano/'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  modules: {
-    piano
-  }
+    modules: {
+        piano
+    }
 })

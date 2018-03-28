@@ -34,12 +34,17 @@
           ])
       },
       async created () {
-          await this[GET_MIDI_ACCESS]()
-          this.loadingMidi = false;
-          this.midiAccess.addEventListener('onstatechange', e => {
-              this[REFRESH_MIDI](e)
-              this[REFRESH_MIDI_INPUTS_OUTPUTS]()
-          })
+          if(navigator.requestMIDIAccess) {
+              await this[GET_MIDI_ACCESS]()
+              this.loadingMidi = false;
+              this.midiAccess.addEventListener('onstatechange', e => {
+                  this[REFRESH_MIDI](e)
+                  this[REFRESH_MIDI_INPUTS_OUTPUTS]()
+              })
+          } else {
+              this.loadingMidi = false;
+          }
+
       }
   }
 </script>

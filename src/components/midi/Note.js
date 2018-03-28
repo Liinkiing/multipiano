@@ -9,13 +9,13 @@ export default class Note {
      */
     constructor(note) {
         if (!note) return null
-        this._keyname = note.keyname
-        this._midiCode = note.midiCode
+        this._keyname = note.keyname || note._keyname
+        this._midiCode = note.midiCode || note._midiCode
         this._isPlaying = false
         this._timestamp = null
-        this._keyCodes = note.keyCodes || null
-        this._isBlackKey = note.keyname.includes("S")
-        this._octave = Utils.getNumberFromString(note.keyname)
+        this._keyCodes = note.keyCodes || note._keyCodes || null
+        this._isBlackKey = this._keyname.includes("S")
+        this._octave = Utils.getNumberFromString(this._keyname)
     }
 
     static createFromKeyname(keyname) {
