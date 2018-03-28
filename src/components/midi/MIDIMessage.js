@@ -8,6 +8,7 @@ export default class MIDIMessage {
      */
     constructor({ data }) {
         this._signalType = SIGNAL_TYPE_MAP[data[0]]
+        this._originalMidiData = data
         const note = pianoKeys.find(key => key.midiCode === data[1]);
         this._note =  ((this._signalType === MIDI_ATTACK && note) || (this._signalType === MIDI_RELASE && note)) ?
             new Note(note) :
@@ -23,11 +24,15 @@ export default class MIDIMessage {
         }
     }
 
-    get note() {
+    get originalMidiData () {
+        return this._originalMidiData;
+    }
+
+    get note () {
         return this._note;
     }
 
-    get velocity() {
+    get velocity () {
         return this._velocity;
     }
 }

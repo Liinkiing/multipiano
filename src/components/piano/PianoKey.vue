@@ -1,6 +1,5 @@
 <template>
     <div class="piano-key" :class="{'is-black-key': note.isBlackKey, 'is-playing': note.playing}">
-
     </div>
 
 </template>
@@ -17,7 +16,8 @@
     export default {
         name: 'piano-key',
         props: {
-            note: {type: Note, required: true}
+            note: {type: Note, required: true},
+            sustain: {type: Boolean, required: false}
         },
         computed: {
             ...mapGetters([
@@ -53,7 +53,11 @@
                 }, 4)
             })
             this.midiAccess.listenToMidiForNote(MIDI_RELASE, this.note, () => {
-                this.USER_RELEASE_NOTE(this.note, 3)
+                this.USER_RELEASE_NOTE({
+                    note: this.note,
+                    delay: 3,
+                    sustained: this.sustain
+                })
             })
         },
         mounted () {

@@ -12,9 +12,25 @@ export default class Note {
         this._keyname = note.keyname
         this._midiCode = note.midiCode
         this._isPlaying = false
+        this._timestamp = null
         this._keyCodes = note.keyCodes || null
         this._isBlackKey = note.keyname.includes("S")
         this._octave = Utils.getNumberFromString(note.keyname)
+    }
+
+    static createFromKeyname(keyname) {
+        return new Note({
+            keyname,
+            midiCode: 127,
+        })
+    }
+
+    set timestamp (value) {
+        this._timestamp = value
+    }
+
+    get timestamp () {
+        return this._timestamp
     }
 
     play (volume) {

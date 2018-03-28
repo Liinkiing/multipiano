@@ -33,9 +33,12 @@ class AudioEngine {
         this.masterGain.gain.value = this.volume
     }
 
-
     get BASE_URL() {
         return BASE_URL
+    }
+
+    get playingBuffers() {
+        return this.playings
     }
 
     preloadSounds(type) {
@@ -56,37 +59,47 @@ class AudioEngine {
     /**
      * @param {Note} note
      * @param {Number} volume
-     * @param {Boolean} sustained
      * @param {Number} stopDelay
      */
-    play(note, volume = 0.5, sustained = false, stopDelay = 1.5) {
+    play(note, volume = 0.5, stopDelay = 1.5) {
+        const keyId = note.keyname + note.timestamp
         if (!this.sounds.hasOwnProperty(note.keyname)) return;
         const source = this.context.createBufferSource();
+        source.onended = this.onEndedSound.bind(this, keyId)
         source.buffer = this.sounds[note.keyname];
         const gain = this.context.createGain();
         gain.gain.value = this.volume * volume;
         source.connect(gain);
         gain.connect(this.pianoGain);
         source.start(0);
-        if (this.playings[note.keyname]) {
-            const playing = this.playings[note.keyname];
-            if (!sustained) {
-                playing.gain.gain.exponentialRampToValueAtTime(0.000001, this.context.currentTime + stopDelay);
-            }
+        if (this.playings[keyId]) {
+            const playing = this.playings[keyId];
+            playing.gain.gain.exponentialRampToValueAtTime(0.000001, this.context.currentTime + stopDelay);
         }
-        this.playings[note.keyname] = {
+        this.playings[keyId] = {
             source,
             gain
         };
     }
 
-    stop(note, stopDelay = 1.5, sustained = false) {
-        if (this.playings[note.keyname]) {
-            if (!sustained) {
-                this.playings[note.keyname].gain.gain.exponentialRampToValueAtTime(0.000001, this.context.currentTime + stopDelay);
-            }
-            delete this.playings[note.keyname]
+    stopBufferedSounds() {
+        for(let key in this.playings) {
+            this.playings[key].gain.gain.exponentialRampToValueAtTime(0.000001, this.context.currentTime + 3);
         }
+    }
+
+    stop(note, stopDelay = 1.5, sustained = false) {
+        const keyId = note.keyname + note.timestamp
+        if (this.playings[keyId]) {
+            if (!sustained) {
+                this.playings[keyId].gain.gain.exponentialRampToValueAtTime(0.000001, this.context.currentTime + stopDelay);
+                this.playings[keyId].source.stop(this.context.currentTime + stopDelay)
+            }
+        }
+    }
+
+    onEndedSound(keyId) {
+        delete this.playings[keyId]
     }
 
 }

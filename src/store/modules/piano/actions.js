@@ -80,14 +80,15 @@ export default {
     },
     [USER_PLAY_NOTE]({commit}, {note, volume}, stopDelay) {
         if (note) {
+            note.timestamp = Date.now()
             commit(ADD_NOTE_PLAYING, note)
             audioEngine.play(note, volume, stopDelay)
         }
     },
-    [USER_RELEASE_NOTE]({commit}, note, stopDelay) {
+    [USER_RELEASE_NOTE]({commit}, {note, delay, sustained}) {
         if (note) {
             commit(REMOVE_NOTE_PLAYING, note)
-            audioEngine.stop(note, stopDelay)
+            audioEngine.stop(note, delay, sustained)
         }
     },
     async [TOGGLE_MIDI_CONNECTION_OUTPUT]({getters, dispatch}, inputId) {
