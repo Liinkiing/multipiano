@@ -11,13 +11,13 @@ export default new Router({
             path: '/',
             name: 'home',
             component: Room,
-            props: { roomName: null }
+            props: { room: {name: 'Multiplayer Piano', id: 'home'} }
         },
         {
             path: '/:roomName',
             name: 'room.view',
             component: Room,
-            props: true
+            props: route => ({room: {name: route.params.roomName, id: route.params.roomName}})
         }
     ]
 })

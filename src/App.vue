@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="wrapper" v-if="!loadingMidi">
-    <router-view/>
+    <router-view :key="$router.currentRoute.name"/>
     <bottom-bar/>
   </div>
   <div v-else id="app" class="wrapper">

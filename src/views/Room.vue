@@ -1,18 +1,27 @@
 <template>
     <div class="room">
-        <h1>{{ roomName || 'Multiplayer Piano' }}</h1>
+        <h1>{{ room.name }}</h1>
         <piano/>
     </div>
 </template>
 
 <script>
+    import { mapActions } from 'vuex'
+    import {CHANGE_ROOM} from "../store/modules/rooms/actions";
     import Piano from "../components/piano/Piano";
-
     export default {
         components: {Piano},
         name: 'room',
         props: {
-            roomName: { type: String, required: false }
+            room: { type: Object, required: true }
+        },
+        methods: {
+            ...mapActions('rooms', [
+                CHANGE_ROOM
+            ])
+        },
+        created () {
+            this[CHANGE_ROOM](this.room)
         }
     }
 </script>

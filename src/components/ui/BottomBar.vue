@@ -3,6 +3,9 @@
         <button @click="$modal.show('midi')">MIDI In / Out</button>
         <button @click="CHANGE_PIANO_TYPE('stage_grand')">Stage Grand</button>
         <button @click="CHANGE_PIANO_TYPE('close_grand')">Close Grand</button>
+        <router-link :to="{name: 'room.view', params: {roomName: 'test'}}">
+            <button>Go room</button>
+        </router-link>
         <modal height="auto" name="midi">
             <h2>Inputs</h2>
             <ul class="midi-inputs">
