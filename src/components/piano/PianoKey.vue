@@ -43,14 +43,11 @@
                 if (!this.note.playing) this.play(0.5)
 
             },
-            onMouseOut(e) {
+            onMouseOut() {
                 if (this.note.source === SOURCE_MOUSE && this.note.playing) this.release()
             },
-            onMouseEnter() {
-
-            },
-            onMouseOver(e) {
-                console.log(e.button)
+            onMouseEnter(e) {
+                console.log(e)
             },
             onMouseUp() {
                 if (this.note.source === SOURCE_MOUSE && this.note.playing) this.release()
@@ -72,11 +69,13 @@
             this.$el.addEventListener('mousedown', this.onMouseDown.bind(this))
             this.$el.addEventListener('mouseup', this.onMouseUp.bind(this))
             this.$el.addEventListener('mouseout', this.onMouseOut.bind(this))
+            this.$el.addEventListener('mouseenter', this.onMouseEnter.bind(this))
         },
         beforeDestroy() {
             this.$el.removeEventListener('mousedown', this.onMouseDown.bind(this))
             this.$el.removeEventListener('mouseup', this.onMouseUp.bind(this))
             this.$el.removeEventListener('mouseout', this.onMouseOut.bind(this))
+            this.$el.removeEventListener('mouseenter', this.onMouseEnter.bind(this))
         }
     }
 </script>
