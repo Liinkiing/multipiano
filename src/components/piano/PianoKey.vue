@@ -6,6 +6,7 @@
 
 <script>
     import {mapGetters, mapActions} from 'vuex'
+    import AudioEngine from '../../components/audio/AudioEngine'
     import Note from '../midi/Note'
     import {MIDI_ATTACK, MIDI_RELASE, SOURCE_MIDI, SOURCE_MOUSE} from "../midi/constants";
     import {USER_PLAY_NOTE, USER_RELEASE_NOTE} from "../../store/modules/piano/actions";
@@ -28,6 +29,13 @@
                     'is-black-key': this.note.isBlackKey,
                     'is-playing': this.note.playing,
                     [this.note.color]: this.note.playing
+                }
+            }
+        },
+        watch: {
+            sustain (newVal)  {
+                if(newVal === false && !this.note.playing) {
+                    AudioEngine.stopBufferedSoundForNote(this.note)
                 }
             }
         },

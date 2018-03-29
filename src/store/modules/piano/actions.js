@@ -1,5 +1,5 @@
 import MIDIWrapper from "../../../wrappers/MIDIWrapper";
-import audioEngine from '../../../components/audio/AudioEngine'
+import AudioEngine from '../../../components/audio/AudioEngine'
 import {
     ADD_MIDI_INPUT,
     ADD_MIDI_OUTPUT,
@@ -88,20 +88,20 @@ export default {
             note.source = source || SOURCE_KEYBOARD
             commit(ADD_NOTE_PLAYING, note)
             this._vm.$socket.emit('userPlayNote', note);
-            audioEngine.play(note, note.volume, stopDelay)
+            AudioEngine.play(note, note.volume, stopDelay)
         }
     },
     socket_userHasPlayedNote({commit}, payload) {
         let note = new Note(payload)
         if (note) {
             commit(ADD_NOTE_PLAYING, note)
-            audioEngine.play(note, note.volume, 1.5)
+            AudioEngine.play(note, note.volume, 1.5)
         }
     },
     [USER_RELEASE_NOTE]({commit}, {note, delay, sustained}) {
         if (note) {
             commit(REMOVE_NOTE_PLAYING, note)
-            audioEngine.stop(note, delay, sustained)
+            AudioEngine.stop(note, delay, sustained)
             this._vm.$socket.emit('userReleaseNote', {note, delay, sustained});
         }
     },
@@ -109,7 +109,7 @@ export default {
         let _note = new Note(note)
         if (_note) {
             commit(REMOVE_NOTE_PLAYING, _note)
-            audioEngine.stop(_note, 1.5, sustained)
+            AudioEngine.stop(_note, 1.5, sustained)
         }
     },
     async [TOGGLE_MIDI_CONNECTION_OUTPUT]({getters, dispatch}, inputId) {

@@ -10,7 +10,7 @@
 <script>
     import {mapGetters, mapActions} from 'vuex'
     import PianoKey from './PianoKey'
-    import audioEngine from '../audio/AudioEngine'
+    import AudioEngine from '../audio/AudioEngine'
     import {USER_PLAY_NOTE, USER_RELEASE_NOTE} from '../../store/modules/piano/actions'
     import {MIDI_SUSTAIN, SOURCE_KEYBOARD} from "../midi/constants";
 
@@ -70,17 +70,12 @@
         watch: {
             async pianoType(newPianoType) {
                 this.loadingSounds = true
-                await audioEngine.init(newPianoType)
+                await AudioEngine.init(newPianoType)
                 this.loadingSounds = false
-            },
-            sustain (newVal) {
-                if(newVal === false) {
-                    audioEngine.stopBufferedSounds()
-                }
             }
         },
         async mounted() {
-            await audioEngine.init(this.pianoType)
+            await AudioEngine.init(this.pianoType)
             window.addEventListener('keydown', this.onKeydown.bind(this))
             window.addEventListener('keyup', this.onKeyup.bind(this))
             this.midiAccess.addEventListener(MIDI_SUSTAIN, this.onSustainMessage.bind(this))

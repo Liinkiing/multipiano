@@ -88,6 +88,13 @@ class AudioEngine {
         }
     }
 
+    stopBufferedSoundForNote(note) {
+        const keyId = note.keyname + note.timestamp
+        if(this.playings[keyId]) {
+            this.playings[keyId].gain.gain.exponentialRampToValueAtTime(0.000001, this.context.currentTime + 3);
+        }
+    }
+
     stop(note, stopDelay = 1.5, sustained = false) {
         const keyId = note.keyname + note.timestamp
         if (this.playings[keyId]) {
