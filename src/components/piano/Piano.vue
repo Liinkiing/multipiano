@@ -12,7 +12,7 @@
     import PianoKey from './PianoKey'
     import audioEngine from '../audio/AudioEngine'
     import {USER_PLAY_NOTE, USER_RELEASE_NOTE} from '../../store/modules/piano/actions'
-    import {MIDI_SUSTAIN} from "../midi/constants";
+    import {MIDI_SUSTAIN, SOURCE_KEYBOARD} from "../midi/constants";
 
     export default {
         components: {PianoKey},
@@ -32,12 +32,13 @@
             onKeydown (e) {
                 if(!e.ctrlKey && !e.shiftKey && !e.altKey && !e.metaKey) {
                     if(!this.keysdown[e.keyCode]) {
-                        this.keysdown[e.keyCode] = true
                         const note = this.getNoteByKeycode(e.keyCode)
-                        if (note) {
+                        if (note && !note.playing) {
+                            this.keysdown[e.keyCode] = true
                             this[USER_PLAY_NOTE]({
                                 note,
-                                volume: 0.5
+                                volume: 0.5,
+                                source: SOURCE_KEYBOARD
                             })
                         }
                     }
@@ -46,10 +47,11 @@
             onKeyup (e) {
                 delete this.keysdown[e.keyCode]
                 const note = this.getNoteByKeycode(e.keyCode)
-                if (note) {
+                if (note && note.source === SOURCE_KEYBOARD) {
                     this[USER_RELEASE_NOTE]({
                         note,
-                        sustained: this.sustain
+                        sustained: this.sustain,
+                        source: SOURCE_KEYBOARD
                     })
                 }
             },

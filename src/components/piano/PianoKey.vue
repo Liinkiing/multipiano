@@ -5,9 +5,9 @@
 </template>
 
 <script>
-    import { mapGetters, mapActions } from 'vuex'
+    import {mapGetters, mapActions} from 'vuex'
     import Note from '../midi/Note'
-    import {MIDI_ATTACK, MIDI_RELASE} from "../midi/constants";
+    import {MIDI_ATTACK, MIDI_RELASE, SOURCE_MIDI, SOURCE_MOUSE} from "../midi/constants";
     import {USER_PLAY_NOTE, USER_RELEASE_NOTE} from "../../store/modules/piano/actions";
 
     const MAX_VELOCITY = 1
@@ -21,51 +21,62 @@
         },
         computed: {
             ...mapGetters([
-                'midiAccess',
+                'midiAccess'
             ])
         },
         methods: {
-            play (volume) {
+            play(volume, source = SOURCE_MOUSE) {
                 this[USER_PLAY_NOTE]({
                     note: this.note,
                     volume,
+                    source
                 })
             },
-            release (delay = null) {
+            release(delay = 3) {
                 this[USER_RELEASE_NOTE]({
                     note: this.note,
                     delay,
                     sustained: this.sustain
                 })
             },
-            onMouseDown () {
-                this.play(0.5)
+            onMouseDown() {
+                if (!this.note.playing) this.play(0.5)
+
             },
-            onMouseUp () {
-                this.release()
+            onMouseOut(e) {
+                if (this.note.source === SOURCE_MOUSE && this.note.playing) this.release()
+            },
+            onMouseEnter() {
+
+            },
+            onMouseOver(e) {
+                console.log(e.button)
+            },
+            onMouseUp() {
+                if (this.note.source === SOURCE_MOUSE && this.note.playing) this.release()
             },
             ...mapActions([
                 USER_PLAY_NOTE,
                 USER_RELEASE_NOTE
             ])
         },
-        created () {
+        created() {
             this.midiAccess.listenToMidiForNote(MIDI_ATTACK, this.note, (e) => {
-                this.play(e.velocity * (MAX_VELOCITY / VELOCITY_STEPS))
+                if (!this.note.playing) this.play(e.velocity * (MAX_VELOCITY / VELOCITY_STEPS), SOURCE_MIDI)
             })
             this.midiAccess.listenToMidiForNote(MIDI_RELASE, this.note, () => {
-                this.release(3)
+                if (this.note.source === SOURCE_MIDI) this.release(3)
             })
         },
-        mounted () {
+        mounted() {
             this.$el.addEventListener('mousedown', this.onMouseDown.bind(this))
             this.$el.addEventListener('mouseup', this.onMouseUp.bind(this))
-            this.$el.addEventListener('mouseout', this.onMouseUp.bind(this))
+            this.$el.addEventListener('mouseout', this.onMouseOut.bind(this))
         },
-        beforeDestroy () {
+        beforeDestroy() {
             this.$el.removeEventListener('mousedown', this.onMouseDown.bind(this))
             this.$el.removeEventListener('mouseup', this.onMouseUp.bind(this))
-            this.$el.removeEventListener('mouseout', this.onMouseUp.bind(this))
+            this.$el.removeEventListener('mouseout', this.onMouseOut.bind(this))
         }
     }
 </script>

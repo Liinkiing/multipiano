@@ -10,6 +10,7 @@ import {
     SET_PIANO_NOTES as MUTATION_SET_PIANO_NOTES, SET_PIANO_TYPE, ADD_NOTE_PLAYING, REMOVE_NOTE_PLAYING
 } from "./mutations";
 import Note from "../../../components/midi/Note";
+import {SOURCE_KEYBOARD} from "../../../components/midi/constants";
 
 export const GET_MIDI_ACCESS = "GET_MIDI_ACCESS"
 export const OPEN_MIDI_INPUT = "OPEN_MIDI_INPUT"
@@ -79,9 +80,10 @@ export default {
             await dispatch(OPEN_MIDI_INPUT, inputId)
         }
     },
-    [USER_PLAY_NOTE]({commit}, {note, volume}, stopDelay) {
+    [USER_PLAY_NOTE]({commit}, {note, volume, source}, stopDelay) {
         if (note) {
             note.timestamp = Date.now()
+            note.source = source || SOURCE_KEYBOARD
             commit(ADD_NOTE_PLAYING, note)
             audioEngine.play(note, volume, stopDelay)
             this._vm.$socket.emit('userPlayNote', note);

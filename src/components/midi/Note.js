@@ -1,5 +1,6 @@
 import Utils from "../../utils/Utils";
 import audioEngine from '../../components/audio/AudioEngine'
+import {SOURCE_KEYBOARD} from "./constants";
 
 export default class Note {
 
@@ -12,6 +13,7 @@ export default class Note {
         this._keyname = note.keyname || note._keyname
         this._midiCode = note.midiCode || note._midiCode
         this._isPlaying = false
+        this._source = note.source || note._source || SOURCE_KEYBOARD
         this._timestamp = null
         this._keyCodes = note.keyCodes || note._keyCodes || null
         this._isBlackKey = this._keyname.includes("S")
@@ -23,6 +25,14 @@ export default class Note {
             keyname,
             midiCode: 127,
         })
+    }
+
+    set source (value) {
+        this._source = value
+    }
+
+    get source () {
+        return this._source
     }
 
     set timestamp (value) {
