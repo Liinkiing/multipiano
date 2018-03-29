@@ -25,7 +25,7 @@
             }
         },
         methods: {
-            ...mapActions([
+            ...mapActions('piano', [
                 USER_PLAY_NOTE,
                 USER_RELEASE_NOTE
             ]),
@@ -60,7 +60,7 @@
             }
         },
         computed: {
-            ...mapGetters([
+            ...mapGetters('piano', [
                 'pianoType',
                 'getNoteByKeycode',
                 'midiAccess',

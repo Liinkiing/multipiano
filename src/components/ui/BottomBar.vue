@@ -37,7 +37,7 @@
     export default {
         name: 'bottom-bar',
         computed: {
-            ...mapGetters([
+            ...mapGetters('piano', [
                 'midiInputs',
                 'midiOutputs',
                 'isMidiInputConnectionStatusOpen',
@@ -46,7 +46,7 @@
             ])
         },
         methods: {
-            ...mapActions([
+            ...mapActions('piano', [
                 CLOSE_MIDI_PORT,
                 OPEN_MIDI_PORT,
                 TOGGLE_MIDI_CONNECTION_INPUT,

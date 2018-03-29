@@ -22,12 +22,12 @@
           }
       },
       computed: {
-          ...mapGetters([
+          ...mapGetters('piano', [
               'midiAccess'
           ])
       },
       methods: {
-          ...mapActions([
+          ...mapActions('piano', [
               GET_MIDI_ACCESS,
               REFRESH_MIDI,
               REFRESH_MIDI_INPUTS_OUTPUTS
