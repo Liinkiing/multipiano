@@ -12,9 +12,6 @@ export const ADD_NOTE_PLAYING = "ADD_NOTE_PLAYING"
 export const REMOVE_NOTE_PLAYING = "REMOVE_NOTE_PLAYING"
 
 export default {
-    SOCKET_CONNECT (state) {
-
-    },
     [SET_MIDI_ACCESS](state, midiAccess) {
         state.midi.midiAccess = midiAccess
         state.midi.inputs = state.midi.midiAccess.inputsConnectionStatus
@@ -53,7 +50,8 @@ export default {
     [ADD_NOTE_PLAYING] (state, note) {
         state.notes = state.notes.map(n => {
             if (n.keyname === note.keyname) {
-                n.playing = true
+                note.playing = true
+                return note
             }
             return n
         })
@@ -61,7 +59,8 @@ export default {
     [REMOVE_NOTE_PLAYING] (state, note) {
         state.notes = state.notes.map(n => {
             if (n.keyname === note.keyname) {
-                n.playing = false
+                note.playing = false
+                return note
             }
             return n
         })

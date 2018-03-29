@@ -80,35 +80,36 @@ export default {
             await dispatch(OPEN_MIDI_INPUT, inputId)
         }
     },
-    [USER_PLAY_NOTE]({commit}, {note, volume, source}, stopDelay) {
+    [USER_PLAY_NOTE]({commit, rootState}, {note, volume, source}, stopDelay) {
         if (note) {
             note.timestamp = Date.now()
+            note.user = rootState.users.currentUser
+            note.volume = volume
             note.source = source || SOURCE_KEYBOARD
             commit(ADD_NOTE_PLAYING, note)
-            audioEngine.play(note, volume, stopDelay)
             this._vm.$socket.emit('userPlayNote', note);
+            audioEngine.play(note, note.volume, stopDelay)
         }
     },
     socket_userHasPlayedNote({commit}, payload) {
         let note = new Note(payload)
         if (note) {
-            note.timestamp = Date.now()
             commit(ADD_NOTE_PLAYING, note)
-            audioEngine.play(note, 0.5, 1.5)
+            audioEngine.play(note, note.volume, 1.5)
         }
     },
     [USER_RELEASE_NOTE]({commit}, {note, delay, sustained}) {
         if (note) {
             commit(REMOVE_NOTE_PLAYING, note)
             audioEngine.stop(note, delay, sustained)
-            this._vm.$socket.emit('userReleaseNote', note);
+            this._vm.$socket.emit('userReleaseNote', {note, delay, sustained});
         }
     },
-    socket_userHasReleasedNote({commit}, payload) {
-        let note = new Note(payload)
-        if (note) {
-            note.timestamp = Date.now()
-            commit(REMOVE_NOTE_PLAYING, note)
+    socket_userHasReleasedNote({commit}, {note, sustained}) {
+        let _note = new Note(note)
+        if (_note) {
+            commit(REMOVE_NOTE_PLAYING, _note)
+            audioEngine.stop(_note, 1.5, sustained)
         }
     },
     async [TOGGLE_MIDI_CONNECTION_OUTPUT]({getters, dispatch}, inputId) {

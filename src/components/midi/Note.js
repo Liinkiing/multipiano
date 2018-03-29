@@ -12,9 +12,11 @@ export default class Note {
         if (!note) return null
         this._keyname = note.keyname || note._keyname
         this._midiCode = note.midiCode || note._midiCode
-        this._isPlaying = false
+        this._user = note.user || note._user || null
+        this._volume = note.volume || note._volume || 0.5
+        this._isPlaying = note.playing || note._isPlaying || false
         this._source = note.source || note._source || SOURCE_KEYBOARD
-        this._timestamp = null
+        this._timestamp = note.timestamp || note._timestamp || null
         this._keyCodes = note.keyCodes || note._keyCodes || null
         this._isBlackKey = this._keyname.includes("S")
         this._octave = Utils.getNumberFromString(this._keyname)
@@ -25,6 +27,26 @@ export default class Note {
             keyname,
             midiCode: 127,
         })
+    }
+
+    get color () {
+        return this._user ? this._user.color : 'red'
+    }
+
+    set user (value) {
+        this._user = value
+    }
+
+    get user () {
+        return this._user
+    }
+
+    get volume () {
+        return this._volume
+    }
+
+    set volume (value) {
+        this._volume = value
     }
 
     set source (value) {
@@ -41,10 +63,6 @@ export default class Note {
 
     get timestamp () {
         return this._timestamp
-    }
-
-    play (volume) {
-        audioEngine.play(this, volume)
     }
 
     set playing (value) {

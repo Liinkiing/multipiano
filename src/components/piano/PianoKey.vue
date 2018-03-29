@@ -1,5 +1,5 @@
 <template>
-    <div class="piano-key" :class="{'is-black-key': note.isBlackKey, 'is-playing': note.playing}">
+    <div class="piano-key" :class="style">
     </div>
 
 </template>
@@ -22,7 +22,14 @@
         computed: {
             ...mapGetters('piano', [
                 'midiAccess'
-            ])
+            ]),
+            style() {
+                return {
+                    'is-black-key': this.note.isBlackKey,
+                    'is-playing': this.note.playing,
+                    [this.note.color]: this.note.playing
+                }
+            }
         },
         methods: {
             play(volume, source = SOURCE_MOUSE) {
@@ -75,6 +82,8 @@
 </script>
 
 <style lang="scss">
+    @import "../../assets/scss/modules/variables";
+
     .piano-key {
         background: whitesmoke;
         height: 140px;
@@ -85,7 +94,13 @@
             height: 100px;
         }
         &.is-playing {
-            background: red;
+            @each $colorName, $color in $color-list {
+                &.#{$colorName} {
+                    background: $color
+                }
+            }
         }
     }
+
+
 </style>
