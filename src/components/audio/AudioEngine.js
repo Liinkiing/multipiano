@@ -1,6 +1,6 @@
 import pianoKeys from '../../components/midi/piano_keys'
 
-const BASE_URL = "http://localhost:5000/assets/sounds/piano"
+const BASE_URL = process.env.VUE_APP_SERVER_URL
 
 class AudioEngine {
 

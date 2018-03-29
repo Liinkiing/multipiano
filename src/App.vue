@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="wrapper" v-if="!loadingMidi">
-    <router-view :key="$router.currentRoute.name"/>
+    <router-view :key="$router.currentRoute.path"/>
     <bottom-bar/>
   </div>
   <div v-else id="app" class="wrapper">
@@ -9,7 +9,7 @@
 </template>
 
 <script>
-    import { mapActions, mapGetters } from 'vuex'
+    import { mapActions, mapGetters, mapState } from 'vuex'
     import BottomBar from "./components/ui/BottomBar";
     import {GET_MIDI_ACCESS, REFRESH_MIDI, REFRESH_MIDI_INPUTS_OUTPUTS} from "./store/modules/piano/actions";
 
@@ -24,6 +24,9 @@
       computed: {
           ...mapGetters('piano', [
               'midiAccess'
+          ]),
+          ...mapState('rooms', [
+              'currentRoom'
           ])
       },
       methods: {
