@@ -12,7 +12,7 @@ Vue.config.productionTip = false
 
 Vue.use(VModal)
 Vue.use(ToggleButton)
-Vue.use(VueSocketio, 'http://localhost:5000', store);
+Vue.use(VueSocketio, process.env.VUE_APP_SOCKET_URL, store);
 
 new Vue({
     router,
