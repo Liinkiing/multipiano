@@ -1,5 +1,5 @@
 <template>
-    <div class="piano-key" :class="style">
+    <div class="piano-key" :class="{'is-black-key': this.note.isBlackKey, 'is-playing': this.note.playing}" :style="colorStyle">
     </div>
 
 </template>
@@ -24,11 +24,10 @@
             ...mapGetters('piano', [
                 'midiAccess'
             ]),
-            style() {
+            colorStyle () {
+                if (!this.note.playing) return null
                 return {
-                    'is-black-key': this.note.isBlackKey,
-                    'is-playing': this.note.playing,
-                    [this.note.color]: this.note.playing
+                    'background-color': this.note.color
                 }
             }
         },

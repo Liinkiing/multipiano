@@ -1,6 +1,7 @@
 <template>
     <div class="room">
         <h1>{{ room.name }}</h1>
+        <user-list/>
         <piano/>
     </div>
 </template>
@@ -9,8 +10,11 @@
     import { mapActions } from 'vuex'
     import {CHANGE_ROOM} from "../store/modules/rooms/actions";
     import Piano from "../components/piano/Piano";
+    import UserList from "../components/ui/UserList";
     export default {
-        components: {Piano},
+        components: {
+            UserList,
+            Piano},
         name: 'room',
         props: {
             room: { type: Object, required: true }
@@ -30,6 +34,7 @@
     @import "../assets/scss/modules/variables";
     .room {
         width: inherit;
+        height: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;

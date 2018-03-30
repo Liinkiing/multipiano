@@ -1,4 +1,4 @@
-import User from "../../../socket/models/User.mjs";
+import User from "../../../socket/models/User.js";
 
 export const ADD_USER = "ADD_USER"
 export const REMOVE_USER = "REMOVE_USER"

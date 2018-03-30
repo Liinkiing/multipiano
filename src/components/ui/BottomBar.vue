@@ -63,7 +63,10 @@
 <style lang="scss">
     @import "../../assets/scss/modules/variables";
     .bottom-bar {
-        margin-top: auto;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
         padding: 40px;
         background: rgba(0, 0, 0, 0.28);
         box-shadow: $big-shadow;
