@@ -5,6 +5,7 @@ import {
     ADD_MIDI_OUTPUT,
     REMOVE_MIDI_INPUT,
     REMOVE_MIDI_OUTPUT,
+    SET_CAN_PLAY,
     SET_MIDI_ACCESS,
     REFRESH_MIDI_INPUTS_OUTPUTS as MUTATION_REFRESH_MIDI_INPUTS_OUTPUTS,
     SET_PIANO_NOTES as MUTATION_SET_PIANO_NOTES, SET_PIANO_TYPE, ADD_NOTE_PLAYING, REMOVE_NOTE_PLAYING
@@ -27,6 +28,8 @@ export const SET_PIANO_NOTES = "SET_PIANO_NOTES"
 export const CHANGE_PIANO_TYPE = "CHANGE_PIANO_TYPE"
 export const USER_PLAY_NOTE = "USER_PLAY_NOTE"
 export const USER_RELEASE_NOTE = "USER_RELEASE_NOTE"
+export const USER_CAN_PLAY = "USER_CAN_PLAY"
+export const USER_CANT_PLAY = "USER_CANT_PLAY"
 
 export default {
     async GET_MIDI_ACCESS ({commit}) {
@@ -47,6 +50,12 @@ export default {
     async [CLOSE_MIDI_OUTPUT]({state, commit}, outputId) {
         await state.midi.midiAccess.outputs.filter(o => o.id === outputId)[0].close()
         commit(MUTATION_REFRESH_MIDI_INPUTS_OUTPUTS)
+    },
+    [USER_CAN_PLAY]({commit}) {
+        commit(SET_CAN_PLAY, true)
+    },
+    [USER_CANT_PLAY]({commit}) {
+        commit(SET_CAN_PLAY, false)
     },
     [SET_PIANO_NOTES]({commit}, keys) {
         commit(MUTATION_SET_PIANO_NOTES, keys)

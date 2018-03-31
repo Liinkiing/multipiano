@@ -11,6 +11,7 @@ const state = {
         outputs: []
     },
     type: 'stage_grand',
+    canPlay: true,
     notes: pianoKeys.map(key => new Note(key))
 }
 

@@ -8,7 +8,7 @@
 </template>
 
 <script>
-    import {mapGetters, mapActions} from 'vuex'
+    import {mapGetters, mapActions, mapState} from 'vuex'
     import PianoKey from './PianoKey'
     import AudioEngine from '../audio/AudioEngine'
     import {USER_PLAY_NOTE, USER_RELEASE_NOTE} from '../../store/modules/piano/actions'
@@ -30,7 +30,7 @@
                 USER_RELEASE_NOTE
             ]),
             onKeydown (e) {
-                if(!e.ctrlKey && !e.shiftKey && !e.altKey && !e.metaKey) {
+                if(this.canPlay && !e.ctrlKey && !e.shiftKey && !e.altKey && !e.metaKey) {
                     if(!this.keysdown[e.keyCode]) {
                         const note = this.getNoteByKeycode(e.keyCode)
                         if (note && !note.playing) {
@@ -47,7 +47,7 @@
             onKeyup (e) {
                 delete this.keysdown[e.keyCode]
                 const note = this.getNoteByKeycode(e.keyCode)
-                if (note && note.source === SOURCE_KEYBOARD) {
+                if (this.canPlay && note && note.source === SOURCE_KEYBOARD) {
                     this[USER_RELEASE_NOTE]({
                         note,
                         sustained: this.sustain,
@@ -60,6 +60,9 @@
             }
         },
         computed: {
+            ...mapState('piano', [
+                'canPlay'
+            ]),
             ...mapGetters('piano', [
                 'pianoType',
                 'getNoteByKeycode',

@@ -5,7 +5,7 @@
 </template>
 
 <script>
-    import {mapGetters, mapActions} from 'vuex'
+    import {mapGetters, mapActions, mapState} from 'vuex'
     import AudioEngine from '../../components/audio/AudioEngine'
     import Note from '../midi/Note'
     import {MIDI_ATTACK, MIDI_RELASE, SOURCE_MIDI, SOURCE_MOUSE} from "../midi/constants";
@@ -21,6 +21,9 @@
             sustain: {type: Boolean, required: false}
         },
         computed: {
+            ...mapState('piano', [
+                'canPlay'
+            ]),
             ...mapGetters('piano', [
                 'midiAccess'
             ]),
@@ -40,6 +43,7 @@
         },
         methods: {
             play(volume, source = SOURCE_MOUSE) {
+                if (!this.canPlay) return;
                 this[USER_PLAY_NOTE]({
                     note: this.note,
                     volume,
@@ -47,6 +51,7 @@
                 })
             },
             release(delay = 3) {
+                if (!this.canPlay) return;
                 this[USER_RELEASE_NOTE]({
                     note: this.note,
                     delay,

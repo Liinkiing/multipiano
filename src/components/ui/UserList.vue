@@ -1,6 +1,7 @@
 <template>
     <div class="user-list">
         <ul class="users">
+            <user-badge :user="currentUser" :is-current-user="true"/>
             <user-badge v-for="user in users" :user="user"/>
         </ul>
     </div>

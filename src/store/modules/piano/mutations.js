@@ -10,8 +10,12 @@ export const SET_PIANO_NOTES = "SET_PIANO_NOTES"
 export const SET_PIANO_TYPE = "SET_PIANO_TYPE"
 export const ADD_NOTE_PLAYING = "ADD_NOTE_PLAYING"
 export const REMOVE_NOTE_PLAYING = "REMOVE_NOTE_PLAYING"
+export const SET_CAN_PLAY = "SET_CAN_PLAY"
 
 export default {
+    [SET_CAN_PLAY](state, canPlay) {
+        state.canPlay = canPlay
+    },
     [SET_MIDI_ACCESS](state, midiAccess) {
         state.midi.midiAccess = midiAccess
         state.midi.inputs = state.midi.midiAccess.inputsConnectionStatus
