@@ -12,7 +12,7 @@ export default class Note {
         if (!note) return null
         this._keyname = note.keyname || note._keyname
         this._midiCode = note.midiCode || note._midiCode
-        this._user = note.user || note._user || null
+        this._users = note.users || note._users || []
         this._volume = note.volume || note._volume || 0.5
         this._isPlaying = note.playing || note._isPlaying || false
         this._source = note.source || note._source || SOURCE_KEYBOARD
@@ -30,15 +30,18 @@ export default class Note {
     }
 
     get color () {
-        return this._user ? this._user.color : 'red'
+        if (this._users && this._users.length > 0) {
+            return this._users[this._users.length - 1].color
+        }
+        return 'red'
     }
 
-    set user (value) {
-        this._user = value
+    set users (value) {
+        this._users = value
     }
 
-    get user () {
-        return this._user
+    get users () {
+        return this._users
     }
 
     get volume () {

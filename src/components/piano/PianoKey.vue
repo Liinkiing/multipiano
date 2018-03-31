@@ -21,6 +21,9 @@
             sustain: {type: Boolean, required: false}
         },
         computed: {
+            ...mapState('users', [
+                'currentUser'
+            ]),
             ...mapState('piano', [
                 'canPlay'
             ]),
@@ -59,7 +62,7 @@
                 })
             },
             onMouseDown() {
-                if (!this.note.playing) this.play(0.5)
+                if (!this.note.users.find(user => user.id === this.currentUser.id)) this.play(0.5)
             },
             onMouseOut() {
                 if (this.note.source === SOURCE_MOUSE && this.note.playing) this.release()
@@ -81,14 +84,17 @@
             })
         },
         mounted() {
-            this.$el.addEventListener('mousedown', this.onMouseDown.bind(this))
-            this.$el.addEventListener('mouseup', this.onMouseUp.bind(this))
-            this.$el.addEventListener('mouseout', this.onMouseOut.bind(this))
+            this.onMouseDown = this.onMouseDown.bind(this)
+            this.onMouseUp = this.onMouseUp.bind(this)
+            this.onMouseOut = this.onMouseOut.bind(this)
+            this.$el.addEventListener('mousedown', this.onMouseDown)
+            this.$el.addEventListener('mouseup', this.onMouseUp)
+            this.$el.addEventListener('mouseout', this.onMouseOut)
         },
         beforeDestroy() {
-            this.$el.removeEventListener('mousedown', this.onMouseDown.bind(this))
-            this.$el.removeEventListener('mouseup', this.onMouseUp.bind(this))
-            this.$el.removeEventListener('mouseout', this.onMouseOut.bind(this))
+            this.$el.removeEventListener('mousedown', this.onMouseDown)
+            this.$el.removeEventListener('mouseup', this.onMouseUp)
+            this.$el.removeEventListener('mouseout', this.onMouseOut)
         }
     }
 </script>

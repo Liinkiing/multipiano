@@ -7,8 +7,8 @@ export default {
         commit(ADD_USER, socketUser)
     },
 
-    socket_userDisconnected ({commit}, socketId) {
-        commit(REMOVE_USER, socketId)
+    socket_userDisconnected ({commit}, socketUser) {
+        commit(REMOVE_USER, socketUser)
     },
 
     socket_meConnected({commit}, {me, others}) {

@@ -19,8 +19,8 @@ export default {
             return u
         });
     },
-    [REMOVE_USER] (state, socketId) {
-        state.users = state.users.filter(user => user.id !== socketId)
+    [REMOVE_USER] (state, socketUser) {
+        state.users = state.users.filter(user => user.id !== socketUser.id)
     },
     [SET_USERS] (state, users) {
         state.users = users

@@ -44,7 +44,7 @@
                     }
                 }
             },
-            onKeyup (e) {
+            onKeyup(e) {
                 delete this.keysdown[e.keyCode]
                 const note = this.getNoteByKeycode(e.keyCode)
                 if (this.canPlay && note && note.source === SOURCE_KEYBOARD) {
@@ -79,13 +79,17 @@
         },
         async mounted() {
             await AudioEngine.init(this.pianoType)
-            window.addEventListener('keydown', this.onKeydown.bind(this))
-            window.addEventListener('keyup', this.onKeyup.bind(this))
             this.midiAccess.addEventListener(MIDI_SUSTAIN, this.onSustainMessage.bind(this))
         },
+        beforeMount () {
+            this.onKeyup = this.onKeyup.bind(this)
+            this.onKeydown = this.onKeydown.bind(this)
+            window.addEventListener('keydown', this.onKeydown)
+            window.addEventListener('keyup', this.onKeyup)
+        },
         beforeDestroy () {
-            window.removeEventListener('keydown', this.onKeydown.bind(this))
-            window.removeEventListener('keyup', this.onKeyup.bind(this))
+            window.removeEventListener('keydown', this.onKeydown)
+            window.removeEventListener('keyup', this.onKeyup)
             this.midiAccess.removeEventListener(MIDI_SUSTAIN, this.onSustainMessage.bind(this))
         }
     }

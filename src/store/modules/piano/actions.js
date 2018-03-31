@@ -92,7 +92,9 @@ export default {
     [USER_PLAY_NOTE]({commit, rootState}, {note, volume, source}, stopDelay) {
         if (note) {
             note.timestamp = Date.now()
-            note.user = rootState.users.currentUser
+            if(!note.users.find(user => rootState.users.currentUser.id === user.id)) {
+                note.users.push(rootState.users.currentUser)
+            }
             note.volume = volume
             note.source = source || SOURCE_KEYBOARD
             commit(ADD_NOTE_PLAYING, note)
@@ -107,8 +109,11 @@ export default {
             AudioEngine.play(note, note.volume, 1.5)
         }
     },
-    [USER_RELEASE_NOTE]({commit}, {note, delay, sustained}) {
+    [USER_RELEASE_NOTE]({commit, rootState}, {note, delay, sustained}) {
         if (note) {
+            if(note.users.find(user => rootState.users.currentUser.id === user.id)) {
+                note.users = note.users.filter(user => user.id !== rootState.users.currentUser.id)
+            }
             commit(REMOVE_NOTE_PLAYING, note)
             AudioEngine.stop(note, delay, sustained)
             this._vm.$socket.emit('userReleaseNote', {note, delay, sustained});
