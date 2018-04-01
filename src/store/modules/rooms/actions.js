@@ -4,10 +4,8 @@ export const CHANGE_ROOM = "CHANGE_ROOM"
 
 export default {
     [CHANGE_ROOM] ({state, commit, rootState}, roomName) {
-        console.log(state.currentRoom)
         const from = state.currentRoom.name
         const to = roomName
-        console.log(from, to)
         this._vm.$socket.emit('joinRoom', {from, to});
     },
     socket_userHasEditedUsername({commit}, user) {
