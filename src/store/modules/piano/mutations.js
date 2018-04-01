@@ -75,7 +75,7 @@ export default {
     [REMOVE_NOTE_PLAYING] (state, note) {
         state.notes = state.notes.map(n => {
             if (n.keyname === note.keyname) {
-                note.playing = false
+                note.playing = note.users.length > 0
                 return note
             }
             return n

@@ -51,7 +51,7 @@
             onKeyup(e) {
                 this[DELETE_KEY_DOWN](e.keyCode)
                 const note = this.getNoteByKeycode(e.keyCode)
-                if (this.canPlay && note && note.source === SOURCE_KEYBOARD) {
+                if (this.canPlay && note) {
                     this[USER_RELEASE_NOTE]({
                         note,
                         sustained: this.sustain,

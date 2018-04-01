@@ -1,5 +1,8 @@
 <template>
-    <div class="piano-key" :class="{'is-black-key': this.note.isBlackKey, 'is-playing': this.note.playing}" :style="colorStyle">
+    <div class="piano-key" :class="{'is-black-key': this.note.isBlackKey, 'is-playing': this.note.playing}">
+        <transition-group name="fade-piano-key" mode="in-out">
+            <div v-for="user in note.users" :key="user.id" class="piano-key-user" :style="{background: user.color, boxShadow: `0 0 50px ${user.color}`}"></div>
+        </transition-group>
     </div>
 
 </template>
@@ -22,7 +25,7 @@
             sustain: {type: Boolean, required: false}
         },
         computed: {
-            currentUserPlaying () {
+            currentUserPlaying() {
                 return !!this.note.users.find(user => this.currentUser.id === user.id)
             },
             ...mapState('users', [
@@ -33,17 +36,11 @@
             ]),
             ...mapGetters('piano', [
                 'midiAccess'
-            ]),
-            colorStyle () {
-                if (!this.note.playing) return null
-                return {
-                    'background-color': this.note.color
-                }
-            }
+            ])
         },
         watch: {
-            sustain (newVal)  {
-                if(newVal === false && !this.note.playing) {
+            sustain(newVal) {
+                if (newVal === false && !this.note.playing) {
                     AudioEngine.stopBufferedSoundForNote(this.note)
                 }
             }
@@ -68,7 +65,7 @@
                     sustained: this.sustain
                 })
             },
-            blur () {
+            blur() {
                 if (this.currentUserPlaying) {
                     this.release()
                     this[DELETE_ALL_KEYS_DOWN]()
@@ -93,7 +90,7 @@
                 this.play(e.velocity * (MAX_VELOCITY / VELOCITY_STEPS), SOURCE_MIDI)
             })
             this.midiAccess.listenToMidiForNote(MIDI_RELASE, this.note, () => {
-                if (this.note.source === SOURCE_MIDI) this.release(3)
+                this.release(3)
             })
         },
         mounted() {
@@ -102,12 +99,14 @@
             this.onMouseOut = this.onMouseOut.bind(this)
             this.blur = this.blur.bind(this)
             window.addEventListener('blur', this.blur)
+            window.addEventListener('contextmenu', this.blur)
             this.$el.addEventListener('mousedown', this.onMouseDown)
             this.$el.addEventListener('mouseup', this.onMouseUp)
             this.$el.addEventListener('mouseout', this.onMouseOut)
         },
         beforeDestroy() {
             window.removeEventListener('blur', this.blur)
+            window.removeEventListener('contextmenu', this.blur)
             this.$el.removeEventListener('mousedown', this.onMouseDown)
             this.$el.removeEventListener('mousedown', this.onMouseDown)
             this.$el.removeEventListener('mouseup', this.onMouseUp)
@@ -124,9 +123,16 @@
         height: 140px;
         width: 20px;
         border: 2px black solid;
+        position: relative;
         &.is-black-key {
             background: black;
             height: 100px;
+        }
+        & .piano-key-user {
+            position: absolute;
+            content: '';
+            width: 100%;
+            height: 100%;
         }
         &.is-playing {
             @each $colorName, $color in $color-list {

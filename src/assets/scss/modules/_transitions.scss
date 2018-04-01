@@ -8,3 +8,14 @@
   opacity: 0;
   filter: blur(15px)
 }
+
+.fade-piano-key-enter-active {
+  transition: opacity .10s, filter 0.15s;
+}
+.fade-piano-key-leave-active {
+  transition: opacity .10s, filter 0.15s;
+}
+.fade-piano-key-enter, .fade-piano-key-leave-to {
+  opacity: 0;
+  filter: blur(10px)
+}
