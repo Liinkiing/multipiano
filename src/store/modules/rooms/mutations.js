@@ -1,6 +1,6 @@
 import User from "../../../socket/models/User";
 
-export const SET_ROOM = "SET_ROOM"
+export const SET_CURRENT_ROOM_NAME = "SET_CURRENT_ROOM_NAME"
 export const SET_ROOMS = "SET_ROOMS"
 export const ADD_ROOM = "ADD_ROOM"
 export const DELETE_ROOM = "DELETE_ROOM"
@@ -19,8 +19,8 @@ export default {
             return u
         });
     },
-    [SET_ROOM] (state, room) {
-        state.currentRoom = room
+    [SET_CURRENT_ROOM_NAME] (state, roomName) {
+        state.currentRoom = roomName
     },
     [SET_ROOMS] (state, rooms) {
         state.rooms = rooms

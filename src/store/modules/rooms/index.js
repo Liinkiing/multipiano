@@ -3,17 +3,20 @@ import mutations from "./mutations";
 import {HOME_ID} from "../../../router";
 
 const state = {
-    currentRoom: {
-        id: HOME_ID,
-        name: 'Multiplayer Piano',
-        users: [],
-        usersCount: 0,
-    },
+    currentRoom: HOME_ID,
     rooms: []
 }
 
 const getters = {
-
+    currentRoom: state => {
+        return state.rooms.find(room => room.name === state.currentRoom) || null
+    },
+    homeCount: state => {
+        return state.rooms.find(room => room.id === HOME_ID) ? state.rooms.find(room => room.id === HOME_ID).usersCount : 0
+    },
+    isHomepage: state => {
+        return state.currentRoom === HOME_ID
+    }
 }
 
 export default {

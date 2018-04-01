@@ -1,14 +1,14 @@
 <template>
     <div class="user-list">
-        <ul class="users">
-            <user-badge v-for="user in users" :user="user" :is-current-user="user.id === currentUser.id"/>
+        <ul v-if="currentRoom" class="users">
+            <user-badge v-for="user in currentRoom.users" :user="user" :is-current-user="user.id === currentUser.id"/>
         </ul>
     </div>
 
 </template>
 
 <script>
-    import {mapState} from 'vuex';
+    import {mapState, mapGetters} from 'vuex';
     import UserBadge from "./UserBadge";
 
     export default {
@@ -18,10 +18,9 @@
             ...mapState('users', [
                 'currentUser'
             ]),
-            ...mapState('rooms', {
-                users: state => state.currentRoom.users,
-                usersCount: state => state.currentRoom.usersCount
-            }),
+            ...mapGetters('rooms', [
+                'currentRoom'
+            ])
         }
     }
 </script>
