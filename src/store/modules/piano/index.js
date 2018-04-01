@@ -12,7 +12,8 @@ const state = {
     },
     type: 'stage_grand',
     canPlay: true,
-    notes: pianoKeys.map(key => new Note(key))
+    notes: pianoKeys.map(key => new Note(key)),
+    keysdown: {}
 }
 
 const getters = {

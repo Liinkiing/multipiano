@@ -5,11 +5,12 @@
 </template>
 
 <script>
-    import {mapGetters, mapActions, mapState} from 'vuex'
+    import {mapGetters, mapActions, mapState, mapMutations} from 'vuex'
     import AudioEngine from '../../components/audio/AudioEngine'
     import Note from '../midi/Note'
     import {MIDI_ATTACK, MIDI_RELASE, SOURCE_MIDI, SOURCE_MOUSE} from "../midi/constants";
     import {USER_PLAY_NOTE, USER_RELEASE_NOTE} from "../../store/modules/piano/actions";
+    import {DELETE_ALL_KEYS_DOWN} from "../../store/modules/piano/mutations";
 
     const MAX_VELOCITY = 1
     const VELOCITY_STEPS = 127
@@ -21,6 +22,9 @@
             sustain: {type: Boolean, required: false}
         },
         computed: {
+            currentUserPlaying () {
+                return !!this.note.users.find(user => this.currentUser.id === user.id)
+            },
             ...mapState('users', [
                 'currentUser'
             ]),
@@ -45,6 +49,9 @@
             }
         },
         methods: {
+            ...mapMutations('piano', [
+                DELETE_ALL_KEYS_DOWN
+            ]),
             play(volume, source = SOURCE_MOUSE) {
                 if (!this.canPlay) return;
                 this[USER_PLAY_NOTE]({
@@ -61,14 +68,20 @@
                     sustained: this.sustain
                 })
             },
+            blur () {
+                if (this.currentUserPlaying) {
+                    this.release()
+                    this[DELETE_ALL_KEYS_DOWN]()
+                }
+            },
             onMouseDown() {
-                if (!this.note.users.find(user => user.id === this.currentUser.id)) this.play(0.5)
+                if (!this.currentUserPlaying) this.play(0.5)
             },
             onMouseOut() {
-                if (this.note.source === SOURCE_MOUSE && this.note.playing) this.release()
+                if (this.note.source === SOURCE_MOUSE && this.currentUserPlaying) this.release()
             },
             onMouseUp() {
-                if (this.note.source === SOURCE_MOUSE && this.note.playing) this.release()
+                if (this.note.source === SOURCE_MOUSE && this.currentUserPlaying) this.release()
             },
             ...mapActions('piano', [
                 USER_PLAY_NOTE,
@@ -77,7 +90,7 @@
         },
         created() {
             this.midiAccess.listenToMidiForNote(MIDI_ATTACK, this.note, (e) => {
-                if (!this.note.playing) this.play(e.velocity * (MAX_VELOCITY / VELOCITY_STEPS), SOURCE_MIDI)
+                this.play(e.velocity * (MAX_VELOCITY / VELOCITY_STEPS), SOURCE_MIDI)
             })
             this.midiAccess.listenToMidiForNote(MIDI_RELASE, this.note, () => {
                 if (this.note.source === SOURCE_MIDI) this.release(3)
@@ -87,11 +100,15 @@
             this.onMouseDown = this.onMouseDown.bind(this)
             this.onMouseUp = this.onMouseUp.bind(this)
             this.onMouseOut = this.onMouseOut.bind(this)
+            this.blur = this.blur.bind(this)
+            window.addEventListener('blur', this.blur)
             this.$el.addEventListener('mousedown', this.onMouseDown)
             this.$el.addEventListener('mouseup', this.onMouseUp)
             this.$el.addEventListener('mouseout', this.onMouseOut)
         },
         beforeDestroy() {
+            window.removeEventListener('blur', this.blur)
+            this.$el.removeEventListener('mousedown', this.onMouseDown)
             this.$el.removeEventListener('mousedown', this.onMouseDown)
             this.$el.removeEventListener('mouseup', this.onMouseUp)
             this.$el.removeEventListener('mouseout', this.onMouseOut)

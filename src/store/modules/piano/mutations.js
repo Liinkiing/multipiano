@@ -11,8 +11,20 @@ export const SET_PIANO_TYPE = "SET_PIANO_TYPE"
 export const ADD_NOTE_PLAYING = "ADD_NOTE_PLAYING"
 export const REMOVE_NOTE_PLAYING = "REMOVE_NOTE_PLAYING"
 export const SET_CAN_PLAY = "SET_CAN_PLAY"
+export const DELETE_KEY_DOWN = "DELETE_KEY_DOWN"
+export const ADD_KEY_DOWN = "ADD_KEY_DOWN"
+export const DELETE_ALL_KEYS_DOWN = "DELETE_ALL_KEYS_DOWN"
 
 export default {
+    [DELETE_KEY_DOWN] (state, keyCode) {
+        delete state.keysdown[keyCode]
+    },
+    [ADD_KEY_DOWN] (state, keyCode) {
+        state.keysdown[keyCode] = true
+    },
+    [DELETE_ALL_KEYS_DOWN] (state) {
+        state.keysdown = {}
+    },
     [SET_CAN_PLAY](state, canPlay) {
         state.canPlay = canPlay
     },
