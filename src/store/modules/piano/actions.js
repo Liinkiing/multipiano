@@ -122,7 +122,7 @@ export default {
     },
     [USER_RELEASE_SUSTAIN]({commit}, notes) {
         AudioEngine.stopBufferedSoundsExcept(notes)
-        this._vm.$socket.emit('userReleaseSustain');
+        this._vm.$socket.emit('userReleaseSustain', notes);
     },
     socket_userHasReleasedSustain({commit}, notes) {
         AudioEngine.stopBufferedSoundsExcept(notes)
