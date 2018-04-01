@@ -88,10 +88,26 @@ class AudioEngine {
         }
     }
 
+    stopBufferedSoundsExcept(notes) {
+        for(let key in this.playings) {
+            const playingKeynames = notes.map(note => note.keyname)
+            if(playingKeynames.some(keyname => key.includes(keyname))) continue
+            this.playings[key].gain.gain.exponentialRampToValueAtTime(0.000001, this.context.currentTime + 3);
+            this.playings[key].source.stop(this.context.currentTime + 3)
+            setTimeout(() => {
+                delete this.playings[key]
+            }, 3)
+        }
+    }
+
     stopBufferedSoundForNote(note) {
         const keyId = note.keyname + note.timestamp
         if(this.playings[keyId]) {
             this.playings[keyId].gain.gain.exponentialRampToValueAtTime(0.000001, this.context.currentTime + 3);
+            this.playings[keyId].source.stop(this.context.currentTime + 3)
+            setTimeout(() => {
+                delete this.playings[keyId]
+            }, 3)
         }
     }
 
@@ -101,6 +117,9 @@ class AudioEngine {
             if (!sustained) {
                 this.playings[keyId].gain.gain.exponentialRampToValueAtTime(0.000001, this.context.currentTime + stopDelay);
                 this.playings[keyId].source.stop(this.context.currentTime + stopDelay)
+                setTimeout(() => {
+                    delete this.playings[keyId]
+                }, 3)
             }
         }
     }

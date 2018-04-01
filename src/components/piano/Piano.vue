@@ -71,6 +71,7 @@
             ]),
             ...mapGetters('piano', [
                 'pianoType',
+                'playingNotes',
                 'getNoteByKeycode',
                 'midiAccess',
                 'pianoNotes',
@@ -84,7 +85,7 @@
             },
             sustain(newVal) {
                 if (newVal === false) {
-                    this[USER_RELEASE_SUSTAIN]()
+                    this[USER_RELEASE_SUSTAIN](this.playingNotes)
                 }
             }
         },

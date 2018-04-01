@@ -120,12 +120,12 @@ export default {
             this._vm.$socket.emit('userReleaseNote', {note, delay, sustained});
         }
     },
-    [USER_RELEASE_SUSTAIN]() {
-        AudioEngine.stopBufferedSounds()
+    [USER_RELEASE_SUSTAIN]({commit}, notes) {
+        AudioEngine.stopBufferedSoundsExcept(notes)
         this._vm.$socket.emit('userReleaseSustain');
     },
-    socket_userHasReleasedSustain() {
-        AudioEngine.stopBufferedSounds()
+    socket_userHasReleasedSustain({commit}, notes) {
+        AudioEngine.stopBufferedSoundsExcept(notes)
     },
     socket_userHasReleasedNote({commit}, {note, sustained}) {
         let _note = new Note(note)
