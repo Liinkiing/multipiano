@@ -7,18 +7,9 @@ export const DELETE_ROOM = "DELETE_ROOM"
 export const ADD_USER = "ADD_USER"
 export const REMOVE_USER = "REMOVE_USER"
 export const SET_USERS = "SET_USERS"
-export const REPLACE_USER = "REPLACE_USER"
 
 
 export default {
-    [REPLACE_USER] (state, user) {
-        state.currentRoom.users = state.currentRoom.users.map(u => {
-            if (u.id === user.id) {
-                return user
-            }
-            return u
-        });
-    },
     [SET_CURRENT_ROOM_NAME] (state, roomName) {
         state.currentRoom = roomName
     },
