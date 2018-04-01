@@ -30,6 +30,7 @@ export const USER_PLAY_NOTE = "USER_PLAY_NOTE"
 export const USER_RELEASE_NOTE = "USER_RELEASE_NOTE"
 export const USER_CAN_PLAY = "USER_CAN_PLAY"
 export const USER_CANT_PLAY = "USER_CANT_PLAY"
+export const USER_RELEASE_SUSTAIN = "USER_RELEASE_SUSTAIN"
 
 export default {
     async GET_MIDI_ACCESS ({commit}) {
@@ -118,6 +119,13 @@ export default {
             AudioEngine.stop(note, delay, sustained)
             this._vm.$socket.emit('userReleaseNote', {note, delay, sustained});
         }
+    },
+    [USER_RELEASE_SUSTAIN]() {
+        AudioEngine.stopBufferedSounds()
+        this._vm.$socket.emit('userReleaseSustain');
+    },
+    socket_userHasReleasedSustain() {
+        AudioEngine.stopBufferedSounds()
     },
     socket_userHasReleasedNote({commit}, {note, sustained}) {
         let _note = new Note(note)

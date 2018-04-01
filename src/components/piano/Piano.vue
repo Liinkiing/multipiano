@@ -11,7 +11,7 @@
     import {mapGetters, mapActions, mapState, mapMutations} from 'vuex'
     import PianoKey from './PianoKey'
     import AudioEngine from '../audio/AudioEngine'
-    import {USER_PLAY_NOTE, USER_RELEASE_NOTE} from '../../store/modules/piano/actions'
+    import {USER_PLAY_NOTE, USER_RELEASE_NOTE, USER_RELEASE_SUSTAIN} from '../../store/modules/piano/actions'
     import {MIDI_SUSTAIN, SOURCE_KEYBOARD} from "../midi/constants";
     import {ADD_KEY_DOWN, DELETE_KEY_DOWN} from "../../store/modules/piano/mutations";
 
@@ -31,7 +31,8 @@
             ]),
             ...mapActions('piano', [
                 USER_PLAY_NOTE,
-                USER_RELEASE_NOTE
+                USER_RELEASE_NOTE,
+                USER_RELEASE_SUSTAIN
             ]),
             onKeydown (e) {
                 if(this.canPlay && !e.ctrlKey && !e.shiftKey && !e.altKey && !e.metaKey) {
@@ -80,6 +81,11 @@
                 this.loadingSounds = true
                 await AudioEngine.init(newPianoType)
                 this.loadingSounds = false
+            },
+            sustain(newVal) {
+                if (newVal === false) {
+                    this[USER_RELEASE_SUSTAIN]()
+                }
             }
         },
         async mounted() {

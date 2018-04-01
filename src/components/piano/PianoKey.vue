@@ -12,7 +12,7 @@
     import AudioEngine from '../../components/audio/AudioEngine'
     import Note from '../midi/Note'
     import {MIDI_ATTACK, MIDI_RELASE, SOURCE_MIDI, SOURCE_MOUSE} from "../midi/constants";
-    import {USER_PLAY_NOTE, USER_RELEASE_NOTE} from "../../store/modules/piano/actions";
+    import {USER_PLAY_NOTE, USER_RELEASE_NOTE, USER_RELEASE_SUSTAIN} from "../../store/modules/piano/actions";
     import {DELETE_ALL_KEYS_DOWN} from "../../store/modules/piano/mutations";
 
     const MAX_VELOCITY = 1
@@ -41,7 +41,7 @@
         watch: {
             sustain(newVal) {
                 if (newVal === false && !this.note.playing) {
-                    AudioEngine.stopBufferedSoundForNote(this.note)
+                    // this[USER_RELEASE_SUSTAIN](this.note)
                 }
             }
         },
@@ -86,7 +86,8 @@
             },
             ...mapActions('piano', [
                 USER_PLAY_NOTE,
-                USER_RELEASE_NOTE
+                USER_RELEASE_NOTE,
+                USER_RELEASE_SUSTAIN
             ])
         },
         created() {
