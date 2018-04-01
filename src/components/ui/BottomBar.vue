@@ -5,7 +5,7 @@
         <button @click="CHANGE_PIANO_TYPE('close_grand')">Close Grand</button>
         <button @click="$modal.show('newRoom')">Create a room</button>
         <room-list/>
-        <modal height="auto" name="midi">
+        <modal @opened="USER_CANT_PLAY" @closed="USER_CAN_PLAY" height="auto" name="midi">
             <h2>Inputs</h2>
             <ul class="midi-inputs">
                 <li class="midi-input" v-for="input in midiInputs" :key="input.id">
