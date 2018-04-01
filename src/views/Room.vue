@@ -25,7 +25,7 @@
             ])
         },
         created () {
-            this[CHANGE_ROOM](this.room)
+            this[CHANGE_ROOM](this.room.id)
         }
     }
 </script>

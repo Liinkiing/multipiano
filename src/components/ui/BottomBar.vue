@@ -3,9 +3,8 @@
         <button @click="$modal.show('midi')">MIDI In / Out</button>
         <button @click="CHANGE_PIANO_TYPE('stage_grand')">Stage Grand</button>
         <button @click="CHANGE_PIANO_TYPE('close_grand')">Close Grand</button>
-        <router-link :to="{name: 'room.view', params: {roomName: 'test'}}">
-            <button>Go room</button>
-        </router-link>
+        <button @click="$modal.show('newRoom')">Create a room</button>
+        <room-list/>
         <modal height="auto" name="midi">
             <h2>Inputs</h2>
             <ul class="midi-inputs">
@@ -24,6 +23,11 @@
                 </li>
             </ul>
         </modal>
+        <modal @opened="() => { USER_CANT_PLAY(); $refs.newRoomInput.focus() }" @closed="USER_CAN_PLAY" height="auto" name="newRoom">
+            <h2>Create a room</h2>
+            <input ref="newRoomInput" type="text" v-model="newRoom" @keyup.enter="validateRoomCreation">
+            <button @click="validateRoomCreation">OK</button>
+        </modal>
     </div>
     
 </template>
@@ -35,10 +39,17 @@
         OPEN_MIDI_PORT,
         CHANGE_PIANO_TYPE,
         TOGGLE_MIDI_CONNECTION_INPUT,
-        TOGGLE_MIDI_CONNECTION_OUTPUT
+        TOGGLE_MIDI_CONNECTION_OUTPUT, USER_CAN_PLAY, USER_CANT_PLAY
     } from "../../store/modules/piano/actions";
+    import RoomList from "./RoomList";
     export default {
+        components: {RoomList},
         name: 'bottom-bar',
+        data () {
+            return {
+                newRoom: ''
+            }
+        },
         computed: {
             ...mapGetters('piano', [
                 'midiInputs',
@@ -49,9 +60,21 @@
             ])
         },
         methods: {
+            validateRoomCreation () {
+                this.$router.push({
+                    name: 'room.view',
+                    params: {
+                        roomName: this.newRoom
+                    }
+                })
+                this.newRoom = ''
+                this.$modal.hide('newRoom')
+            },
             ...mapActions('piano', [
                 CLOSE_MIDI_PORT,
                 OPEN_MIDI_PORT,
+                USER_CANT_PLAY,
+                USER_CAN_PLAY,
                 TOGGLE_MIDI_CONNECTION_INPUT,
                 TOGGLE_MIDI_CONNECTION_OUTPUT,
                 CHANGE_PIANO_TYPE,

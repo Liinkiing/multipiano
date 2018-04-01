@@ -1,13 +1,25 @@
-import {SET_ROOM} from "./mutations";
-import {REMOVE_USER} from "../users/mutations";
+import {REPLACE_USER, SET_ROOM, SET_ROOMS} from "./mutations";
 
 export const CHANGE_ROOM = "CHANGE_ROOM"
 
 export default {
-    [CHANGE_ROOM] ({state, commit}, room) {
+    [CHANGE_ROOM] ({state, commit, rootState}, roomName) {
+        console.log(state.currentRoom)
+        const from = state.currentRoom.name
+        const to = roomName
+        console.log(from, to)
+        this._vm.$socket.emit('joinRoom', {from, to});
+    },
+    socket_userHasEditedUsername({commit}, user) {
+        commit(REPLACE_USER, user)
+    },
+    socket_getRooms({commit}, rooms) {
+        commit(SET_ROOMS, rooms)
+    },
+    socket_updateRoom({commit}, room) {
         commit(SET_ROOM, room)
-        this._vm.$socket.emit('room', state.currentRoom);
     },
-    socket_leaveRoom ({dispatch}, {user, room}) {
-    },
+    socket_userDisconnectedFromRoom ({commit}, room) {
+        commit(SET_ROOM, room)
+    }
 }

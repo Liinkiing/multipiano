@@ -1,8 +1,7 @@
 <template>
     <div class="user-list">
         <ul class="users">
-            <user-badge :user="currentUser" :is-current-user="true"/>
-            <user-badge v-for="user in users" :user="user"/>
+            <user-badge v-for="user in users" :user="user" :is-current-user="user.id === currentUser.id"/>
         </ul>
     </div>
 
@@ -17,9 +16,12 @@
         name: 'user-list',
         computed: {
             ...mapState('users', [
-                'currentUser',
-                'users'
-            ])
+                'currentUser'
+            ]),
+            ...mapState('rooms', {
+                users: state => state.currentRoom.users,
+                usersCount: state => state.currentRoom.usersCount
+            }),
         }
     }
 </script>
