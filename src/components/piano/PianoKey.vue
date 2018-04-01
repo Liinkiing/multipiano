@@ -70,6 +70,10 @@
                     this.release()
                     this[DELETE_ALL_KEYS_DOWN]()
                 }
+                this.midiAccess.stopListening()
+            },
+            focus () {
+                this.midiAccess.startListening()
             },
             onMouseDown() {
                 if (!this.currentUserPlaying) this.play(0.5)
@@ -98,7 +102,9 @@
             this.onMouseUp = this.onMouseUp.bind(this)
             this.onMouseOut = this.onMouseOut.bind(this)
             this.blur = this.blur.bind(this)
+            this.focus = this.focus.bind(this)
             window.addEventListener('blur', this.blur)
+            window.addEventListener('focus', this.focus)
             window.addEventListener('contextmenu', this.blur)
             this.$el.addEventListener('mousedown', this.onMouseDown)
             this.$el.addEventListener('mouseup', this.onMouseUp)
@@ -106,6 +112,7 @@
         },
         beforeDestroy() {
             window.removeEventListener('blur', this.blur)
+            window.removeEventListener('focus', this.focus)
             window.removeEventListener('contextmenu', this.blur)
             this.$el.removeEventListener('mousedown', this.onMouseDown)
             this.$el.removeEventListener('mousedown', this.onMouseDown)

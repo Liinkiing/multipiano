@@ -18,6 +18,7 @@ export default class MIDIAccess {
      */
     constructor(midiAccess) {
         this.midiAccess = midiAccess
+        this.isListening = true
         this.listeners = []
         this.inputs = []
         this.midiAccess.inputs.forEach(input => {
@@ -40,17 +41,27 @@ export default class MIDIAccess {
         }
         this.inputs.forEach(input => {
             input.onmidimessage = e => {
-                let message = new MIDIMessage(e)
-                if (this.listeners[message.signalType]) {
-                    this.listeners[message.signalType].forEach(callback => {
-                        callback(message)
-                    })
-                }
-                if (message.note && this.listeners[message.note.keyname][message.signalType]) {
-                    this.listeners[message.note.keyname][message.signalType](message)
+                if (this.isListening) {
+                    let message = new MIDIMessage(e)
+                    if (this.listeners[message.signalType]) {
+                        this.listeners[message.signalType].forEach(callback => {
+                            callback(message)
+                        })
+                    }
+                    if (message.note && this.listeners[message.note.keyname][message.signalType]) {
+                        this.listeners[message.note.keyname][message.signalType](message)
+                    }
                 }
             }
         })
+    }
+
+    stopListening () {
+        this.isListening = false
+    }
+
+    startListening () {
+        this.isListening = true
     }
 
     get inputsConnectionStatus() {
