@@ -6,6 +6,7 @@
     "serve": "vue-cli-service serve",
     "start": "node server.js",
     "heroku-postbuild": "npm install --only=dev --no-shrinkwrap && npm run build",
+    "deploy": "git push heroku master",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
