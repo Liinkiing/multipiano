@@ -1,7 +1,7 @@
 <template>
     <div class="user-list">
         <ul v-if="currentRoom" class="users">
-            <user-badge v-for="user in currentRoom.users" :user="user" :is-current-user="user.id === currentUser.id"/>
+            <user-badge v-for="user in currentRoom.users" :key="user.id" :user="user" :is-current-user="user.id === currentUser.id"/>
         </ul>
     </div>
 

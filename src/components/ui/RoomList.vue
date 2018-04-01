@@ -2,8 +2,8 @@
     <div class="room-list">
         <ul class="rooms">
             <li :class="{active: isHomepage}"><router-link to="/">Home ({{ homeCount }})</router-link></li>
-            <li v-for="room in rooms" :class="{active: room.name === currentRoom}">
-                <router-link :key="room.id" v-if="room.id !== HOME_ID" :to="{name: 'room.view', params: {roomName: room.name}}">{{ room.name }} ({{ room.usersCount }})</router-link>
+            <li v-for="room in rooms" :key="room.id" :class="{active: room.name === currentRoom}">
+                <router-link  v-if="room.id !== HOME_ID" :to="{name: 'room.view', params: {roomName: room.name}}">{{ room.name }} ({{ room.usersCount }})</router-link>
             </li>
         </ul>
     </div>

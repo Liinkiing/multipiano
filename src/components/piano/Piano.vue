@@ -84,6 +84,7 @@
         },
         async mounted() {
             await AudioEngine.init(this.pianoType)
+            this.midiAccess.init();
             this.midiAccess.addEventListener(MIDI_SUSTAIN, this.onSustainMessage.bind(this))
         },
         beforeMount () {
