@@ -39,6 +39,7 @@
         list-style: none;
         & li {
             margin: 10px 20px;
+            display: inline-block;
             &.active {
                 font-weight: bold;
             }

@@ -50,7 +50,9 @@
                 }
             },
             onKeyup(e) {
-                this[DELETE_KEY_DOWN](e.keyCode)
+                if (this.canPlayKeyboard) {
+                    this[DELETE_KEY_DOWN](e.keyCode)
+                }
                 const note = this.getNoteByKeycode(e.keyCode)
                 if (this.canPlayKeyboard && note) {
                     this[USER_RELEASE_NOTE]({
@@ -116,6 +118,8 @@
         -moz-user-select: none;
         -o-user-select: none;
         user-select: none;
+        position: relative;
+        z-index: 50;
         & .keys {
             padding: 0;
             margin: 0;
