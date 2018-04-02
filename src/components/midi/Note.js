@@ -1,5 +1,4 @@
 import Utils from "../../utils/Utils";
-import AudioEngine from '../../components/audio/AudioEngine'
 import {SOURCE_KEYBOARD} from "./constants";
 
 export default class Note {

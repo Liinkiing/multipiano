@@ -5,10 +5,10 @@ export const USER_SEND_MESSAGE = "USER_SEND_MESSAGE"
 export const USER_EDIT_MESSAGE = "USER_EDIT_MESSAGE"
 
 export default {
-    [USER_SEND_MESSAGE]({commit}, {user, message}) {
+    [USER_SEND_MESSAGE](context, {user, message}) {
         this._vm.$socket.emit('userSendMessage', {user, message})
     },
-    [USER_EDIT_MESSAGE]({commit}, {user, message, newBody}) {
+    [USER_EDIT_MESSAGE](context, {user, message, newBody}) {
         this._vm.$socket.emit('userEditMessage', {user, message, newBody})
     },
     socket_userHasEditedMessage({commit}, socketMessage) {
