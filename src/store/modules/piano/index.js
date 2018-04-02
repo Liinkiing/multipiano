@@ -12,6 +12,7 @@ const state = {
     },
     type: 'stage_grand',
     canPlay: true,
+    canPlayKeyboard: true,
     notes: pianoKeys.map(key => new Note(key)),
     keysdown: {}
 }

@@ -8,7 +8,8 @@ import {
     SET_CAN_PLAY,
     SET_MIDI_ACCESS,
     REFRESH_MIDI_INPUTS_OUTPUTS as MUTATION_REFRESH_MIDI_INPUTS_OUTPUTS,
-    SET_PIANO_NOTES as MUTATION_SET_PIANO_NOTES, SET_PIANO_TYPE, ADD_NOTE_PLAYING, REMOVE_NOTE_PLAYING
+    SET_PIANO_NOTES as MUTATION_SET_PIANO_NOTES, SET_PIANO_TYPE, ADD_NOTE_PLAYING, REMOVE_NOTE_PLAYING,
+    DELETE_ALL_KEYS_DOWN, SET_CAN_PLAY_KEYBOARD
 } from "./mutations";
 import Note from "../../../components/midi/Note";
 import {SOURCE_KEYBOARD} from "../../../components/midi/constants";
@@ -30,10 +31,13 @@ export const USER_PLAY_NOTE = "USER_PLAY_NOTE"
 export const USER_RELEASE_NOTE = "USER_RELEASE_NOTE"
 export const USER_CAN_PLAY = "USER_CAN_PLAY"
 export const USER_CANT_PLAY = "USER_CANT_PLAY"
+export const USER_CAN_PLAY_WITH_KEYBOARD = "USER_CAN_PLAY_WITH_KEYBOARD"
+export const USER_CANT_PLAY_WITH_KEYBOARD = "USER_CANT_PLAY_WITH_KEYBOARD"
 export const USER_RELEASE_SUSTAIN = "USER_RELEASE_SUSTAIN"
+export const CLEAR_PIANO_PLAYING = "CLEAR_PIANO_PLAYING"
 
 export default {
-    async GET_MIDI_ACCESS ({commit}) {
+    async GET_MIDI_ACCESS({commit}) {
         commit(SET_MIDI_ACCESS, await MIDIWrapper.requestMidiAccess())
     },
     async [OPEN_MIDI_INPUT]({commit, state}, inputId) {
@@ -57,6 +61,12 @@ export default {
     },
     [USER_CANT_PLAY]({commit}) {
         commit(SET_CAN_PLAY, false)
+    },
+    [USER_CAN_PLAY_WITH_KEYBOARD]({commit}) {
+        commit(SET_CAN_PLAY_KEYBOARD, true)
+    },
+    [USER_CANT_PLAY_WITH_KEYBOARD]({commit}) {
+        commit(SET_CAN_PLAY_KEYBOARD, false)
     },
     [SET_PIANO_NOTES]({commit}, keys) {
         commit(MUTATION_SET_PIANO_NOTES, keys)
@@ -93,7 +103,7 @@ export default {
     [USER_PLAY_NOTE]({commit, rootState}, {note, volume, source}, stopDelay) {
         if (note) {
             note.timestamp = Date.now()
-            if(!note.users.find(user => rootState.users.currentUser.id === user.id)) {
+            if (!note.users.find(user => rootState.users.currentUser.id === user.id)) {
                 note.users.push(rootState.users.currentUser)
             }
             note.volume = volume
@@ -112,7 +122,7 @@ export default {
     },
     [USER_RELEASE_NOTE]({commit, rootState}, {note, delay, sustained}) {
         if (note) {
-            if(note.users.find(user => rootState.users.currentUser.id === user.id)) {
+            if (note.users.find(user => rootState.users.currentUser.id === user.id)) {
                 note.users = note.users.filter(user => user.id !== rootState.users.currentUser.id)
             }
             commit(REMOVE_NOTE_PLAYING, note)
@@ -120,11 +130,21 @@ export default {
             this._vm.$socket.emit('userReleaseNote', {note, delay, sustained});
         }
     },
-    [USER_RELEASE_SUSTAIN]({commit}, notes) {
+    [CLEAR_PIANO_PLAYING]({commit, getters, dispatch}) {
+        getters.playingNotes.forEach(note => {
+            dispatch(USER_RELEASE_NOTE, {
+                note,
+                delay: 3,
+                sustained: false
+            })
+        })
+        commit(DELETE_ALL_KEYS_DOWN)
+    },
+    [USER_RELEASE_SUSTAIN](context, notes) {
         AudioEngine.stopBufferedSoundsExcept(notes)
         this._vm.$socket.emit('userReleaseSustain', notes);
     },
-    socket_userHasReleasedSustain({commit}, notes) {
+    socket_userHasReleasedSustain(context, notes) {
         AudioEngine.stopBufferedSoundsExcept(notes)
     },
     socket_userHasReleasedNote({commit}, {note, sustained}) {

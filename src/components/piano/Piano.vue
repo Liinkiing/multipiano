@@ -35,7 +35,7 @@
                 USER_RELEASE_SUSTAIN
             ]),
             onKeydown (e) {
-                if(this.canPlay && !e.ctrlKey && !e.shiftKey && !e.altKey && !e.metaKey) {
+                if(this.canPlayKeyboard && !e.ctrlKey && !e.shiftKey && !e.altKey && !e.metaKey) {
                     if(!this.keysdown[e.keyCode]) {
                         const note = this.getNoteByKeycode(e.keyCode)
                         if (note && !note.currentUserPlaying) {
@@ -52,7 +52,7 @@
             onKeyup(e) {
                 this[DELETE_KEY_DOWN](e.keyCode)
                 const note = this.getNoteByKeycode(e.keyCode)
-                if (this.canPlay && note) {
+                if (this.canPlayKeyboard && note) {
                     this[USER_RELEASE_NOTE]({
                         note,
                         sustained: this.sustain,
@@ -66,7 +66,7 @@
         },
         computed: {
             ...mapState('piano', [
-                'canPlay',
+                'canPlayKeyboard',
                 'keysdown'
             ]),
             ...mapGetters('piano', [

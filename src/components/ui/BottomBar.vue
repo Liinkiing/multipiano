@@ -5,7 +5,7 @@
         <button @click="CHANGE_PIANO_TYPE('close_grand')">Close Grand</button>
         <button @click="$modal.show('newRoom')">Create a room</button>
         <room-list/>
-        <modal @opened="USER_CANT_PLAY" @closed="USER_CAN_PLAY" height="auto" name="midi">
+        <modal @opened="() => { USER_CANT_PLAY_WITH_KEYBOARD(); CLEAR_PIANO_PLAYING() }" @closed="USER_CAN_PLAY_WITH_KEYBOARD" height="auto" name="midi">
             <h2>Inputs</h2>
             <ul class="midi-inputs">
                 <li class="midi-input" v-for="input in midiInputs" :key="input.id">
@@ -23,7 +23,7 @@
                 </li>
             </ul>
         </modal>
-        <modal @opened="() => { USER_CANT_PLAY(); $refs.newRoomInput.focus() }" @closed="USER_CAN_PLAY" height="auto" name="newRoom">
+        <modal @opened="() => { USER_CANT_PLAY_WITH_KEYBOARD(); CLEAR_PIANO_PLAYING(); $refs.newRoomInput.focus() }" @closed="USER_CAN_PLAY_WITH_KEYBOARD" height="auto" name="newRoom">
             <h2>Create a room</h2>
             <input ref="newRoomInput" type="text" v-model="newRoom" @keyup.enter="validateRoomCreation">
             <button @click="validateRoomCreation">OK</button>
@@ -39,7 +39,10 @@
         OPEN_MIDI_PORT,
         CHANGE_PIANO_TYPE,
         TOGGLE_MIDI_CONNECTION_INPUT,
-        TOGGLE_MIDI_CONNECTION_OUTPUT, USER_CAN_PLAY, USER_CANT_PLAY
+        TOGGLE_MIDI_CONNECTION_OUTPUT,
+        USER_CANT_PLAY_WITH_KEYBOARD,
+        CLEAR_PIANO_PLAYING,
+        USER_CAN_PLAY_WITH_KEYBOARD
     } from "../../store/modules/piano/actions";
     import RoomList from "./RoomList";
     export default {
@@ -73,8 +76,9 @@
             ...mapActions('piano', [
                 CLOSE_MIDI_PORT,
                 OPEN_MIDI_PORT,
-                USER_CANT_PLAY,
-                USER_CAN_PLAY,
+                CLEAR_PIANO_PLAYING,
+                USER_CANT_PLAY_WITH_KEYBOARD,
+                USER_CAN_PLAY_WITH_KEYBOARD,
                 TOGGLE_MIDI_CONNECTION_INPUT,
                 TOGGLE_MIDI_CONNECTION_OUTPUT,
                 CHANGE_PIANO_TYPE,
@@ -93,6 +97,7 @@
         padding: 40px;
         background: rgba(0, 0, 0, 0.28);
         box-shadow: $big-shadow;
+        height: 120px;
         & ul.midi-inputs, ul.midi-outputs {
             padding: 0;
             margin: 0;

@@ -3,6 +3,7 @@
         <h1>{{ room.name }}</h1>
         <user-list/>
         <piano/>
+        <chat/>
     </div>
 </template>
 
@@ -11,8 +12,10 @@
     import {CHANGE_ROOM} from "../store/modules/rooms/actions";
     import Piano from "../components/piano/Piano";
     import UserList from "../components/ui/UserList";
+    import Chat from "../components/chat/Chat";
     export default {
         components: {
+            Chat,
             UserList,
             Piano},
         name: 'room',

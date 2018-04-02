@@ -9,10 +9,14 @@
 
 <script>
     import {mapGetters, mapActions, mapState, mapMutations} from 'vuex'
-    import AudioEngine from '../../components/audio/AudioEngine'
     import Note from '../midi/Note'
     import {MIDI_ATTACK, MIDI_RELASE, SOURCE_MIDI, SOURCE_MOUSE} from "../midi/constants";
-    import {USER_PLAY_NOTE, USER_RELEASE_NOTE, USER_RELEASE_SUSTAIN} from "../../store/modules/piano/actions";
+    import {
+        CLEAR_PIANO_PLAYING,
+        USER_PLAY_NOTE,
+        USER_RELEASE_NOTE,
+        USER_RELEASE_SUSTAIN
+    } from "../../store/modules/piano/actions";
     import {DELETE_ALL_KEYS_DOWN} from "../../store/modules/piano/mutations";
 
     const MAX_VELOCITY = 1
@@ -38,13 +42,6 @@
                 'midiAccess'
             ])
         },
-        watch: {
-            sustain(newVal) {
-                if (newVal === false && !this.note.playing) {
-                    // this[USER_RELEASE_SUSTAIN](this.note)
-                }
-            }
-        },
         methods: {
             ...mapMutations('piano', [
                 DELETE_ALL_KEYS_DOWN
@@ -67,8 +64,7 @@
             },
             blur() {
                 if (this.currentUserPlaying) {
-                    this.release()
-                    this[DELETE_ALL_KEYS_DOWN]()
+                    this[CLEAR_PIANO_PLAYING]()
                 }
                 this.midiAccess.stopListening()
             },
@@ -87,7 +83,8 @@
             ...mapActions('piano', [
                 USER_PLAY_NOTE,
                 USER_RELEASE_NOTE,
-                USER_RELEASE_SUSTAIN
+                USER_RELEASE_SUSTAIN,
+                CLEAR_PIANO_PLAYING
             ])
         },
         created() {
