@@ -9,7 +9,7 @@
 
 <script>
     import {mapState, mapActions} from 'vuex'
-    import {USER_CAN_PLAY, USER_CANT_PLAY} from "../../store/modules/piano/actions";
+    import {CLEAR_PIANO_PLAYING, USER_CAN_PLAY, USER_CANT_PLAY} from "../../store/modules/piano/actions";
     import {USER_EDIT_USERNAME} from "../../store/modules/users/actions";
 
     export default {
@@ -27,7 +27,8 @@
         methods: {
             ...mapActions('piano', [
                 USER_CAN_PLAY,
-                USER_CANT_PLAY
+                USER_CANT_PLAY,
+                CLEAR_PIANO_PLAYING
             ]),
             ...mapActions('users', [
                 USER_EDIT_USERNAME
@@ -36,6 +37,7 @@
                 if (!this.isCurrentUser) return;
                 this.newUsername = this.user.username
                 this.editing = true
+                this[CLEAR_PIANO_PLAYING]()
                 this[USER_CANT_PLAY]()
                 this.$nextTick(() => {
                     this.$refs.input.select()

@@ -6813,6 +6813,10 @@ vm-browserify@0.0.4:
   dependencies:
     indexof "0.0.1"
 
+vue-date-filter@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/vue-date-filter/-/vue-date-filter-1.0.1.tgz#bc47ac7333fda5020d87d8137cb6465fd43a6d21"
+
 vue-eslint-parser@^2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/vue-eslint-parser/-/vue-eslint-parser-2.0.3.tgz#c268c96c6d94cfe3d938a5f7593959b0ca3360d1"

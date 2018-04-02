@@ -28,6 +28,7 @@ export default {
     },
     [SET_CAN_PLAY](state, canPlay) {
         state.canPlay = canPlay
+        state.canPlayKeyboard = canPlay
     },
     [SET_CAN_PLAY_KEYBOARD](state, canPlay) {
         state.canPlayKeyboard = canPlay

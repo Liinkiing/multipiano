@@ -28,10 +28,10 @@ const getters = {
         return state.notes
     },
     midiInputs: state => {
-        return state.midi.midiAccess.inputs
+        return state.midi.midiAccess ? state.midi.midiAccess.inputs : null
     },
     midiOutputs: state => {
-        return state.midi.midiAccess.outputs
+        return state.midi.midiAccess ? state.midi.midiAccess.outputs : null
     },
     midiAccess: state => {
         return state.midi.midiAccess
@@ -43,11 +43,13 @@ const getters = {
         return state.notes.find(key => key.keyCodes && key.keyCodes.includes(keycode))
     },
     isMidiInputConnectionStatusOpen: state => id => {
+        if (!state.midi.inputs) return false
         let result = state.midi.inputs.find(input => input.id === id);
         if (!result) return false
         return 'connection' in result ? result.connection === 'open' : false
     },
     isMidiOutputConnectionStatusOpen: state => id => {
+        if (!state.midi.outputs) return false
         let result = state.midi.outputs.find(output => output.id === id);
         if (!result) return false
         return 'connection' in result ? result.connection === 'open' : false

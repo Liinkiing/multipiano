@@ -66,10 +66,14 @@
                 if (this.currentUserPlaying) {
                     this[CLEAR_PIANO_PLAYING]()
                 }
-                this.midiAccess.stopListening()
+                if (this.midiAccess) {
+                    this.midiAccess.stopListening()
+                }
             },
             focus () {
-                this.midiAccess.startListening()
+                if (this.midiAccess) {
+                    this.midiAccess.startListening()
+                }
             },
             onMouseDown() {
                 if (!this.currentUserPlaying) this.play(0.5)
@@ -88,12 +92,14 @@
             ])
         },
         created() {
-            this.midiAccess.listenToMidiForNote(MIDI_ATTACK, this.note, (e) => {
-                this.play(e.velocity * (MAX_VELOCITY / VELOCITY_STEPS), SOURCE_MIDI)
-            })
-            this.midiAccess.listenToMidiForNote(MIDI_RELASE, this.note, () => {
-                this.release(3)
-            })
+            if (this.midiAccess) {
+                this.midiAccess.listenToMidiForNote(MIDI_ATTACK, this.note, (e) => {
+                    this.play(e.velocity * (MAX_VELOCITY / VELOCITY_STEPS), SOURCE_MIDI)
+                })
+                this.midiAccess.listenToMidiForNote(MIDI_RELASE, this.note, () => {
+                    this.release(3)
+                })
+            }
         },
         mounted() {
             this.onMouseDown = this.onMouseDown.bind(this)

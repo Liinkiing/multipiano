@@ -90,7 +90,7 @@ class AudioEngine {
 
     stopBufferedSoundsExcept(notes) {
         for(let key in this.playings) {
-            const playingKeynames = notes.map(note => note.keyname)
+            const playingKeynames = notes.map(note => note.keyname || note._keyname)
             if(playingKeynames.some(keyname => key.includes(keyname))) continue
             this.playings[key].gain.gain.exponentialRampToValueAtTime(0.000001, this.context.currentTime + 3);
             this.playings[key].source.stop(this.context.currentTime + 3)

@@ -105,7 +105,9 @@
         beforeDestroy () {
             window.removeEventListener('keydown', this.onKeydown)
             window.removeEventListener('keyup', this.onKeyup)
-            this.midiAccess.removeEventListener(MIDI_SUSTAIN, this.onSustainMessage.bind(this))
+            if (this.midiAccess) {
+                this.midiAccess.removeEventListener(MIDI_SUSTAIN, this.onSustainMessage.bind(this))
+            }
         }
     }
 </script>
