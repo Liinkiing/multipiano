@@ -4,7 +4,7 @@
         <button @click="CHANGE_PIANO_TYPE('stage_grand')">Stage Grand</button>
         <button @click="CHANGE_PIANO_TYPE('close_grand')">Close Grand</button>
         <button @click="$modal.show('newRoom')">Create a room</button>
-        <button v-if="currentUserIsHost" @click="$modal.show('roomOptions')">Room options</button>
+        <room-options/>
         <room-list/>
         <modal @opened="() => { USER_CANT_PLAY_WITH_KEYBOARD(); CLEAR_PIANO_PLAYING() }" @closed="USER_CAN_PLAY_WITH_KEYBOARD" height="auto" name="midi">
             <h2>Inputs</h2>
@@ -46,9 +46,12 @@
         USER_CAN_PLAY_WITH_KEYBOARD
     } from "../../store/modules/piano/actions";
     import RoomList from "./RoomList";
+    import RoomOptions from "./RoomOptions";
     const ROOM_BLACKLIST = ['home', 'accueil', 'multiplayer piano', 'multiplayer-piano']
     export default {
-        components: {RoomList},
+        components: {
+            RoomOptions,
+            RoomList},
         name: 'bottom-bar',
         data () {
             return {
@@ -61,10 +64,6 @@
                 'midiOutputs',
                 'isMidiInputConnectionStatusOpen',
                 'isMidiOutputConnectionStatusOpen',
-
-            ]),
-            ...mapGetters('users', [
-                'currentUserIsHost'
             ])
         },
         methods: {

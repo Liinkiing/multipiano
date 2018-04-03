@@ -3,12 +3,12 @@
         <h1>{{ room.name }}</h1>
         <user-list/>
         <piano/>
-        <chat/>
+        <chat v-if="currentRoom && currentRoom.chatEnabled"/>
     </div>
 </template>
 
 <script>
-    import { mapActions } from 'vuex'
+    import { mapActions, mapGetters } from 'vuex'
     import {CHANGE_ROOM} from "../store/modules/rooms/actions";
     import Piano from "../components/piano/Piano";
     import UserList from "../components/ui/UserList";
@@ -26,6 +26,9 @@
             ...mapActions('rooms', [
                 CHANGE_ROOM
             ])
+        },
+        computed: {
+            ...mapGetters('rooms', ['currentRoom'])
         },
         created () {
             this[CHANGE_ROOM](this.room.id)
