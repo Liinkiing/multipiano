@@ -1,5 +1,5 @@
 import Message from "../../../socket/models/Message";
-import {ADD_MESSAGE, REPLACE_MESSAGE, SET_ENABLED} from "./mutations";
+import {ADD_MESSAGE, REPLACE_MESSAGE} from "./mutations";
 
 export const USER_SEND_MESSAGE = "USER_SEND_MESSAGE"
 export const USER_EDIT_MESSAGE = "USER_EDIT_MESSAGE"

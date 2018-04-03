@@ -36,9 +36,6 @@
                 chat: true
             }
         },
-        mounted () {
-            this.chat = this.currentRoom ? this.currentRoom.chatEnabled : true
-        },
         watch: {
             currentRoom () {
                 this.chat = this.currentRoom.chatEnabled
