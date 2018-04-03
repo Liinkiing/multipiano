@@ -1,6 +1,6 @@
 <template>
     <li class="user-badge" :style="style">
-        <span v-if="!editing" @click="edit">{{ isCurrentUser ? 'You (' + user.username + ')' : user.username }}</span>
+        <span v-if="!editing" @click="edit">{{ isCurrentUser ? 'You (' + user.username + ')' : user.username }} <span v-if="host">(HOST)</span></span>
         <input ref="input" v-show="isCurrentUser && editing" :disabled="!editing" type="text" v-model="newUsername"
                @blur="cancel" @keyup.enter.exact="validate" @keyup.esc.exact="cancel">
     </li>
@@ -16,7 +16,8 @@
         name: 'user-badge',
         props: {
             user: {type: Object, required: true},
-            isCurrentUser: {type: Boolean, required: false, default: false}
+            isCurrentUser: {type: Boolean, required: false, default: false},
+            host: {type: Boolean, required: true}
         },
         data() {
             return {

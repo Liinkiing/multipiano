@@ -1,7 +1,7 @@
 <template>
     <div class="user-list">
         <ul v-if="currentRoom" class="users">
-            <user-badge v-for="user in currentRoom.users" :key="user.id" :user="user" :is-current-user="user.id === currentUser.id"/>
+            <user-badge v-for="user in currentRoom.users" :key="user.id" :user="user" :is-current-user="user.id === currentUser.id" :host="isHost(user)"/>
         </ul>
     </div>
 
@@ -20,6 +20,9 @@
             ]),
             ...mapGetters('rooms', [
                 'currentRoom'
+            ]),
+            ...mapGetters('users', [
+                'isHost'
             ])
         }
     }
