@@ -1,5 +1,7 @@
 import {SET_CURRENT_ROOM_NAME, SET_ROOMS} from "./mutations";
 import {CLEAR_CHAT} from "../chat/mutations";
+export const CHANGE_PUBLIC_ROOM_STATUS = "CHANGE_PUBLIC_ROOM_STATUS"
+
 
 export const CHANGE_ROOM = "CHANGE_ROOM"
 
@@ -13,5 +15,8 @@ export default {
     },
     socket_getRooms({commit}, rooms) {
         commit(SET_ROOMS, rooms)
+    },
+    [CHANGE_PUBLIC_ROOM_STATUS](context, publicRoom) {
+        this._vm.$socket.emit('userChangedPublicRoomStatus', publicRoom)
     }
 }
