@@ -113,7 +113,12 @@ export default {
             AudioEngine.play(note, note.volume, stopDelay)
         }
     },
-    socket_userHasPlayedNote({commit}, payload) {
+    socket_userHasPlayedNote({commit, rootGetters}, payload) {
+        for (let i = 0; i < payload._users.length; i++) {
+            if (rootGetters['users/isMuted'](payload._users[i])) {
+                return
+            }
+        }
         let note = new Note(payload)
         if (note) {
             commit(ADD_NOTE_PLAYING, note)

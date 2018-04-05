@@ -6,7 +6,8 @@ const state = {
         id: null,
         username: 'Linking',
         color: 'yellow'
-    }
+    },
+    mutedUsers: []
 }
 
 const getters = {
@@ -26,6 +27,9 @@ const getters = {
         if (!rootGetters['rooms/currentRoom']) return false
         if (!rootGetters['rooms/currentRoom'].host) return false
         return rootGetters['rooms/currentRoom'].host.id === state.currentUser.id
+    },
+    isMuted: state => user => {
+        return state.mutedUsers.find(u => u.id === user.id) !== undefined
     }
 }
 

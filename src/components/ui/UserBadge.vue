@@ -1,6 +1,10 @@
 <template>
     <li class="user-badge" :style="style">
-        <span v-if="!editing" @click="edit">{{ isCurrentUser ? 'You (' + user.username + ')' : user.username }} <span v-if="host">(HOST)</span></span>
+        <span v-if="!editing" @click="edit">
+            <span v-if="isCurrentUser">You ({{user.username}}) </span>
+            <span v-else>{{user.username}} <button @click="toggleMute">{{ isUserMuted ? 'Unmute' : 'Mute' }}</button></span>
+            <span v-if="host"> (HOST)</span>
+        </span>
         <input ref="input" v-show="isCurrentUser && editing" :disabled="!editing" type="text" v-model="newUsername"
                @blur="cancel" @keyup.enter.exact="validate" @keyup.esc.exact="cancel">
     </li>
@@ -8,9 +12,9 @@
 </template>
 
 <script>
-    import {mapState, mapActions} from 'vuex'
+    import {mapState, mapActions, mapGetters} from 'vuex'
     import {CLEAR_PIANO_PLAYING, USER_CAN_PLAY, USER_CANT_PLAY} from "../../store/modules/piano/actions";
-    import {USER_EDIT_USERNAME} from "../../store/modules/users/actions";
+    import {USER_ADD_MUTED_USER, USER_EDIT_USERNAME, USER_REMOVE_MUTED_USER} from "../../store/modules/users/actions";
 
     export default {
         name: 'user-badge',
@@ -26,14 +30,26 @@
             }
         },
         methods: {
+            ...mapGetters('users', [
+                'isMuted'
+            ]),
             ...mapActions('piano', [
                 USER_CAN_PLAY,
                 USER_CANT_PLAY,
                 CLEAR_PIANO_PLAYING
             ]),
             ...mapActions('users', [
-                USER_EDIT_USERNAME
+                USER_EDIT_USERNAME,
+                USER_ADD_MUTED_USER,
+                USER_REMOVE_MUTED_USER
             ]),
+            toggleMute () {
+                if (this.isUserMuted) {
+                    this[USER_REMOVE_MUTED_USER](this.user)
+                } else {
+                    this[USER_ADD_MUTED_USER](this.user)
+                }
+            },
             edit() {
                 if (!this.isCurrentUser) return;
                 this.newUsername = this.user.username
@@ -57,6 +73,9 @@
             }
         },
         computed: {
+            isUserMuted () {
+                return this.isMuted()(this.user)
+            },
             ...mapState('users', [
                 'currentUser'
             ]),

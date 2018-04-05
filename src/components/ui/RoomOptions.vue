@@ -48,8 +48,8 @@
         },
         watch: {
             currentRoom() {
-                this.chat = this.currentRoom.chatEnabled
-                this.publicRoom = this.currentRoom.public
+                this.chat = this.currentRoom ? this.currentRoom.chatEnabled : true
+                this.publicRoom = this.currentRoom ? this.currentRoom.public : true
             },
             chat() {
                 this[CHANGE_CHAT_STATUS](this.chat)
