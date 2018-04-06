@@ -1,6 +1,7 @@
+import Vue from "vue";
 import {
-    ADD_MUTED_USER, REMOVE_MUTED_USER, RESET_MUTED_USERS, SET_COLOR, SET_CURRENT_USER,
-    SET_USERNAME
+ADD_MUTED_USER, REMOVE_MUTED_USER, RESET_MUTED_USERS, SET_COLOR, SET_CURRENT_USER,
+SET_USERNAME
 } from "./mutations";
 import { router } from '../../../router'
 export const USER_EDIT_USERNAME = "USER_EDIT_USERNAME";
@@ -16,6 +17,12 @@ export default {
     },
     socket_userKicked() {
         router.push('/')
+        Vue.prototype.$notify({
+            group: 'notifications',
+            type: 'warn',
+            title: "You've been kicked",
+            text: 'Sorry! You have been kicked from a room :('
+        });
     },
     [USER_EDIT_USERNAME] ({commit, state}, username) {
         commit(SET_USERNAME, username)
