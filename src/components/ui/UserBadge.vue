@@ -1,12 +1,15 @@
 <template>
-    <li class="user-badge" :style="style">
-        <span v-if="!editing" @click="edit">
-            <span v-if="isCurrentUser">You ({{user.username}}) </span>
+    <li v-if="!onlyDisplay" class="user-badge" :style="style">
+        <span v-if="!editing">
+            <span v-if="isCurrentUser" @click="edit">You ({{user.username}}) </span><color-picker v-if="isCurrentUser"/>
             <span v-else>{{user.username}} <button @click="toggleMute">{{ isUserMuted ? 'Unmute' : 'Mute' }}</button></span>
             <span v-if="host"> (HOST)</span>
         </span>
         <input ref="input" v-show="isCurrentUser && editing" :disabled="!editing" type="text" v-model="newUsername"
                @blur="cancel" @keyup.enter.exact="validate" @keyup.esc.exact="cancel">
+    </li>
+    <li v-else class="user-badge" :style="style">
+        {{ user.username }}
     </li>
 
 </template>
@@ -15,13 +18,16 @@
     import {mapState, mapActions, mapGetters} from 'vuex'
     import {CLEAR_PIANO_PLAYING, USER_CAN_PLAY, USER_CANT_PLAY} from "../../store/modules/piano/actions";
     import {USER_ADD_MUTED_USER, USER_EDIT_USERNAME, USER_REMOVE_MUTED_USER} from "../../store/modules/users/actions";
+    import ColorPicker from "./ColorPicker";
 
     export default {
+        components: {ColorPicker},
         name: 'user-badge',
         props: {
             user: {type: Object, required: true},
             isCurrentUser: {type: Boolean, required: false, default: false},
-            host: {type: Boolean, required: true}
+            host: {type: Boolean, required: true},
+            onlyDisplay: {type: Boolean, default: false}
         },
         data() {
             return {
@@ -95,6 +101,7 @@
         border-radius: 5px;
         display: inline-block;
         margin: 10px 20px;
+        transition: all 0.3s;
         &:first-of-type {
             margin-left: 0;
         }

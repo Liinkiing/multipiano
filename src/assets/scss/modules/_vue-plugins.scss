@@ -13,8 +13,18 @@ div[data-popover] {
 .v--modal-box {
   background: whitesmoke !important;
   padding: 40px !important;
+  & h2 {
+    color: black;
+    &:first-of-type {
+      margin-top: 0;
+    }
+  }
 }
 
 .vue-js-switch.changed-font {
   font-size: 2rem !important;
+}
+
+.vc-chrome {
+  font-family: 'Signika', sans-serif !important;
 }
