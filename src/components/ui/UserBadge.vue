@@ -2,7 +2,9 @@
     <li v-if="!onlyDisplay" class="user-badge" :style="style">
         <span v-if="!editing">
             <span v-if="isCurrentUser" @click="edit">You ({{user.username}}) </span><color-picker v-if="isCurrentUser"/>
-            <span v-else>{{user.username}} <button @click="toggleMute">{{ isUserMuted ? 'Unmute' : 'Mute' }}</button></span>
+            <span v-else>
+                {{user.username}} <button @click="toggleMute">{{ isUserMuted ? 'Unmute' : 'Mute' }}</button> <button v-if="isCurrentUserHost" @click="kick(user)">Kick</button>
+            </span>
             <span v-if="host"> (HOST)</span>
         </span>
         <input ref="input" v-show="isCurrentUser && editing" :disabled="!editing" type="text" v-model="newUsername"
@@ -17,7 +19,12 @@
 <script>
     import {mapState, mapActions, mapGetters} from 'vuex'
     import {CLEAR_PIANO_PLAYING, USER_CAN_PLAY, USER_CANT_PLAY} from "../../store/modules/piano/actions";
-    import {USER_ADD_MUTED_USER, USER_EDIT_USERNAME, USER_REMOVE_MUTED_USER} from "../../store/modules/users/actions";
+    import {
+        KICK_USER,
+        USER_ADD_MUTED_USER,
+        USER_EDIT_USERNAME,
+        USER_REMOVE_MUTED_USER
+    } from "../../store/modules/users/actions";
     import ColorPicker from "./ColorPicker";
 
     export default {
@@ -37,7 +44,8 @@
         },
         methods: {
             ...mapGetters('users', [
-                'isMuted'
+                'isMuted',
+                'isHost'
             ]),
             ...mapActions('piano', [
                 USER_CAN_PLAY,
@@ -46,6 +54,7 @@
             ]),
             ...mapActions('users', [
                 USER_EDIT_USERNAME,
+                KICK_USER,
                 USER_ADD_MUTED_USER,
                 USER_REMOVE_MUTED_USER
             ]),
@@ -55,6 +64,12 @@
                 } else {
                     this[USER_ADD_MUTED_USER](this.user)
                 }
+            },
+            kick (user) {
+                this[KICK_USER]({
+                    host: this.currentUser,
+                    user
+                })
             },
             edit() {
                 if (!this.isCurrentUser) return;
@@ -81,6 +96,9 @@
         computed: {
             isUserMuted () {
                 return this.isMuted()(this.user)
+            },
+            isCurrentUserHost () {
+                return this.isHost()(this.currentUser)
             },
             ...mapState('users', [
                 'currentUser'

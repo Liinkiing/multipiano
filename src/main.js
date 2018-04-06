@@ -4,7 +4,7 @@ import VueSocketio from 'vue-socket.io';
 import DateFilter from 'vue-date-filter'
 import VModal from 'vue-js-modal'
 import App from './App.vue'
-import router from './router'
+import { router } from './router'
 import store from './store/'
 import './assets/scss/app.scss'
 
