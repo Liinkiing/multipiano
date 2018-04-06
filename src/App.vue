@@ -24,7 +24,6 @@
         REFRESH_MIDI_INPUTS_OUTPUTS, USER_CAN_PLAY_WITH_KEYBOARD,
         USER_CANT_PLAY_WITH_KEYBOARD
     } from "./store/modules/piano/actions";
-    import {EventBus} from "./main";
 
     export default {
         components: {BottomBar},
