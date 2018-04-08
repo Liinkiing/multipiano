@@ -3,7 +3,11 @@
         <span v-if="!editing">
             <span v-if="isCurrentUser" @click="edit">You ({{user.username}}) </span><color-picker v-if="isCurrentUser"/>
             <span v-else>
-                {{user.username}} <button @click="toggleMute">{{ isUserMuted ? 'Unmute' : 'Mute' }}</button> <button v-if="isCurrentUserHost" @click="kick(user)">Kick</button>
+                {{user.username}} <button @click="toggleMute">{{ isUserMuted ? 'Unmute' : 'Mute' }}</button>
+                <span class="actions" v-if="displayAction">
+                <button v-if="isCurrentUserHost && !isUserBannedFromCurrentRoom" @click="kick(user)">Kick</button>
+                <button v-if="isCurrentUserHost" @click="toggleBan(user)">{{ isUserBannedFromCurrentRoom ? 'Unban' : 'Ban' }}</button>
+                </span>
             </span>
             <span v-if="host"> (HOST)</span>
         </span>
@@ -26,6 +30,7 @@
         USER_REMOVE_MUTED_USER
     } from "../../store/modules/users/actions";
     import ColorPicker from "./ColorPicker";
+    import {EventBus} from "../../main";
 
     export default {
         components: {ColorPicker},
@@ -34,7 +39,8 @@
             user: {type: Object, required: true},
             isCurrentUser: {type: Boolean, required: false, default: false},
             host: {type: Boolean, required: true},
-            onlyDisplay: {type: Boolean, default: false}
+            onlyDisplay: {type: Boolean, default: false},
+            displayAction: {type: Boolean, default: false}
         },
         data() {
             return {
@@ -45,7 +51,7 @@
         methods: {
             ...mapGetters('users', [
                 'isMuted',
-                'isHost'
+                'isHost',
             ]),
             ...mapActions('piano', [
                 USER_CAN_PLAY,
@@ -58,18 +64,21 @@
                 USER_ADD_MUTED_USER,
                 USER_REMOVE_MUTED_USER
             ]),
-            toggleMute () {
+            toggleMute() {
                 if (this.isUserMuted) {
                     this[USER_REMOVE_MUTED_USER](this.user)
                 } else {
                     this[USER_ADD_MUTED_USER](this.user)
                 }
             },
-            kick (user) {
+            kick(user) {
                 this[KICK_USER]({
                     host: this.currentUser,
                     user
                 })
+            },
+            toggleBan(user) {
+                EventBus.$emit('player.toggleBan', user)
             },
             edit() {
                 if (!this.isCurrentUser) return;
@@ -94,10 +103,16 @@
             }
         },
         computed: {
-            isUserMuted () {
+            ...mapGetters('rooms', [
+                'bannedUsers'
+            ]),
+            isUserBannedFromCurrentRoom () {
+                return this.bannedUsers.find(user => user.ip === this.user.ip)
+            },
+            isUserMuted() {
                 return this.isMuted()(this.user)
             },
-            isCurrentUserHost () {
+            isCurrentUserHost() {
                 return this.isHost()(this.currentUser)
             },
             ...mapState('users', [
@@ -105,7 +120,8 @@
             ]),
             style() {
                 return {
-                    'background-color': this.user.color
+                    'background-color': this.user.color,
+                    'box-shadow': `0 0 30px ${this.user.color}`,
                 }
             }
         }

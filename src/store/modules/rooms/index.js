@@ -11,6 +11,9 @@ const getters = {
     currentRoom: state => {
         return state.rooms.find(room => room.name === state.currentRoom) || null
     },
+    bannedUsers: (state) => {
+        return state.rooms.find(room => room.name === state.currentRoom) ? state.rooms.find(room => room.name === state.currentRoom).bannedUsers.map(bannedUsers => bannedUsers.user) : []
+    },
     homeCount: state => {
         return state.rooms.find(room => room.id === HOME_ID) ? state.rooms.find(room => room.id === HOME_ID).usersCount : 0
     },

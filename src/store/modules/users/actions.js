@@ -10,6 +10,8 @@ export const USER_REMOVE_MUTED_USER = "USER_REMOVE_MUTED_USER";
 export const USER_RESET_MUTED_USER = "USER_RESET_MUTED_USER";
 export const USER_EDIT_COLOR = "USER_EDIT_COLOR";
 export const KICK_USER = "KICK_USER";
+export const BAN_USER = "BAN_USER";
+export const UNBAN_USER = "UNBAN_USER";
 
 export default {
     socket_meConnected({commit}, me) {
@@ -21,7 +23,24 @@ export default {
             group: 'notifications',
             type: 'warn',
             title: "You've been kicked",
-            text: 'Sorry! You have been kicked from a room :('
+            text: 'Sorry! You have been kicked from this room :('
+        });
+    },
+    socket_userBanned(context, duration) {
+        router.push('/')
+        Vue.prototype.$notify({
+            group: 'notifications',
+            type: 'warn',
+            title: "You're banned",
+            text: `Sorry! You are banned from this room for ${duration} minutes :(`
+        });
+    },
+    socket_userUnbanned(context, room) {
+        Vue.prototype.$notify({
+            group: 'notifications',
+            type: 'success',
+            title: "Yay! Unban",
+            text: `You have been unbanned from the room ${room.name}`
         });
     },
     [USER_EDIT_USERNAME] ({commit, state}, username) {
@@ -43,6 +62,12 @@ export default {
     },
     [KICK_USER] (context, {host, user}) {
         this._vm.$socket.emit('userKick', {host, user});
+    },
+    [BAN_USER] (context, {host, user, duration}) {
+        this._vm.$socket.emit('userBan', {host, user, duration});
+    },
+    [UNBAN_USER] (context, {host, user, duration}) {
+        this._vm.$socket.emit('userUnban', {host, user, duration});
     }
 
 }
