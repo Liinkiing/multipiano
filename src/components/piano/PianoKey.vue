@@ -114,7 +114,7 @@
             this.blur = this.blur.bind(this)
             this.focus = this.focus.bind(this)
             EventBus.$on('note.release', () => {
-                if (this.currentUserPlaying) {
+                if (this.note.source === SOURCE_MOUSE && this.currentUserPlaying) {
                     this.release()
                 }
             })
