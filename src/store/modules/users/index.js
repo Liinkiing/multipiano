@@ -31,7 +31,7 @@ const getters = {
     isUserBannedForCurrentRoom: (state, getters, rootState, rootGetters) => user => {
         if(!rootGetters['rooms/bannedUsers']) return false
         if(rootGetters['rooms/bannedUsers'].length === 0) return false
-        return rootGetters['rooms/bannedUsers'].find(u => u.ip === user.ip) !== null
+        return rootGetters['rooms/bannedUsers'].find(u => u.id === user.id) !== null
     },
     isMuted: state => user => {
         return state.mutedUsers.find(u => u.id === user.id) !== undefined

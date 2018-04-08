@@ -107,7 +107,7 @@
                 'bannedUsers'
             ]),
             isUserBannedFromCurrentRoom () {
-                return this.bannedUsers.find(user => user.ip === this.user.ip)
+                return this.bannedUsers.find(user => user.id === this.user.id)
             },
             isUserMuted() {
                 return this.isMuted()(this.user)
