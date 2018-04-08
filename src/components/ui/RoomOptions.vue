@@ -14,7 +14,7 @@
              </div>
              <h2>Ban options</h2>
              <label for="banDuration">Ban duration (in minutes)</label>
-             <input type="number" min="0.025" max="120" id="banDuration" v-model="banDuration">
+             <input type="number" min="1" max="120" id="banDuration" v-model="banDuration">
              <div v-if="bannedUsers.length > 0" class="banned-users">
                  <h2>Banned players</h2>
                  <ul class="users">
