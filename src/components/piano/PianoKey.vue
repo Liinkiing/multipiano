@@ -132,12 +132,20 @@
     .piano-key {
         background: whitesmoke;
         height: 140px;
-        width: 20px;
-        border: 2px black solid;
+        width: 30px;
+        border-right: $piano-key-border;
+        &:first-of-type {
+            border-left: none;
+        }
+        &:last-of-type {
+            border-right: none;
+        }
         position: relative;
         &.is-black-key {
-            background: black;
+            background: $black-key-color;
+            width: 20px;
             height: 100px;
+            border: $piano-key-border;
         }
         & .piano-key-user {
             position: absolute;

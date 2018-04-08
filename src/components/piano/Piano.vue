@@ -113,6 +113,7 @@
 </script>
 
 <style lang="scss">
+    @import "../../assets/scss/modules/variables";
     .piano {
         display: flex;
         -webkit-user-select: none;
@@ -122,11 +123,26 @@
         user-select: none;
         position: relative;
         z-index: 50;
+        margin: 40px 0;
+        box-shadow: 0 0 40px rgba(0, 0, 0, 0.42);
+        overflow: hidden;
+        border-radius: 20px;
+        border: 2px solid #c7c7c752;
         & .keys {
             padding: 0;
             margin: 0;
             list-style: none;
             display: flex;
+            position: relative;
+            & .is-black-key {
+                position: absolute;
+                z-index: 1;
+                @each $blackKeyNumber, $position in $black-keys {
+                    &:nth-of-type(#{$blackKeyNumber}) {
+                        left: $position
+                    }
+                }
+            }
         }
     }
 </style>
