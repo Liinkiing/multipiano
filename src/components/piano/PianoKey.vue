@@ -104,6 +104,7 @@
                 this.midiAccess.listenToMidiForNote(MIDI_RELASE, this.note, () => {
                     this.release(3)
                 })
+                this.midiAccess.startListening()
             }
         },
         mounted() {
@@ -127,6 +128,8 @@
             // this.$el.addEventListener('mouseout', this.onMouseOut)
         },
         beforeDestroy() {
+            if (this.midiAccess)
+                this.midiAccess.stopListening()
             window.removeEventListener('blur', this.blur)
             window.removeEventListener('focus', this.focus)
             window.removeEventListener('contextmenu', this.blur)

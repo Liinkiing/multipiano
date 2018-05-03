@@ -4,6 +4,7 @@ import piano from './modules/piano/'
 import users from './modules/users/'
 import rooms from './modules/rooms'
 import chat from './modules/chat'
+import app from './modules/app'
 
 Vue.use(Vuex)
 
@@ -12,6 +13,7 @@ export default new Vuex.Store({
         piano,
         users,
         rooms,
-        chat
+        chat,
+        app
     }
 })

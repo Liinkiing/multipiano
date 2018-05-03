@@ -16,18 +16,22 @@
     import {USER_PLAY_NOTE, USER_RELEASE_NOTE, USER_RELEASE_SUSTAIN} from '../../store/modules/piano/actions'
     import {MIDI_SUSTAIN, SOURCE_KEYBOARD} from "../midi/constants";
     import {ADD_KEY_DOWN, DELETE_KEY_DOWN} from "../../store/modules/piano/mutations";
-    import {EventBus} from "../../main";
+    import {START_LOADING, STOP_LOADING} from "../../store/modules/app/actions";
 
     export default {
         components: {PianoKey},
         name: 'piano',
         data () {
             return {
-                loadingSounds: false,
+                loadingSounds: true,
                 sustain: false
             }
         },
         methods: {
+            ...mapActions('app', [
+                START_LOADING,
+                STOP_LOADING
+            ]),
             ...mapMutations('piano', [
                DELETE_KEY_DOWN,
                ADD_KEY_DOWN
@@ -85,10 +89,15 @@
         watch: {
             async pianoType(newPianoType) {
                 this.loadingSounds = true
-                EventBus.$emit('loading.start', 'Loading sounds...')
                 await AudioEngine.init(newPianoType)
                 this.loadingSounds = false
-                EventBus.$emit('loading.stop')
+            },
+            loadingSounds (loading) {
+                if (loading) {
+                    this[START_LOADING]('Loading sounds...')
+                } else {
+                    this[STOP_LOADING]()
+                }
             },
             sustain(newVal) {
                 if (newVal === false) {
@@ -96,11 +105,16 @@
                 }
             }
         },
-        async mounted() {
+        async mounted () {
+            this.loadingSounds = true
+            this.midiAccess.stopListening()
+            this[START_LOADING]('Loading sounds...')
             await AudioEngine.init(this.pianoType)
+            this.loadingSounds = false
             if (this.midiAccess) {
                 this.midiAccess.init();
                 this.midiAccess.addEventListener(MIDI_SUSTAIN, this.onSustainMessage.bind(this))
+                this.midiAccess.startListening()
             }
         },
         beforeMount () {

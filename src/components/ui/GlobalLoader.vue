@@ -10,24 +10,13 @@
 </template>
 
 <script>
-    import {EventBus} from "../../main";
-
+    import { mapState } from 'vuex'
     export default {
         name: 'global-loader',
-        data () {
-            return {
-                message: null,
-                loading: false
-            }
-        },
-        created () {
-            EventBus.$on('loading.start', (message) => {
-                this.message = message;
-                this.loading = true;
-            })
-            EventBus.$on('loading.stop', () => {
-                this.message = null;
-                this.loading = false;
+        computed: {
+            ...mapState('app', {
+                loading: state => state.loader.loading,
+                message: state => state.loader.message
             })
         }
     }

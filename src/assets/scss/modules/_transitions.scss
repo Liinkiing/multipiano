@@ -29,3 +29,14 @@
 .fade-enter, .fade-leave-to {
   opacity: 0;
 }
+
+.fade-scale-enter-active {
+  transition: opacity .15s, transform 0.35s;
+}
+.fade-scale-leave-active {
+  transition: opacity .15s, transform 0.35s;
+}
+.fade-scale-enter, .fade-scale-leave-to {
+  opacity: 0;
+  transform: scale3d(0.98, 0.98, 0.98);
+}

@@ -35,6 +35,14 @@ class AudioEngine {
         this.masterGain.gain.setValueAtTime(this.volume, 0)
     }
 
+    resume () {
+        return this.context.resume()
+    }
+
+    get state () {
+        return this.context.state
+    }
+
     get BASE_URL() {
         return BASE_URL
     }
