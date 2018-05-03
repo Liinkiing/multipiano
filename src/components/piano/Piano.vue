@@ -93,8 +93,10 @@
         },
         async mounted() {
             await AudioEngine.init(this.pianoType)
-            this.midiAccess.init();
-            this.midiAccess.addEventListener(MIDI_SUSTAIN, this.onSustainMessage.bind(this))
+            if (this.midiAccess) {
+                this.midiAccess.init();
+                this.midiAccess.addEventListener(MIDI_SUSTAIN, this.onSustainMessage.bind(this))
+            }
         },
         beforeMount () {
             this.onKeyup = this.onKeyup.bind(this)

@@ -1,6 +1,8 @@
 import pianoKeys from '../../components/midi/piano_keys'
 
 const BASE_URL = process.env.VUE_APP_SERVER_URL
+const DELAYED_STOP = 1.5
+const ZERO = 0.000001
 
 class AudioEngine {
 
@@ -74,7 +76,7 @@ class AudioEngine {
         source.start(0);
         if (this.playings[keyId]) {
             const playing = this.playings[keyId];
-            playing.gain.gain.exponentialRampToValueAtTime(0.000001, this.context.currentTime + stopDelay);
+            playing.gain.gain.exponentialRampToValueAtTime(ZERO, this.context.currentTime + stopDelay);
         }
         this.playings[keyId] = {
             source,
@@ -84,7 +86,7 @@ class AudioEngine {
 
     stopBufferedSounds() {
         for(let key in this.playings) {
-            this.playings[key].gain.gain.exponentialRampToValueAtTime(0.000001, this.context.currentTime + 3);
+            this.playings[key].gain.gain.exponentialRampToValueAtTime(ZERO, this.context.currentTime + DELAYED_STOP);
         }
     }
 
@@ -92,22 +94,22 @@ class AudioEngine {
         for(let key in this.playings) {
             const playingKeynames = notes.map(note => note.keyname || note._keyname)
             if(playingKeynames.some(keyname => key.includes(keyname))) continue
-            this.playings[key].gain.gain.exponentialRampToValueAtTime(0.000001, this.context.currentTime + 3);
+            this.playings[key].gain.gain.exponentialRampToValueAtTime(ZERO, this.context.currentTime + DELAYED_STOP);
             this.playings[key].source.stop(this.context.currentTime + 3)
             setTimeout(() => {
                 delete this.playings[key]
-            }, 3)
+            }, DELAYED_STOP + 0.01)
         }
     }
 
     stopBufferedSoundForNote(note) {
         const keyId = note.keyname + note.timestamp
         if(this.playings[keyId]) {
-            this.playings[keyId].gain.gain.exponentialRampToValueAtTime(0.000001, this.context.currentTime + 3);
+            this.playings[keyId].gain.gain.exponentialRampToValueAtTime(ZERO, this.context.currentTime + DELAYED_STOP);
             this.playings[keyId].source.stop(this.context.currentTime + 3)
             setTimeout(() => {
                 delete this.playings[keyId]
-            }, 3)
+            }, DELAYED_STOP + 0.01)
         }
     }
 
@@ -115,11 +117,11 @@ class AudioEngine {
         const keyId = note.keyname + note.timestamp
         if (this.playings[keyId]) {
             if (!sustained) {
-                this.playings[keyId].gain.gain.exponentialRampToValueAtTime(0.000001, this.context.currentTime + stopDelay);
+                this.playings[keyId].gain.gain.exponentialRampToValueAtTime(ZERO, this.context.currentTime + stopDelay);
                 this.playings[keyId].source.stop(this.context.currentTime + stopDelay)
                 setTimeout(() => {
                     delete this.playings[keyId]
-                }, 3)
+                }, stopDelay + 0.01)
             }
         }
     }
