@@ -1,8 +1,10 @@
 <template>
     <div class="piano">
-        <ul class="keys">
-            <piano-key v-if="!loadingSounds" :key="note.keyname" v-for="note in pianoNotes" :note="note" :sustain="sustain"/>
-        </ul>
+        <transition name="fade">
+            <ul class="keys" v-if="!loadingSounds">
+                <piano-key :key="note.keyname" v-for="note in pianoNotes" :note="note" :sustain="sustain"/>
+            </ul>
+        </transition>
     </div>
 
 </template>
@@ -14,6 +16,7 @@
     import {USER_PLAY_NOTE, USER_RELEASE_NOTE, USER_RELEASE_SUSTAIN} from '../../store/modules/piano/actions'
     import {MIDI_SUSTAIN, SOURCE_KEYBOARD} from "../midi/constants";
     import {ADD_KEY_DOWN, DELETE_KEY_DOWN} from "../../store/modules/piano/mutations";
+    import {EventBus} from "../../main";
 
     export default {
         components: {PianoKey},
@@ -82,8 +85,10 @@
         watch: {
             async pianoType(newPianoType) {
                 this.loadingSounds = true
+                EventBus.$emit('loading.start', 'Loading sounds...')
                 await AudioEngine.init(newPianoType)
                 this.loadingSounds = false
+                EventBus.$emit('loading.stop')
             },
             sustain(newVal) {
                 if (newVal === false) {

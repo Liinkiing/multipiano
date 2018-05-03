@@ -1,6 +1,7 @@
 <template>
     <div id="app" class="wrapper" v-if="!loadingMidi">
         <notifications group="notifications" />
+        <global-loader/>
         <router-view :key="$router.currentRoute.path"/>
         <bottom-bar/>
         <modal @opened="() => { USER_CANT_PLAY_WITH_KEYBOARD(); CLEAR_PIANO_PLAYING(); }"
@@ -10,7 +11,7 @@
         </modal>
     </div>
     <div v-else id="app" class="wrapper">
-        <p>Waiting for MIDI devices...</p>
+
     </div>
 </template>
 
@@ -24,9 +25,12 @@
         REFRESH_MIDI_INPUTS_OUTPUTS, USER_CAN_PLAY_WITH_KEYBOARD,
         USER_CANT_PLAY_WITH_KEYBOARD
     } from "./store/modules/piano/actions";
+    import GlobalLoader from "./components/ui/GlobalLoader";
 
     export default {
-        components: {BottomBar},
+        components: {
+            GlobalLoader,
+            BottomBar},
         name: 'app',
         data() {
             return {
