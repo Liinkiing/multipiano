@@ -16,6 +16,7 @@
         USER_RELEASE_SUSTAIN
     } from "../../store/modules/piano/actions";
     import {DELETE_ALL_KEYS_DOWN} from "../../store/modules/piano/mutations";
+    import AudioEngine from '../../components/audio/AudioEngine'
     import { EventBus } from "../../main";
 
     const MAX_VELOCITY = 1
@@ -81,6 +82,9 @@
                 }
             },
             onMouseDown() {
+                if (AudioEngine.state === 'suspended') {
+                    AudioEngine.resume();
+                }
                 if (!this.currentUserPlaying) this.play(0.5)
             },
             onMouseOut() {
@@ -99,6 +103,9 @@
         created() {
             if (this.midiAccess) {
                 this.midiAccess.listenToMidiForNote(MIDI_ATTACK, this.note, (e) => {
+                    if (AudioEngine.state === 'suspended') {
+                        AudioEngine.resume();
+                    }
                     this.play(e.velocity * (MAX_VELOCITY / VELOCITY_STEPS), SOURCE_MIDI)
                 })
                 this.midiAccess.listenToMidiForNote(MIDI_RELASE, this.note, () => {
@@ -148,6 +155,7 @@
         height: 140px;
         width: 30px;
         border-right: $piano-key-border;
+        -webkit-user-drag: none;
         &:first-of-type {
             border-left: none;
         }

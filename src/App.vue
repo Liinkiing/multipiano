@@ -1,6 +1,6 @@
 <template>
     <div id="app" class="wrapper" v-if="!loadingMidi">
-        <notifications group="notifications" />
+        <notifications group="notifications"/>
         <global-loader/>
         <transition name="fade-scale" mode="out-in">
             <router-view :key="$router.currentRoute.path"/>
@@ -33,7 +33,8 @@
     export default {
         components: {
             GlobalLoader,
-            BottomBar},
+            BottomBar
+        },
         name: 'app',
         data() {
             return {
@@ -57,11 +58,10 @@
                 REFRESH_MIDI,
                 REFRESH_MIDI_INPUTS_OUTPUTS
             ]),
-            handleUserInteraction () { // Used because of new Chrome policy : https://goo.gl/7K7WLu
+            handleUserInteraction() { // Used because of new Chrome policy : https://goo.gl/7K7WLu
+                console.log('user interaction')
                 if (AudioEngine.state === 'suspended') {
                     AudioEngine.resume();
-                    window.removeEventListener('mousemove', this.handleUserInteraction)
-                    window.removeEventListener('keydown', this.handleUserInteraction)
                 }
             }
         },
@@ -78,7 +78,13 @@
                 this.loadingMidi = false;
                 this.$modal.show('noMidi')
             }
-            window.addEventListener('mousemove', this.handleUserInteraction)
+            AudioEngine.onstatechange = (e) => {
+                if (e.target.state === 'running') {
+                    window.removeEventListener('click', this.handleUserInteraction)
+                    window.removeEventListener('keydown', this.handleUserInteraction)
+                }
+            }
+            window.addEventListener('click', this.handleUserInteraction)
             window.addEventListener('keydown', this.handleUserInteraction)
         }
     }

@@ -35,6 +35,10 @@ class AudioEngine {
         this.masterGain.gain.setValueAtTime(this.volume, 0)
     }
 
+    set onstatechange (value) {
+        this.context.onstatechange = value
+    }
+
     resume () {
         return this.context.resume()
     }
