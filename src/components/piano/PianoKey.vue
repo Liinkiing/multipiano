@@ -1,6 +1,6 @@
 <template>
     <div class="piano-key" :class="{'is-black-key': note.isBlackKey, 'is-playing': note.playing}">
-            <div @mouseout="onMouseOut" v-for="user in note.users" :key="user.id" class="piano-key-user" :style="{background: user.color, boxShadow: `0 0 50px ${user.color}`}"></div>
+        <div @mouseout="onMouseOut" v-for="user in note.users" :key="user.id" class="piano-key-user" :style="{background: user.color, boxShadow: `0 0 50px ${user.color}`}"></div>
     </div>
 
 </template>
@@ -18,7 +18,6 @@
     import {DELETE_ALL_KEYS_DOWN} from "../../store/modules/piano/mutations";
     import AudioEngine from '../../components/audio/AudioEngine'
     import { EventBus } from "../../main";
-
     const MAX_VELOCITY = 1
     const VELOCITY_STEPS = 127
 
@@ -102,16 +101,16 @@
         },
         created() {
             if (this.midiAccess) {
+                this.midiAccess.startListening()
                 this.midiAccess.listenToMidiForNote(MIDI_ATTACK, this.note, (e) => {
                     if (AudioEngine.state === 'suspended') {
-                        AudioEngine.resume();
+                        EventBus.$emit('midi.firstUserInteraction')
                     }
                     this.play(e.velocity * (MAX_VELOCITY / VELOCITY_STEPS), SOURCE_MIDI)
                 })
                 this.midiAccess.listenToMidiForNote(MIDI_RELASE, this.note, () => {
                     this.release(3)
                 })
-                this.midiAccess.startListening()
             }
         },
         mounted() {

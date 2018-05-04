@@ -6,6 +6,13 @@
             <router-view :key="$router.currentRoute.path"/>
         </transition>
         <bottom-bar/>
+        <modal @opened="() => { USER_CANT_PLAY_WITH_KEYBOARD(); CLEAR_PIANO_PLAYING(); }" @closed="USER_CAN_PLAY_WITH_KEYBOARD" height="auto" name="chromeDumbPolicy" class="modal">
+            <h2>Hey!</h2>
+            <p>Sorry to annoy you, but unfortunately, you are using a release of Chrome which force user to make an interaction before I can make sounds!
+                And it looks like the first thing you tried to play is with your MIDI controller, but Chrome is too dumb to detect this as a 'user interaction'. So
+                you have to click to the button or pressing any key on your keyboard / clicking your mouse for making Chrome happy and that you consent to play. Yeah, really dumb I know, sorry!</p>
+            <button @click="() => { $modal.hide('chromeDumbPolicy'); handleUserInteraction() }">Click me</button>
+        </modal>
         <modal @opened="() => { USER_CANT_PLAY_WITH_KEYBOARD(); CLEAR_PIANO_PLAYING(); }"
                @closed="USER_CAN_PLAY_WITH_KEYBOARD" height="auto" name="noMidi">
             <h2>Warning</h2>
@@ -29,6 +36,7 @@
         USER_CANT_PLAY_WITH_KEYBOARD
     } from "./store/modules/piano/actions";
     import GlobalLoader from "./components/ui/GlobalLoader";
+    import { EventBus } from './main';
 
     export default {
         components: {
@@ -59,7 +67,6 @@
                 REFRESH_MIDI_INPUTS_OUTPUTS
             ]),
             handleUserInteraction() { // Used because of new Chrome policy : https://goo.gl/7K7WLu
-                console.log('user interaction')
                 if (AudioEngine.state === 'suspended') {
                     AudioEngine.resume();
                 }
@@ -78,6 +85,9 @@
                 this.loadingMidi = false;
                 this.$modal.show('noMidi')
             }
+            EventBus.$on('midi.firstUserInteraction', () => {
+                this.$modal.show('chromeDumbPolicy');
+            })
             AudioEngine.onstatechange = (e) => {
                 if (e.target.state === 'running') {
                     window.removeEventListener('click', this.handleUserInteraction)
