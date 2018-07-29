@@ -107,7 +107,6 @@
         },
         async mounted () {
             this.loadingSounds = true
-            this.midiAccess.stopListening()
             this[START_LOADING]('Loading sounds...')
             await AudioEngine.init(this.pianoType)
             this.loadingSounds = false
