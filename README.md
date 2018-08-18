@@ -1,6 +1,6 @@
 # Multipiano
 
-<kbd>![Preview](https://image.noelshack.com/fichiers/2018/33/6/1534608467-capture-d-ecran-2018-08-18-a-18-05-17.png)</kbd>
+![Preview](https://preview.ibb.co/b9VVdK/Capture_d_e_cran_2018_08_18_a_18_05_17.png)
 
 A vuejs application which allow users to play piano with friends in realtime!
 
