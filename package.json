@@ -11,6 +11,8 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "connect-history-api-fallback": "^1.5.0",
+    "express": "^4.16.3",
     "lodash": "^4.17.5",
     "vue": "^2.5.13",
     "vue-color": "^2.4.6",
@@ -26,9 +28,7 @@
     "@vue/cli-plugin-babel": "^3.0.0-beta.6",
     "@vue/cli-plugin-eslint": "^3.0.0-beta.6",
     "@vue/cli-service": "^3.0.0-beta.6",
-    "connect-history-api-fallback": "^1.5.0",
     "cross-env": "^5.1.4",
-    "express": "^4.16.3",
     "node-sass": "^4.7.2",
     "sass-loader": "^6.0.6",
     "serve-static": "^1.13.2",
