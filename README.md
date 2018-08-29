@@ -21,4 +21,4 @@ You can
 - Change your username by double clicking on your badge
 - Change your color
 
-It's not finished and is more used for me as a POF. I've wanted to mimic [http:/multiplayerpiano.com](http:/multiplayerpiano.com) in terms of features, for learning purposes
+It's not finished and is more used for me as a test. I've wanted to mimic [http:/multiplayerpiano.com](http:/multiplayerpiano.com) in terms of features, for learning purposes
