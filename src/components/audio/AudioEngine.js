@@ -1,4 +1,6 @@
 import pianoKeys from '../../components/midi/piano_keys'
+import {SOURCE_KEYBOARD, SOURCE_MOUSE} from "../midi/constants";
+import Utils from "../../utils/Utils";
 
 const BASE_URL = process.env.VUE_APP_SERVER_URL
 const DELAYED_STOP = 1.5
@@ -80,7 +82,13 @@ class AudioEngine {
         if (!this.sounds.hasOwnProperty(note.keyname)) return;
         const source = this.context.createBufferSource();
         source.onended = this.onEndedSound.bind(this, keyId)
-        source.buffer = this.sounds[note.keyname];
+        if (note.source === SOURCE_KEYBOARD || note.source === SOURCE_MOUSE) {
+            const octave = note.octave + note.octaveOffset
+            const keyname = Utils.replaceNumberFromString(note.keyname, octave)
+            source.buffer = this.sounds[keyname];
+        } else {
+            source.buffer = this.sounds[note.keyname];
+        }
         const gain = this.context.createGain();
         gain.gain.setValueAtTime(this.volume * volume, 0);
         source.connect(gain);

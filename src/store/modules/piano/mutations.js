@@ -1,6 +1,7 @@
 import Note from "../../../components/midi/Note";
 
 export const SET_MIDI_ACCESS = "SET_MIDI_ACCESS"
+export const SET_PIANO_OCTAVE = "SET_PIANO_OCTAVE"
 export const ADD_MIDI_INPUT = "ADD_MIDI_INPUT"
 export const ADD_MIDI_OUTPUT = "ADD_MIDI_OUTPUT"
 export const REMOVE_MIDI_OUTPUT = "REMOVE_MIDI_OUTPUT"
@@ -19,6 +20,9 @@ export const DELETE_ALL_KEYS_DOWN = "DELETE_ALL_KEYS_DOWN"
 export default {
     [DELETE_KEY_DOWN] (state, keyCode) {
         delete state.keysdown[keyCode]
+    },
+    [SET_PIANO_OCTAVE] (state, octave) {
+        state.octaveOffset = octave
     },
     [ADD_KEY_DOWN] (state, keyCode) {
         state.keysdown[keyCode] = true

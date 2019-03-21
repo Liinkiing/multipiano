@@ -9,12 +9,16 @@ import {
     SET_MIDI_ACCESS,
     REFRESH_MIDI_INPUTS_OUTPUTS as MUTATION_REFRESH_MIDI_INPUTS_OUTPUTS,
     SET_PIANO_NOTES as MUTATION_SET_PIANO_NOTES, SET_PIANO_TYPE, ADD_NOTE_PLAYING, REMOVE_NOTE_PLAYING,
-    DELETE_ALL_KEYS_DOWN, SET_CAN_PLAY_KEYBOARD
+    DELETE_ALL_KEYS_DOWN, SET_CAN_PLAY_KEYBOARD, SET_PIANO_OCTAVE
 } from "./mutations";
 import Note from "../../../components/midi/Note";
 import {SOURCE_KEYBOARD} from "../../../components/midi/constants";
+import Utils from "../../../utils/Utils";
 
 export const GET_MIDI_ACCESS = "GET_MIDI_ACCESS"
+export const CHANGE_OCTAVE = "CHANGE_OCTAVE"
+export const INCREASE_OCTAVE = "INCREASE_OCTAVE"
+export const DECREASE_OCTAVE = "DECREASE_OCTAVE"
 export const OPEN_MIDI_INPUT = "OPEN_MIDI_INPUT"
 export const OPEN_MIDI_OUTPUT = "OPEN_MIDI_OUTPUT"
 export const CLOSE_MIDI_OUTPUT = "CLOSE_MIDI_OUTPUT"
@@ -100,13 +104,14 @@ export default {
             await dispatch(OPEN_MIDI_INPUT, inputId)
         }
     },
-    [USER_PLAY_NOTE]({commit, rootState}, {note, volume, source}, stopDelay) {
+    [USER_PLAY_NOTE]({commit, rootState, state}, {note, volume, source}, stopDelay) {
         if (note) {
             note.timestamp = Date.now()
             if (!note.users.find(user => rootState.users.currentUser.id === user.id)) {
                 note.users.push(rootState.users.currentUser)
             }
             note.volume = volume
+            note.octaveOffset = state.octaveOffset
             note.source = source || SOURCE_KEYBOARD
             commit(ADD_NOTE_PLAYING, note)
             this._vm.$socket.emit('userPlayNote', note);
@@ -168,5 +173,14 @@ export default {
     },
     [CHANGE_PIANO_TYPE]({commit}, type) {
         commit(SET_PIANO_TYPE, type)
+    },
+    [CHANGE_OCTAVE] ({ commit }, octave) {
+        commit(SET_PIANO_OCTAVE, octave)
+    },
+    [DECREASE_OCTAVE] ({ commit, state }) {
+        commit(SET_PIANO_OCTAVE, Utils.clamp(state.octaveOffset - 1, -3, 3))
+    },
+    [INCREASE_OCTAVE] ({ commit, state }) {
+        commit(SET_PIANO_OCTAVE, Utils.clamp(state.octaveOffset + 1, -3, 3))
     }
 }

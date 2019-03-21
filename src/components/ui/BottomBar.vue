@@ -4,6 +4,11 @@
         <button @click="CHANGE_PIANO_TYPE('stage_grand')">Stage Grand</button>
         <button @click="CHANGE_PIANO_TYPE('close_grand')">Close Grand</button>
         <button @click="$modal.show('newRoom')">Create a room</button>
+        <span class="octave-selector">
+            <button @click="DECREASE_OCTAVE()">-</button>
+            <span>{{ octaveOffset }}</span>
+            <button @click="INCREASE_OCTAVE()">+</button>
+        </span>
         <room-options/>
         <room-list/>
         <modal @opened="() => { USER_CANT_PLAY_WITH_KEYBOARD(); CLEAR_PIANO_PLAYING() }" @closed="USER_CAN_PLAY_WITH_KEYBOARD" height="auto" name="midi">
@@ -34,7 +39,7 @@
 </template>
 
 <script>
-    import { mapGetters, mapActions } from 'vuex'
+    import { mapGetters, mapActions, mapState } from 'vuex'
     import {
         CLOSE_MIDI_PORT,
         OPEN_MIDI_PORT,
@@ -43,7 +48,7 @@
         TOGGLE_MIDI_CONNECTION_OUTPUT,
         USER_CANT_PLAY_WITH_KEYBOARD,
         CLEAR_PIANO_PLAYING,
-        USER_CAN_PLAY_WITH_KEYBOARD
+        USER_CAN_PLAY_WITH_KEYBOARD, INCREASE_OCTAVE, DECREASE_OCTAVE
     } from "../../store/modules/piano/actions";
     import RoomList from "./RoomList";
     import RoomOptions from "./RoomOptions";
@@ -59,6 +64,9 @@
             }
         },
         computed: {
+            ...mapState('piano', [
+                'octaveOffset'
+            ]),
             ...mapGetters('piano', [
                 'midiInputs',
                 'midiOutputs',
@@ -66,7 +74,20 @@
                 'isMidiOutputConnectionStatusOpen',
             ])
         },
+        mounted() {
+            window.addEventListener('keydown', this.handleShortcut)
+        },
+        destroyed() {
+            window.removeEventListener('keydown', this.handleShortcut)
+        },
         methods: {
+            handleShortcut(evt)  {
+                if (evt.key === "ArrowDown") {
+                    this[DECREASE_OCTAVE]()
+                }  else if (evt.key === "ArrowUp") {
+                    this[INCREASE_OCTAVE]()
+                }
+            },
             validateRoomCreation () {
                 if (ROOM_BLACKLIST.includes(this.newRoom.trim().toLowerCase())) return
                 this.$router.push({
@@ -79,6 +100,8 @@
                 this.$modal.hide('newRoom')
             },
             ...mapActions('piano', [
+                INCREASE_OCTAVE,
+                DECREASE_OCTAVE,
                 CLOSE_MIDI_PORT,
                 OPEN_MIDI_PORT,
                 CLEAR_PIANO_PLAYING,
@@ -94,6 +117,12 @@
 
 <style lang="scss">
     @import "../../assets/scss/modules/variables";
+    .octave-selector {
+        margin-left: 20px;
+        button {
+            margin: 0 5px;
+        }
+    }
     .bottom-bar {
         position: absolute;
         bottom: 0;

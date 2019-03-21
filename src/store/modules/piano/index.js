@@ -10,6 +10,7 @@ const state = {
         inputs: [],
         outputs: []
     },
+    octaveOffset: 0,
     type: 'stage_grand',
     canPlay: true,
     canPlayKeyboard: true,

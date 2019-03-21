@@ -19,6 +19,15 @@ export default class Note {
         this._keyCodes = note.keyCodes || note._keyCodes || null
         this._isBlackKey = this._keyname.includes("S")
         this._octave = Utils.getNumberFromString(this._keyname)
+        this._octaveOffset = note.octaveOffset || note._octaveOffset || 0
+    }
+
+    set octaveOffset(value) {
+        this._octaveOffset = value
+    }
+
+    get octaveOffset() {
+        return this._octaveOffset
     }
 
     static createFromKeyname(keyname) {
