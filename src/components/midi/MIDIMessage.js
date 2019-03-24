@@ -1,4 +1,4 @@
-import {MIDI_ATTACK, MIDI_RELASE, SIGNAL_TYPE_MAP} from './constants'
+import {MIDI_ATTACK, MIDI_RELASE, MIDI_SUSTAIN, SIGNAL_TYPE_MAP} from './constants'
 import pianoKeys from './piano_keys'
 import Note from "./Note";
 
@@ -7,13 +7,18 @@ export default class MIDIMessage {
      * @param {MIDIMessageEvent} event
      */
     constructor({ data }) {
-        this._signalType = SIGNAL_TYPE_MAP[data[0]]
+        this._velocity = data[2]
+        if (data[1] === 64) {
+            this._signalType = MIDI_SUSTAIN
+        } else {
+            this._signalType = this._velocity === 0 ? MIDI_RELASE : MIDI_ATTACK
+            // RELEASE signal is now the same as ATTACK, only velocity changes
+        }
         this._originalMidiData = data
         const note = pianoKeys.find(key => key.midiCode === data[1]);
         this._note =  ((this._signalType === MIDI_ATTACK && note) || (this._signalType === MIDI_RELASE && note)) ?
             new Note(note) :
             null
-        this._velocity = data[2]
     }
 
     get signalType() {

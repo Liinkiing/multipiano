@@ -628,6 +628,11 @@
     call-me-maybe "^1.0.1"
     glob-to-regexp "^0.3.0"
 
+"@types/webmidi@^2.0.3":
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/@types/webmidi/-/webmidi-2.0.3.tgz#2c04998688e4d0b558b2fa3b84af1a705c5a6ec3"
+  integrity sha512-ui4QxwMIf1I601Pw1FgWJqBOOitrWbeox8XENUIR/R7iQ2r3/BROXBpaYq8fKkk6AvGmBKN9oolURHC36KUI0Q==
+
 "@vue/babel-preset-app@^3.0.0-beta.6":
   version "3.0.0-beta.6"
   resolved "https://registry.yarnpkg.com/@vue/babel-preset-app/-/babel-preset-app-3.0.0-beta.6.tgz#bb51c59d8526f1521caaa3d6e08591fc653f0948"
