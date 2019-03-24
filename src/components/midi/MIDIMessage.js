@@ -8,7 +8,7 @@ export default class MIDIMessage {
      */
     constructor({ data }) {
         this._velocity = data[2]
-        if (data[1] === 64) {
+        if (data[0] === 187) {
             this._signalType = MIDI_SUSTAIN
         } else {
             this._signalType = this._velocity === 0 ? MIDI_RELASE : MIDI_ATTACK
