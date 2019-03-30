@@ -346,7 +346,8 @@
     "keyname": "F6",
     "midiCode": 77,
     "keyCodes": [
-      221
+      221,
+      219
     ]
   },
   {
