@@ -3,7 +3,7 @@ import {SOURCE_KEYBOARD, SOURCE_MOUSE} from "../midi/constants";
 import Utils from "../../utils/Utils";
 
 const BASE_URL = process.env.VUE_APP_SERVER_URL
-const DELAYED_STOP = 1.5
+const DELAYED_STOP = 1
 const ZERO = 0.000001
 
 class AudioEngine {
@@ -90,13 +90,14 @@ class AudioEngine {
             source.buffer = this.sounds[note.keyname];
         }
         const gain = this.context.createGain();
-        gain.gain.setValueAtTime(this.volume * volume, 0);
+        gain.gain.setValueAtTime(this.volume * volume, this.context.currentTime);
         source.connect(gain);
         gain.connect(this.pianoGain);
         source.start(0);
         if (this.playings[keyId]) {
             const playing = this.playings[keyId];
-            playing.gain.gain.exponentialRampToValueAtTime(ZERO, this.context.currentTime + stopDelay);
+            this.playings[keyId].gain.gain.setValueAtTime(this.playings[keyId].gain.gain.value, this.context.currentTime);
+            this.playings[keyId].gain.gain.exponentialRampToValueAtTime(ZERO, this.context.currentTime + DELAYED_STOP);
         }
         this.playings[keyId] = {
             source,
@@ -106,14 +107,17 @@ class AudioEngine {
 
     stopBufferedSounds() {
         for(let key in this.playings) {
+            this.playings[key].gain.gain.setValueAtTime(this.playings[key].gain.gain.value, this.context.currentTime);
             this.playings[key].gain.gain.exponentialRampToValueAtTime(ZERO, this.context.currentTime + DELAYED_STOP);
         }
     }
+
 
     stopBufferedSoundsExcept(notes) {
         for(let key in this.playings) {
             const playingKeynames = notes.map(note => note.keyname || note._keyname)
             if(playingKeynames.some(keyname => key.includes(keyname))) continue
+            this.playings[key].gain.gain.setValueAtTime(this.playings[key].gain.gain.value, this.context.currentTime);
             this.playings[key].gain.gain.exponentialRampToValueAtTime(ZERO, this.context.currentTime + DELAYED_STOP);
             this.playings[key].source.stop(this.context.currentTime + 3)
             setTimeout(() => {
@@ -125,6 +129,7 @@ class AudioEngine {
     stopBufferedSoundForNote(note) {
         const keyId = note.keyname + note.timestamp
         if(this.playings[keyId]) {
+            this.playings[keyId].gain.gain.setValueAtTime(this.playings[keyId].gain.gain.value, this.context.currentTime);
             this.playings[keyId].gain.gain.exponentialRampToValueAtTime(ZERO, this.context.currentTime + DELAYED_STOP);
             this.playings[keyId].source.stop(this.context.currentTime + 3)
             setTimeout(() => {
@@ -137,7 +142,8 @@ class AudioEngine {
         const keyId = note.keyname + note.timestamp
         if (this.playings[keyId]) {
             if (!sustained) {
-                this.playings[keyId].gain.gain.exponentialRampToValueAtTime(ZERO, this.context.currentTime + stopDelay);
+                this.playings[keyId].gain.gain.setValueAtTime(this.playings[keyId].gain.gain.value, this.context.currentTime);
+                this.playings[keyId].gain.gain.exponentialRampToValueAtTime(ZERO, this.context.currentTime + DELAYED_STOP);
                 this.playings[keyId].source.stop(this.context.currentTime + stopDelay)
                 setTimeout(() => {
                     delete this.playings[keyId]
