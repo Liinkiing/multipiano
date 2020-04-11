@@ -2,13 +2,15 @@ import {MIDI_ATTACK, MIDI_RELASE, MIDI_SUSTAIN, SIGNAL_TYPE_MAP} from './constan
 import pianoKeys from './piano_keys'
 import Note from "./Note";
 
+const MIDI_SUSTAIN_DATA = [176, 179, 187]
+
 export default class MIDIMessage {
     /**
      * @param {MIDIMessageEvent} event
      */
     constructor({ data }) {
         this._velocity = data[2]
-        if (data[0] === 187) {
+        if (MIDI_SUSTAIN_DATA.includes(data[0])) {
             this._signalType = MIDI_SUSTAIN
         } else {
             this._signalType = this._velocity === 0 ? MIDI_RELASE : MIDI_ATTACK
