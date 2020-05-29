@@ -1,10 +1,10 @@
 # Multipiano
 
-![Preview](https://preview.ibb.co/b9VVdK/Capture_d_e_cran_2018_08_18_a_18_05_17.png)
+![Preview](https://multipiano.netlify.app/socials.png)
 
 A vuejs application which allow users to play piano with friends in realtime!
 
-You can test it here: https://multipiano.netlify.com (first request is sometimes long because I have a free plan in Heroku, 
+You can test it here: https://multipiano.netlify.app (first request is sometimes long because I have a free plan in Heroku, 
 so my dynos have to wake up 😴)
 
 The appearance is not finished, but a lot of the features I've wanted to includes are available, it's just not polished.
