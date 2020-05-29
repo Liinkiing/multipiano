@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import ToggleButton from 'vue-js-toggle-button'
 import VueSocketio from 'vue-socket.io';
+import VueHead from 'vue-head';
 import DateFilter from 'vue-date-filter'
 import Notifications from 'vue-notification'
 import VModal from 'vue-js-modal'
@@ -15,7 +16,7 @@ Vue.config.devtools = process.env.NODE_ENV === 'development'
 Vue.config.debug = process.env.NODE_ENV === 'development'
 Vue.config.silent = process.env.NODE_ENV !== 'development'
 export const EventBus = new Vue()
-
+Vue.use(VueHead)
 Vue.use(VModal)
 Vue.use(Notifications)
 Vue.use(DateFilter)

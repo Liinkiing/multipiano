@@ -19,6 +19,23 @@
             UserList,
             Piano},
         name: 'room',
+        head: {
+            meta: [
+                { property: 'og:title', content: 'Multipiano' },
+                { property: 'twitter:title', content: 'Multipiano' },
+                { property: 'twitter:card', content: 'summary_large_image' },
+                { property: 'twitter:image', content: 'https://multipiano.netlify.app/socials.png' },
+                { property: 'twitter:description', content: 'Multipiano is a free website to play the piano with your friends in realtime!' },
+                { property: 'og:url', content: 'https://multipiano.netlify.app' },
+                { property: 'og:locale', content: 'en' },
+                { property: 'og:type', content: 'website' },
+                { property: 'og:image', content: 'https://multipiano.netlify.app/socials.png' },
+                { property: 'og:image:width', content: '640' },
+                { property: 'og:image:height', content: '359' },
+                { property: 'og:description', content: 'Multipiano is a free website to play the piano with your friends in realtime!' },
+                { name: 'description', content: 'Multipiano is a free website to play the piano with your friends in realtime!', id: 'desc' }
+            ]
+        },
         props: {
             room: { type: Object, required: true }
         },
