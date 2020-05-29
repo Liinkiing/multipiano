@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Room from './views/Room.vue'
 
-export const HOME_ID = 'multiplayer-piano'
+export const HOME_ID = 'multipiano'
 
 Vue.use(Router)
 
@@ -13,7 +13,7 @@ export const router = new Router({
             path: '/',
             name: 'home',
             component: Room,
-            props: { room: {name: 'Multiplayer Piano', id: HOME_ID} }
+            props: { room: {name: 'Multipiano', id: HOME_ID} }
         },
         {
             path: '/:roomName',
