@@ -13,7 +13,7 @@
   "dependencies": {
     "connect-history-api-fallback": "^1.5.0",
     "express": "^4.16.3",
-    "lodash": "^4.17.5",
+    "lodash": "^4.17.21",
     "vue": "^2.5.13",
     "vue-color": "^2.4.6",
     "vue-date-filter": "^1.0.1",
